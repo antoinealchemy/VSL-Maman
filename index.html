@@ -116,12 +116,13 @@
             color: #2BAF9C;
         }
 
+        /* Desktop: Format 9:16 */
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 640px;
+            max-width: 450px;
             margin: 0 auto 20px;
-            padding-bottom: 56.25%;
+            padding-bottom: 177.78%; /* 9:16 = 16/9 * 100 */
             background: linear-gradient(180deg, #FFFFFF 0%, #E6E6E6 100%);
             border-radius: 16px;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
@@ -170,13 +171,33 @@
             margin-top: 12px;
         }
 
+        /* Tablette: Format 5:4 */
+        @media (max-width: 1024px) {
+            body {
+                padding: 30px 20px;
+                align-items: flex-start;
+            }
+
+            .container {
+                padding-top: 20px;
+            }
+
+            .video-container {
+                max-width: 500px;
+                padding-bottom: 125%; /* 5:4 = 4/5 * 100 */
+            }
+        }
+
+        /* Mobile: Format 5:4 */
         @media (max-width: 768px) {
             body {
                 padding: 20px 16px;
+                align-items: flex-start;
             }
 
             .container {
                 max-width: 100%;
+                padding-top: 10px;
             }
 
             h1 {
@@ -193,8 +214,8 @@
             }
 
             .video-container {
-                padding-bottom: 80%;
-                max-width: 500px;
+                padding-bottom: 125%; /* 5:4 */
+                max-width: 400px;
             }
 
             .play-button {
@@ -213,6 +234,11 @@
         @media (max-width: 480px) {
             body {
                 padding: 16px 12px;
+                align-items: flex-start;
+            }
+
+            .container {
+                padding-top: 5px;
             }
 
             h1 {
@@ -227,8 +253,9 @@
             }
 
             .video-container {
-                padding-bottom: 80%;
+                padding-bottom: 125%; /* 5:4 */
                 border-radius: 12px;
+                max-width: 100%;
             }
 
             .play-button {
@@ -248,6 +275,14 @@
         }
 
         @media (max-width: 380px) {
+            body {
+                padding: 12px 10px;
+            }
+
+            .container {
+                padding-top: 0;
+            }
+
             h1 {
                 font-size: 17px;
                 line-height: 1.2;
