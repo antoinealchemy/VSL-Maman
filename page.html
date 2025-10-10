@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rituel de 3 Minutes - Libère Ton Esprit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #F9FAFB;
+            color: #111111;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 400;
+            color: #111111;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        .keyword-bold {
+            font-weight: 600;
+        }
+
+        .gradient-highlight {
+            background: linear-gradient(90deg, #3FB7A8, #7ED2C4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .italic-text {
+            font-style: italic;
+        }
+
+        .underline {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: clamp(16px, 2.5vw, 20px);
+            font-weight: 400;
+            color: #5C5C5C;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .subtitle-bold {
+            font-weight: 600;
+            color: #111111;
+        }
+
+        .subtitle-courte {
+            text-decoration: underline;
+            text-transform: uppercase;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 2px;
+        }
+
+        .subtitle-number {
+            font-weight: 600;
+            color: #3FB7A8;
+            white-space: nowrap;
+        }
+
+        .subtitle-italic {
+            font-style: italic;
+            color: #2BAF9C;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto 20px;
+            padding-bottom: 56.25%;
+            background: linear-gradient(180deg, #FFFFFF 0%, #E6E6E6 100%);
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-in 0.2s backwards;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3FB7A8, #7ED2C4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(63, 183, 168, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(63, 183, 168, 0.6);
+            animation: none;
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 24px solid white;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            margin-left: 6px;
+        }
+
+        .video-text {
+            font-size: 0.875rem;
+            color: #888;
+            font-style: italic;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 24px;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: clamp(22px, 6vw, 34px);
+                margin-bottom: 28px;
+                line-height: 1.45;
+            }
+
+            h2 {
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+
+            .play-button {
+                width: 64px;
+                height: 64px;
+            }
+
+            .play-button::after {
+                border-left: 20px solid white;
+                border-top: 13px solid transparent;
+                border-bottom: 13px solid transparent;
+                margin-left: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: clamp(20px, 5.5vw, 28px);
+            }
+
+            h2 {
+                font-size: 15px;
+            }
+
+            .video-text {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            Découvre comment ce <span class="keyword-bold">simple rituel</span> de <span class="gradient-highlight">3 minutes</span><br>
+            libère ton esprit de la <span class="italic-text">charge mentale</span>,<br>
+            <span class="underline">même quand tu n'as pas une minute à toi</span>.
+        </h1>
+        
+        <h2>
+            🎥 <span class="subtitle-bold subtitle-courte">Regarde cette courte vidéo jusqu'à la fin :</span>
+            <br><br>
+            👉 Tu comprendras pourquoi <span class="subtitle-number">4 783 mamans</span> parlent de ce rituel <span class="subtitle-italic">comme d'un vrai soulagement.</span>
+        </h2>
+        
+        <div class="video-container">
+            <div class="play-button"></div>
+        </div>
+        
+        <p class="video-text">Vidéo en cours de chargement...</p>
+    </div>
+</body>
+</html>
