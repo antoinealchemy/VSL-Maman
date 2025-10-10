@@ -116,13 +116,13 @@
             color: #2BAF9C;
         }
 
-        /* Desktop: Format 9:16 */
+        /* Desktop: Format 16:9 */
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 450px;
+            max-width: 640px;
             margin: 0 auto 20px;
-            padding-bottom: 177.78%; /* 9:16 = 16/9 * 100 */
+            padding-bottom: 56.25%; /* 16:9 = 9/16 * 100 */
             background: linear-gradient(180deg, #FFFFFF 0%, #E6E6E6 100%);
             border-radius: 16px;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
@@ -171,7 +171,7 @@
             margin-top: 12px;
         }
 
-        /* Tablette: Format 5:4 */
+        /* Tablette: Format 4:5 */
         @media (max-width: 1024px) {
             body {
                 padding: 30px 20px;
@@ -184,11 +184,11 @@
 
             .video-container {
                 max-width: 500px;
-                padding-bottom: 125%; /* 5:4 = 4/5 * 100 */
+                padding-bottom: 125%; /* 4:5 = 5/4 * 100 */
             }
         }
 
-        /* Mobile: Format 5:4 */
+        /* Mobile: Format 4:5 */
         @media (max-width: 768px) {
             body {
                 padding: 20px 16px;
@@ -214,7 +214,7 @@
             }
 
             .video-container {
-                padding-bottom: 125%; /* 5:4 */
+                padding-bottom: 125%; /* 4:5 */
                 max-width: 400px;
             }
 
@@ -253,7 +253,7 @@
             }
 
             .video-container {
-                padding-bottom: 125%; /* 5:4 */
+                padding-bottom: 125%; /* 4:5 */
                 border-radius: 12px;
                 max-width: 100%;
             }
