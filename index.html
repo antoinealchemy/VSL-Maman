@@ -60,8 +60,9 @@
             }
         }
 
-        .keyword-bold {
+        .keyword-bold-green {
             font-weight: 600;
+            color: #3FB7A8;
         }
 
         .gradient-highlight {
@@ -188,7 +189,7 @@
             }
         }
 
-        /* Mobile: Format 4:5 */
+        /* Mobile: Format 1:1 (carré) pour optimiser l'espace */
         @media (max-width: 768px) {
             body {
                 padding: 20px 16px;
@@ -201,21 +202,22 @@
             }
 
             h1 {
-                font-size: clamp(20px, 5.5vw, 28px);
-                margin-bottom: 20px;
-                line-height: 1.25;
+                font-size: 18px;
+                margin-bottom: 16px;
+                line-height: 1.2;
                 letter-spacing: 0.2px;
             }
 
             h2 {
-                font-size: 15px;
-                margin-bottom: 24px;
+                font-size: 13px;
+                margin-bottom: 16px;
                 line-height: 1.5;
             }
 
             .video-container {
-                padding-bottom: 125%; /* 4:5 */
-                max-width: 400px;
+                padding-bottom: 100%; /* 1:1 format carré */
+                max-width: 90%;
+                margin: 0 auto 16px;
             }
 
             .play-button {
@@ -228,6 +230,10 @@
                 border-top: 13px solid transparent;
                 border-bottom: 13px solid transparent;
                 margin-left: 5px;
+            }
+
+            .video-text {
+                font-size: 0.7rem;
             }
         }
 
@@ -242,20 +248,20 @@
             }
 
             h1 {
-                font-size: clamp(18px, 5vw, 24px);
-                margin-bottom: 16px;
-                line-height: 1.2;
+                font-size: 17px;
+                margin-bottom: 14px;
+                line-height: 1.15;
             }
 
             h2 {
-                font-size: 14px;
-                margin-bottom: 20px;
+                font-size: 12.5px;
+                margin-bottom: 14px;
             }
 
             .video-container {
-                padding-bottom: 125%; /* 4:5 */
+                padding-bottom: 100%; /* 1:1 */
                 border-radius: 12px;
-                max-width: 100%;
+                max-width: 92%;
             }
 
             .play-button {
@@ -270,7 +276,7 @@
             }
 
             .video-text {
-                font-size: 0.75rem;
+                font-size: 0.65rem;
             }
         }
 
@@ -284,12 +290,14 @@
             }
 
             h1 {
-                font-size: 17px;
-                line-height: 1.2;
+                font-size: 16px;
+                line-height: 1.15;
+                margin-bottom: 12px;
             }
 
             h2 {
-                font-size: 13px;
+                font-size: 12px;
+                margin-bottom: 12px;
             }
 
             .play-button {
@@ -308,7 +316,9 @@
 <body>
     <div class="container">
         <h1>
-            Découvre comment ce <span class="keyword-bold">simple rituel</span> de <span class="gradient-highlight">3 minutes</span> libère ton esprit de la <span class="italic-text">charge mentale</span>, <span class="underline">même quand tu n'as pas une minute à toi</span>.
+            Découvre comment ce <span class="keyword-bold-green">simple rituel</span> de<br>
+            <span class="keyword-bold-green">3 minutes</span> te libère de la charge mentale,<br>
+            même quand tu n'as pas une minute à toi.
         </h1>
         
         <h2>
