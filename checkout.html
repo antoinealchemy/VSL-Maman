@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Dr. Sarah Dumont</title>
+    <title>Commande - Rituel C.A.L.M.E</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
         * {
             margin: 0;
@@ -24,61 +25,274 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 900px;
             width: 100%;
-            text-align: center;
             background: white;
-            padding: 60px 40px;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
         }
 
-        h1 {
-            font-size: 48px;
+        .header {
+            background: linear-gradient(135deg, #3FB7A8, #50C4B3);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
             font-weight: 600;
-            color: #3FB7A8;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .product-card {
+            border: 2px solid #E8E8E8;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            font-size: 16px;
+            color: #5C5C5C;
+            line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        p {
-            font-size: 18px;
+        .product-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .product-features li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #111111;
+        }
+
+        .product-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3FB7A8;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-top: 2px solid #E8E8E8;
+            margin-top: 20px;
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: 700;
+            color: #3FB7A8;
+        }
+
+        .old-price {
+            font-size: 20px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+
+        .checkout-button {
+            background: linear-gradient(135deg, #3FB7A8, #50C4B3);
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 18px 50px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(63, 183, 168, 0.3);
+        }
+
+        .checkout-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 183, 168, 0.4);
+        }
+
+        .checkout-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .guarantee {
+            text-align: center;
+            padding: 30px;
+            background: #F0F9F8;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .guarantee h3 {
+            color: #3FB7A8;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .guarantee p {
             color: #5C5C5C;
-            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #3FB7A8;
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 40px 30px;
-            }
-
-            h1 {
-                font-size: 36px;
-            }
-
-            p {
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
+            .header {
                 padding: 30px 20px;
             }
 
-            h1 {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .product-card {
+                padding: 20px;
+            }
+
+            .product-title {
+                font-size: 20px;
+            }
+
+            .price-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .price {
                 font-size: 28px;
             }
 
-            p {
-                font-size: 15px;
+            .checkout-button {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Checkout</h1>
-        <p>Page de paiement en construction...</p>
+        <div class="header">
+            <h1>🌟 Rituel C.A.L.M.E</h1>
+            <p>Retrouve ta sérénité en 3 minutes par jour</p>
+        </div>
+
+        <div class="content">
+            <div class="product-card">
+                <h2 class="product-title">Le Programme Complet</h2>
+                <p class="product-description">
+                    Accède immédiatement au rituel qui a aidé 4 783 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
+                </p>
+
+                <ul class="product-features">
+                    <li>Accès immédiat au programme complet</li>
+                    <li>Les 5 étapes du rituel C.A.L.M.E détaillées</li>
+                    <li>Guide PDF téléchargeable</li>
+                    <li>Vidéos explicatives pour chaque étape</li>
+                    <li>Support communauté privée</li>
+                    <li>Garantie satisfait ou remboursé 30 jours</li>
+                </ul>
+
+                <div class="price-section">
+                    <div>
+                        <span class="price">47€</span>
+                        <span class="old-price">97€</span>
+                    </div>
+                    <button id="checkout-button" class="checkout-button">
+                        Commander maintenant
+                    </button>
+                </div>
+            </div>
+
+            <div class="guarantee">
+                <h3>✅ Garantie 30 jours satisfait ou remboursé</h3>
+                <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intégralement. Sans question.</p>
+            </div>
+
+            <div class="loading" id="loading">
+                <p>Redirection vers le paiement sécurisé...</p>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // Clé publique Stripe (LIVE)
+        const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
+
+        // Price ID du produit
+        const priceId = 'price_1SHW1dPW27FSnXRnPYJDfJis';
+
+        const checkoutButton = document.getElementById('checkout-button');
+        const loading = document.getElementById('loading');
+
+        checkoutButton.addEventListener('click', async () => {
+            checkoutButton.disabled = true;
+            loading.style.display = 'block';
+
+            try {
+                const { error } = await stripe.redirectToCheckout({
+                    lineItems: [{
+                        price: priceId,
+                        quantity: 1,
+                    }],
+                    mode: 'payment',
+                    successUrl: window.location.origin + '/success.html',
+                    cancelUrl: window.location.origin + '/checkout.html',
+                    locale: 'fr',
+                });
+
+                if (error) {
+                    console.error('Erreur Stripe:', error);
+                    alert('Une erreur est survenue. Veuillez réessayer.');
+                    checkoutButton.disabled = false;
+                    loading.style.display = 'none';
+                }
+            } catch (err) {
+                console.error('Erreur:', err);
+                alert('Une erreur est survenue. Veuillez réessayer.');
+                checkoutButton.disabled = false;
+                loading.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
