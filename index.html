@@ -148,7 +148,7 @@
             font-size: 1.25rem;
             font-weight: 600;
             padding: 18px 40px;
-            border-radius: 0;
+            border-radius: 8px;
             text-decoration: none;
             margin: 30px auto 40px;
             cursor: pointer;
@@ -170,6 +170,80 @@
 
         .cta-button:active {
             transform: translateY(0);
+        }
+
+        /* Section Avis */
+        .testimonials-section {
+            max-width: 1100px;
+            margin: 60px auto 50px;
+            padding: 0 20px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3FB7A8;
+        }
+
+        .testimonial-info {
+            flex: 1;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #111111;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-stars {
+            color: #FFC107;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #3FB7A8;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: #5C5C5C;
+            line-height: 1.6;
         }
 
         /* Footer styles */
@@ -323,6 +397,16 @@
 
             .mobile-break {
                 display: inline;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                margin-bottom: 40px;
+            }
+
+            .testimonial-card {
+                padding: 20px;
             }
         }
 
@@ -482,7 +566,62 @@
             </div>
         </div>
 
-        <a href="checkout.html" class="cta-button">Obtenir le rituel calme</a>
+        <a href="checkout.html" class="cta-button">OBTENIR LE RITUEL C.A.L.M.E</a>
+    </div>
+
+    <!-- Section Avis -->
+    <div class="testimonials-section">
+        <div class="testimonials-grid">
+            <!-- Avis 1 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophie M." class="testimonial-avatar">
+                    <div class="testimonial-info">
+                        <div class="testimonial-name">Sophie M.</div>
+                        <div class="testimonial-stars">★★★★★</div>
+                    </div>
+                </div>
+                <div class="testimonial-title">Enfin un moment pour moi chaque jour</div>
+                <div class="testimonial-text">
+                    Après 2 semaines avec ce rituel, je me sens tellement plus légère. Mon stress est passé de insupportable à gérable. Je n'aurais jamais cru que 3 minutes pouvaient autant changer mon quotidien.
+                </div>
+            </div>
+
+            <!-- Avis 2 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Marie L." class="testimonial-avatar">
+                    <div class="testimonial-info">
+                        <div class="testimonial-name">Marie L.</div>
+                        <div class="testimonial-stars">★★★★★</div>
+                    </div>
+                </div>
+                <div class="testimonial-title">Plus de cris, plus de culpabilité</div>
+                <div class="testimonial-text">
+                    Ça fait 3 mois que je pratique le rituel calme et je n'ai jamais rechuté dans mon anxiété. Mes enfants me disent même que je suis plus patiente avec eux. Avant, je craquais pour un rien, maintenant j'arrive à garder mon calme même dans le chaos du quotidien. C'est la meilleure décision que j'ai prise pour moi et ma famille.
+                </div>
+            </div>
+
+            <!-- Avis 3 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Laetitia R." class="testimonial-avatar">
+                    <div class="testimonial-info">
+                        <div class="testimonial-name">Laetitia R.</div>
+                        <div class="testimonial-stars">★★★★★</div>
+                    </div>
+                </div>
+                <div class="testimonial-title">Simple et terriblement efficace</div>
+                <div class="testimonial-text">
+                    Je pensais que c'était trop beau pour être vrai, mais ce guide a vraiment transformé ma façon de gérer le stress quotidien. J'ai enfin retrouvé le sommeil après des années d'insomnie. Mes nuits sont meilleures, mes journées plus douces, et je me sens enfin alignée avec moi-même. Merci infiniment pour ce cadeau.
+                </div>
+            </div>
+        </div>
+
+        <!-- Deuxième CTA -->
+        <div style="text-align: center;">
+            <a href="checkout.html" class="cta-button cta-button-2">OBTENIR LE RITUEL C.A.L.M.E</a>
+        </div>
     </div>
 
     <footer>
@@ -580,6 +719,7 @@
     <script>
         setTimeout(function() {
             document.querySelector('.cta-button').classList.add('visible');
+            document.querySelector('.cta-button-2').classList.add('visible');
         }, 10000); // 10000 millisecondes = 10 secondes
     </script>
 
