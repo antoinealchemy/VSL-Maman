@@ -574,22 +574,13 @@
         s.src="https://scripts.converteai.net/462fd05b-c306-4f5e-b710-346cea437fb1/players/68ebcf207a3f63b4d7d918ef/v4/player.js";
         s.async=!0;
         document.head.appendChild(s);
+    </script>
 
-        // Afficher le bouton après 120 secondes (2 minutes)
-        s.onload = function() {
-            if (typeof smartplayer !== 'undefined') {
-                smartplayer('vid-68ebcf207a3f63b4d7d918ef', {
-                    on: {
-                        timeupdate: function(event) {
-                            var currentTime = event.detail.currentTime;
-                            if (currentTime >= 120) {
-                                document.querySelector('.cta-button').classList.add('visible');
-                            }
-                        }
-                    }
-                });
-            }
-        };
+    <!-- Script pour afficher le bouton après 10 secondes -->
+    <script>
+        setTimeout(function() {
+            document.querySelector('.cta-button').classList.add('visible');
+        }, 10000); // 10000 millisecondes = 10 secondes
     </script>
 
     <!-- Scripts modals -->
