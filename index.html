@@ -172,14 +172,6 @@
             transform: translateY(0);
         }
 
-        .urgency-text {
-            font-size: 0.95rem;
-            color: #FF6B6B;
-            font-weight: 600;
-            margin-top: 12px;
-            text-align: center;
-        }
-
         /* Section Avis */
         .testimonials-section {
             max-width: 800px;
@@ -265,6 +257,21 @@
 
         .testimonial-stat:hover {
             text-decoration: underline;
+        }
+
+        /* FOMO text */
+        .fomo-text {
+            display: none;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #FF6B6B;
+            font-weight: 600;
+            margin-top: 8px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .fomo-text.visible {
+            display: block;
         }
 
         /* Footer styles */
@@ -421,13 +428,12 @@
             }
 
             .testimonials-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
+                gap: 15px;
                 margin-bottom: 40px;
             }
 
             .testimonial-card {
-                padding: 20px;
+                padding: 16px;
             }
         }
 
@@ -464,11 +470,6 @@
                 font-size: 1.1rem;
                 padding: 16px 35px;
                 margin: 25px auto 35px;
-            }
-
-            .urgency-text {
-                font-size: 0.9rem;
-                margin-top: 10px;
             }
 
             footer {
@@ -547,10 +548,6 @@
                 padding: 14px 30px;
                 margin: 20px auto 30px;
             }
-
-            .urgency-text {
-                font-size: 0.85rem;
-            }
         }
 
         @media (max-width: 380px) {
@@ -571,10 +568,6 @@
             h2 {
                 font-size: 14.5px;
                 margin-bottom: 12px;
-            }
-
-            .urgency-text {
-                font-size: 0.8rem;
             }
         }
     </style>
@@ -601,8 +594,7 @@
         </div>
 
         <a href="checkout.html" class="cta-button">OBTENIR LE RITUEL C.A.L.M.E</a>
-        
-        <p class="urgency-text">🔥 12 mamans ont rejoint dans la dernière heure</p>
+        <p class="fomo-text">🔥 12 mamans ont rejoint dans la dernière heure</p>
     </div>
 
     <!-- Section Avis -->
@@ -613,13 +605,17 @@
                 <div class="testimonial-header">
                     <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophie M." class="testimonial-avatar">
                     <div class="testimonial-info">
-                        <div class="testimonial-name">Sophie M.</div>
-                        <div class="testimonial-stars">★★★★★</div>
+                        <div class="testimonial-name">Sophie Martinez</div>
+                        <div class="testimonial-date">Il y a 3 semaines</div>
                     </div>
                 </div>
-                <div class="testimonial-title">Enfin un moment pour moi chaque jour</div>
+                <div class="testimonial-stars">★★★★★</div>
                 <div class="testimonial-text">
-                    Après 2 semaines avec ce rituel, je me sens tellement plus légère. Mon stress est passé de insupportable à gérable. Je n'aurais jamais cru que 3 minutes pouvaient autant changer mon quotidien.
+                    Bon bah voilà, ça fait 2 semaines que j'ai commencé et franchement je m'attendais pas à grand chose... Mais là je me sens vraiment plus légère ! Mon stress qui était à 9/10 est descendu à genre 3/10. Je sais pas comment l'expliquer mais ces 3 minutes par jour ça change TOUT. Même mes collègues ont remarqué que j'étais plus détendue 😅
+                </div>
+                <div class="testimonial-stats">
+                    <span class="testimonial-stat">👍 42</span>
+                    <span class="testimonial-stat">💬 8 commentaires</span>
                 </div>
             </div>
 
@@ -628,13 +624,17 @@
                 <div class="testimonial-header">
                     <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Marie L." class="testimonial-avatar">
                     <div class="testimonial-info">
-                        <div class="testimonial-name">Marie L.</div>
-                        <div class="testimonial-stars">★★★★★</div>
+                        <div class="testimonial-name">Marie Leblanc</div>
+                        <div class="testimonial-date">Il y a 1 mois</div>
                     </div>
                 </div>
-                <div class="testimonial-title">Plus de cris, plus de culpabilité</div>
+                <div class="testimonial-stars">★★★★★</div>
                 <div class="testimonial-text">
-                    Ça fait 3 mois que je pratique le rituel calme et je n'ai jamais rechuté dans mon anxiété. Mes enfants me disent même que je suis plus patiente avec eux. Avant, je craquais pour un rien, maintenant j'arrive à garder mon calme même dans le chaos du quotidien. C'est la meilleure décision que j'ai prise pour moi et ma famille.
+                    Ça fait maintenant 3 mois et je peux vous dire que j'ai jamais rechuté dans mon anxiété ! Mes enfants me disent que je crie beaucoup moins (bon ok j'avoue avant c'était l'enfer 😬). Ce qui me tue c'est que c'est vraiment simple, y'a pas besoin de se prendre la tête pendant des heures. 3 minutes et c'est bon. Je recommande à toutes les mamans qui sont au bout du rouleau ❤️
+                </div>
+                <div class="testimonial-stats">
+                    <span class="testimonial-stat">👍 156</span>
+                    <span class="testimonial-stat">💬 23 commentaires</span>
                 </div>
             </div>
 
@@ -643,13 +643,17 @@
                 <div class="testimonial-header">
                     <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Laetitia R." class="testimonial-avatar">
                     <div class="testimonial-info">
-                        <div class="testimonial-name">Laetitia R.</div>
-                        <div class="testimonial-stars">★★★★★</div>
+                        <div class="testimonial-name">Laetitia Rousseau</div>
+                        <div class="testimonial-date">Il y a 2 mois</div>
                     </div>
                 </div>
-                <div class="testimonial-title">Simple et terriblement efficace</div>
+                <div class="testimonial-stars">★★★★★</div>
                 <div class="testimonial-text">
-                    Je pensais que c'était trop beau pour être vrai, mais ce guide a vraiment transformé ma façon de gérer le stress quotidien. J'ai enfin retrouvé le sommeil après des années d'insomnie. Mes nuits sont meilleures, mes journées plus douces, et je me sens enfin alignée avec moi-même. Merci infiniment pour ce cadeau.
+                    Honnêtement au début j'étais sceptique, je me disais "encore un truc qui va rien changer"... Mais NON ! J'ai enfin retrouvé le sommeil après littéralement 4 ans d'insomnie 😭 Mes nuits sont meilleures, mes journées aussi, je me sens alignée avec moi-même pour la première fois depuis que je suis maman. Un immense merci 🙏
+                </div>
+                <div class="testimonial-stats">
+                    <span class="testimonial-stat">👍 89</span>
+                    <span class="testimonial-stat">💬 15 commentaires</span>
                 </div>
             </div>
         </div>
@@ -657,7 +661,7 @@
         <!-- Deuxième CTA -->
         <div style="text-align: center;">
             <a href="checkout.html" class="cta-button cta-button-2">OBTENIR LE RITUEL C.A.L.M.E</a>
-            <p class="urgency-text">🔥 12 mamans ont rejoint dans la dernière heure</p>
+            <p class="fomo-text fomo-text-2">🔥 12 mamans ont rejoint dans la dernière heure</p>
         </div>
     </div>
 
@@ -757,6 +761,8 @@
         setTimeout(function() {
             document.querySelector('.cta-button').classList.add('visible');
             document.querySelector('.cta-button-2').classList.add('visible');
+            document.querySelector('.fomo-text').classList.add('visible');
+            document.querySelector('.fomo-text-2').classList.add('visible');
         }, 10000); // 10000 millisecondes = 10 secondes
     </script>
 
