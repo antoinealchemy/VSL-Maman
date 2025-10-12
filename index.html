@@ -142,7 +142,7 @@
 
         /* Bouton CTA */
         .cta-button {
-            display: inline-block;
+            display: none; /* Caché par défaut */
             background: linear-gradient(135deg, #3FB7A8, #50C4B3);
             color: white;
             font-size: 1.25rem;
@@ -155,7 +155,11 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(63, 183, 168, 0.3);
             border: none;
-            animation: fadeIn 1s ease-in 0.4s backwards;
+        }
+
+        .cta-button.visible {
+            display: inline-block;
+            animation: fadeIn 1s ease-in;
         }
 
         .cta-button:hover {
@@ -570,6 +574,22 @@
         s.src="https://scripts.converteai.net/462fd05b-c306-4f5e-b710-346cea437fb1/players/68ebcf207a3f63b4d7d918ef/v4/player.js";
         s.async=!0;
         document.head.appendChild(s);
+
+        // Afficher le bouton après 120 secondes (2 minutes)
+        s.onload = function() {
+            if (typeof smartplayer !== 'undefined') {
+                smartplayer('vid-68ebcf207a3f63b4d7d918ef', {
+                    on: {
+                        timeupdate: function(event) {
+                            var currentTime = event.detail.currentTime;
+                            if (currentTime >= 120) {
+                                document.querySelector('.cta-button').classList.add('visible');
+                            }
+                        }
+                    }
+                });
+            }
+        };
     </script>
 
     <!-- Scripts modals -->
