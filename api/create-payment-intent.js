@@ -20,10 +20,8 @@ module.exports = async (req, res) => {
       amount: 1700, // 17€ en centimes
       currency: 'eur',
       automatic_payment_methods: { 
-        enabled: true,
-        allow_redirects: 'always'
+        enabled: true
       },
-      payment_method_types: ['card', 'paypal', 'link'],
       metadata: {
         product: 'Rituel C.A.L.M.E'
       }
