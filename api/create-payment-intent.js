@@ -20,10 +20,10 @@ module.exports = async (req, res) => {
     const { includeUpsell } = req.body;
     
     // Prix de base : 17€ (1700 centimes)
-    const baseAmount = 1700;
+    const baseAmount = 100;
     
     // Prix de l'upsell : 27€ (2700 centimes)
-    const upsellAmount = 2700;
+    const upsellAmount = 100;
     
     // Calculer le montant total
     const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
