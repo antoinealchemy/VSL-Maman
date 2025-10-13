@@ -4,11 +4,5 @@
       "memory": 1024,
       "maxDuration": 10
     }
-  },
-  "routes": [
-    {
-      "src": "/.well-known/apple-developer-merchantid-domain-association",
-      "dest": "/public/.well-known/apple-developer-merchantid-domain-association"
-    }
-  ]
+  }
 }
