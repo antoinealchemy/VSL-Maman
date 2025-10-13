@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande - Rituel C.A.L.M.E</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #F9FAFB;
+            color: #111111;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3FB7A8, #50C4B3);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            background: #2a2a2a;
+            border-radius: 0 0 16px 16px;
+            overflow: hidden;
+        }
+
+        .product-info {
+            padding: 40px;
+            border-right: 1px solid #3a3a3a;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            font-size: 16px;
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .product-features li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #e0e0e0;
+        }
+
+        .product-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3FB7A8;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .price-section {
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #E8E8E8;
+        }
+
+        .price {
+            font-size: 42px;
+            font-weight: 700;
+            color: #3FB7A8;
+        }
+
+        .old-price {
+            font-size: 22px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 15px;
+        }
+
+        .guarantee {
+            padding: 20px;
+            background: #F0F9F8;
+            border-radius: 12px;
+            border: 1px solid #C7E9E4;
+        }
+
+        .guarantee h3 {
+            color: #3FB7A8;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .guarantee p {
+            color: #5C5C5C;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .checkout-section {
+            padding: 40px;
+            background: white;
+        }
+
+        #payment-form {
+            max-width: 500px;
+        }
+
+        .form-field {
+            margin-bottom: 16px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 6px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Nunito Sans', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: #3FB7A8;
+            box-shadow: 0 0 0 3px rgba(63, 183, 168, 0.1);
+        }
+
+        .form-field.optional label::after {
+            content: " (facultatif)";
+            font-weight: 400;
+            color: #6B7280;
+        }
+
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        #payment-element {
+            margin-bottom: 24px;
+        }
+
+        #submit {
+            width: 100%;
+            background: linear-gradient(135deg, #3FB7A8, #50C4B3);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(63, 183, 168, 0.3);
+        }
+
+        #submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 183, 168, 0.4);
+        }
+
+        #submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: #3FB7A8;
+        }
+
+        .spinner {
+            border: 3px solid #E8E8E8;
+            border-top: 3px solid #3FB7A8;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #payment-message {
+            color: #ff4444;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            color: #3FB7A8 !important;
+        }
+
+        .debug-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media (max-width: 968px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .product-info {
+                border-right: none;
+                border-bottom: 1px solid #E8E8E8;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .product-info,
+            .checkout-section {
+                padding: 25px 20px;
+            }
+
+            .price {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 Rituel C.A.L.M.E</h1>
+            <p>Retrouve ta sérénité en 3 minutes par jour</p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="product-info">
+                <h2 class="product-title">Le Programme Complet</h2>
+                <p class="product-description">
+                    Accède immédiatement au rituel qui a aidé 4 783 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
+                </p>
+
+                <ul class="product-features">
+                    <li>Accès immédiat au programme complet</li>
+                    <li>Les 5 étapes du rituel C.A.L.M.E détaillées</li>
+                    <li>Guide PDF téléchargeable</li>
+                    <li>Vidéos explicatives pour chaque étape</li>
+                    <li>Support communauté privée</li>
+                    <li>Garantie satisfait ou remboursé 30 jours</li>
+                </ul>
+
+                <div class="price-section">
+                    <span class="price">17€</span>
+                    <span class="old-price">97€</span>
+                </div>
+
+                <div class="guarantee">
+                    <h3>✅ Garantie 30 jours satisfait ou remboursé</h3>
+                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intégralement. Sans question.</p>
+                </div>
+            </div>
+
+            <div class="checkout-section">
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Chargement du paiement sécurisé...</p>
+                </div>
+                
+                <form id="payment-form" style="display: none;">
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                    </div>
+
+                    <div class="name-row">
+                        <div class="form-field">
+                            <label for="prenom">Prénom</label>
+                            <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
+                        </div>
+
+                        <div class="form-field optional">
+                            <label for="nom">Nom</label>
+                            <input type="text" id="nom" name="nom" placeholder="Nom">
+                        </div>
+                    </div>
+
+                    <div id="payment-element"></div>
+                    <button id="submit">
+                        <span id="button-text">Commander maintenant - 17€</span>
+                    </button>
+                    <div id="payment-message"></div>
+                    
+                    <!-- Info de débogage temporaire -->
+                    <div id="debug-info" class="debug-info" style="display: none;">
+                        <strong>Debug Info:</strong><br>
+                        Navigateur: <span id="browser-info"></span><br>
+                        Apple Pay disponible: <span id="applepay-available"></span><br>
+                        HTTPS: <span id="https-check"></span><br>
+                        Domaine: <span id="domain-check"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://vsl-maman.vercel.app';
+        const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
+
+        let elements;
+
+        // Fonction de débogage
+        function showDebugInfo() {
+            const debugDiv = document.getElementById('debug-info');
+            const isApplePayAvailable = window.ApplePaySession && ApplePaySession.canMakePayments();
+            
+            document.getElementById('browser-info').textContent = navigator.userAgent.includes('Safari') ? 'Safari' : 'Autre';
+            document.getElementById('applepay-available').textContent = isApplePayAvailable ? 'Oui ✓' : 'Non ✗';
+            document.getElementById('https-check').textContent = window.location.protocol === 'https:' ? 'Oui ✓' : 'Non ✗';
+            document.getElementById('domain-check').textContent = window.location.hostname;
+            
+            debugDiv.style.display = 'block';
+            
+            console.log('🔍 Debug Apple Pay:', {
+                isApplePayAvailable,
+                protocol: window.location.protocol,
+                hostname: window.location.hostname,
+                userAgent: navigator.userAgent
+            });
+        }
+
+        initialize();
+
+        async function initialize() {
+            try {
+                const response = await fetch(`${API_URL}/api/create-payment-intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la création du paiement');
+                }
+
+                const { clientSecret } = await response.json();
+
+                const appearance = {
+                    theme: 'stripe',
+                    variables: {
+                        colorPrimary: '#3FB7A8',
+                        colorBackground: '#ffffff',
+                        colorText: '#111111',
+                        colorDanger: '#ff4444',
+                        fontFamily: 'Nunito Sans, sans-serif',
+                        borderRadius: '8px',
+                        spacingUnit: '4px'
+                    }
+                };
+
+                elements = stripe.elements({ 
+                    appearance, 
+                    clientSecret,
+                });
+                
+                // Configuration optimisée pour Apple Pay et Google Pay
+                const paymentElementOptions = {
+                    layout: {
+                        type: 'accordion',
+                        defaultCollapsed: false,
+                        radios: true,
+                        spacedAccordionItems: true
+                    },
+                    wallets: {
+                        applePay: 'auto',
+                        googlePay: 'auto'
+                    },
+                    fields: {
+                        billingDetails: {
+                            name: 'never',
+                            email: 'never',
+                            phone: 'never',
+                            address: 'never'
+                        }
+                    }
+                };
+                
+                const paymentElement = elements.create('payment', paymentElementOptions);
+                
+                // Événements de débogage
+                paymentElement.on('ready', () => {
+                    console.log('✅ Payment Element ready');
+                    showDebugInfo();
+                });
+
+                paymentElement.on('change', (event) => {
+                    console.log('🔄 Payment method changed:', event);
+                });
+
+                paymentElement.on('loaderror', (event) => {
+                    console.error('❌ Load error:', event);
+                });
+
+                paymentElement.mount('#payment-element');
+
+                // Cacher le loading, afficher le formulaire
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('payment-form').style.display = 'block';
+
+            } catch (error) {
+                console.error('❌ Erreur:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez réessayer.</p>
+                    <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        Réessayer
+                    </button>
+                `;
+            }
+        }
+
+        document.getElementById('payment-form').addEventListener('submit', handleSubmit);
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+            setLoading(true);
+
+            const email = document.getElementById('email').value;
+            const prenom = document.getElementById('prenom').value;
+            const nom = document.getElementById('nom').value;
+            const fullName = nom ? `${prenom} ${nom}` : prenom;
+
+            const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: `${window.location.origin}/success.html`,
+                    receipt_email: email,
+                    payment_method_data: {
+                        billing_details: {
+                            name: fullName,
+                            email: email
+                        }
+                    }
+                },
+            });
+
+            if (error) {
+                if (error.type === "card_error" || error.type === "validation_error") {
+                    showMessage(error.message);
+                } else {
+                    showMessage("Une erreur inattendue est survenue.");
+                }
+            }
+
+            setLoading(false);
+        }
+
+        function showMessage(messageText) {
+            const messageContainer = document.querySelector("#payment-message");
+            messageContainer.textContent = messageText;
+            messageContainer.classList.remove('success-message');
+            
+            setTimeout(() => {
+                messageContainer.textContent = "";
+            }, 4000);
+        }
+
+        function setLoading(isLoading) {
+            const submitButton = document.querySelector("#submit");
+            const buttonText = document.querySelector("#button-text");
+            
+            if (isLoading) {
+                submitButton.disabled = true;
+                buttonText.textContent = "Traitement en cours...";
+            } else {
+                submitButton.disabled = false;
+                buttonText.textContent = "Commander maintenant - 17€";
+            }
+        }
+    </script>
+</body>
+</html>
