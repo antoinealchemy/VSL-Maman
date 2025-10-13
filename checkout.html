@@ -139,13 +139,11 @@
             background: white;
         }
 
-        #payment-request-button {
+        #express-checkout-element {
             margin-bottom: 24px;
-            display: none;
         }
 
         .payment-divider {
-            display: none;
             text-align: center;
             margin: 24px 0;
             position: relative;
@@ -352,8 +350,8 @@
                 </div>
                 
                 <div id="payment-container" style="display: none;">
-                    <!-- Bouton Apple Pay / Google Pay -->
-                    <div id="payment-request-button"></div>
+                    <!-- Express Checkout Element (Apple Pay, Google Pay, etc.) -->
+                    <div id="express-checkout-element"></div>
                     
                     <!-- Séparateur -->
                     <div class="payment-divider" id="payment-divider">
@@ -395,7 +393,6 @@
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
         let elements;
-        let paymentRequest;
 
         initialize();
 
@@ -412,70 +409,7 @@
 
                 const { clientSecret } = await response.json();
 
-                // 1. Créer le Payment Request pour Apple Pay / Google Pay
-                paymentRequest = stripe.paymentRequest({
-                    country: 'FR',
-                    currency: 'eur',
-                    total: {
-                        label: 'Rituel C.A.L.M.E',
-                        amount: 1700,
-                    },
-                    requestPayerName: true,
-                    requestPayerEmail: true,
-                });
-
-                // 2. Créer le bouton Payment Request
-                const prButton = elements.create('paymentRequestButton', {
-                    paymentRequest,
-                    style: {
-                        paymentRequestButton: {
-                            type: 'buy',
-                            theme: 'dark',
-                            height: '48px',
-                        },
-                    },
-                });
-
-                // 3. Vérifier si Apple Pay / Google Pay est disponible
-                const canMakePaymentResult = await paymentRequest.canMakePayment();
-                if (canMakePaymentResult) {
-                    document.getElementById('payment-request-button').style.display = 'block';
-                    document.getElementById('payment-divider').style.display = 'block';
-                    prButton.mount('#payment-request-button');
-                }
-
-                // 4. Gérer le paiement via Payment Request
-                paymentRequest.on('paymentmethod', async (ev) => {
-                    try {
-                        const { error: confirmError } = await stripe.confirmCardPayment(
-                            clientSecret,
-                            { payment_method: ev.paymentMethod.id },
-                            { handleActions: false }
-                        );
-
-                        if (confirmError) {
-                            ev.complete('fail');
-                            showMessage(confirmError.message);
-                        } else {
-                            ev.complete('success');
-                            
-                            // Vérifier si des actions supplémentaires sont nécessaires
-                            const { error: finalError, paymentIntent } = await stripe.confirmCardPayment(clientSecret);
-                            
-                            if (finalError) {
-                                showMessage(finalError.message);
-                            } else if (paymentIntent.status === 'succeeded') {
-                                window.location.href = `${window.location.origin}/success.html`;
-                            }
-                        }
-                    } catch (err) {
-                        console.error('Erreur Payment Request:', err);
-                        ev.complete('fail');
-                        showMessage('Une erreur est survenue lors du paiement.');
-                    }
-                });
-
-                // 5. Créer le Payment Element classique
+                // Configuration de l'apparence
                 const appearance = {
                     theme: 'stripe',
                     variables: {
@@ -489,11 +423,76 @@
                     }
                 };
 
+                // Initialiser Elements avec le clientSecret
                 elements = stripe.elements({ 
                     appearance, 
                     clientSecret,
                 });
-                
+
+                // Créer l'Express Checkout Element
+                const expressCheckoutOptions = {
+                    buttonHeight: 48,
+                    buttonTheme: {
+                        applePay: 'black',
+                        googlePay: 'black'
+                    },
+                    paymentMethods: {
+                        applePay: 'always',
+                        googlePay: 'always',
+                        link: 'auto'
+                    }
+                };
+
+                const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
+
+                // Vérifier quels moyens de paiement sont disponibles
+                expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
+                    console.log('Moyens de paiement disponibles:', availablePaymentMethods);
+                    
+                    if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
+                        document.getElementById('express-checkout-element').style.display = 'block';
+                        document.getElementById('payment-divider').style.display = 'block';
+                    } else {
+                        document.getElementById('express-checkout-element').style.display = 'none';
+                        document.getElementById('payment-divider').style.display = 'none';
+                    }
+                });
+
+                // Gérer le clic sur Express Checkout
+                expressCheckoutElement.on('confirm', async (event) => {
+                    const { error: submitError } = await elements.submit();
+                    if (submitError) {
+                        showMessage(submitError.message);
+                        return;
+                    }
+
+                    const email = document.getElementById('email').value || event.billingDetails?.email || '';
+                    const name = event.billingDetails?.name || 'Client';
+
+                    const { error } = await stripe.confirmPayment({
+                        elements,
+                        clientSecret,
+                        confirmParams: {
+                            return_url: `${window.location.origin}/success.html`,
+                            receipt_email: email,
+                            payment_method_data: {
+                                billing_details: {
+                                    name: name,
+                                    email: email
+                                }
+                            }
+                        },
+                    });
+
+                    if (error) {
+                        showMessage(error.message);
+                    }
+                });
+
+                // Monter l'Express Checkout Element
+                expressCheckoutElement.mount('#express-checkout-element');
+
+                // Créer le Payment Element classique
                 const paymentElementOptions = {
                     layout: {
                         type: 'tabs',
