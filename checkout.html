@@ -86,7 +86,7 @@
         }
 
         .product-features li:before {
-            content: "âœ“";
+            content: "✓";
             position: absolute;
             left: 0;
             color: #3FB7A8;
@@ -312,48 +312,48 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>ðŸ’¸ Rituel C.A.L.M.E</h1>
-            <p>Retrouve ta sÃ©rÃ©nitÃ© en 3 minutes par jour</p>
+            <h1>💸 Rituel C.A.L.M.E</h1>
+            <p>Retrouve ta sérénité en 3 minutes par jour</p>
         </div>
 
         <div class="content-wrapper">
             <div class="product-info">
                 <h2 class="product-title">Le Programme Complet</h2>
                 <p class="product-description">
-                    AccÃ¨de immÃ©diatement au rituel qui a aidÃ© 4 783 mamans Ã  passer leur stress de 8/10 Ã  2/10 en seulement 3 semaines.
+                    Accède immédiatement au rituel qui a aidé 4 783 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
                 </p>
 
                 <ul class="product-features">
-                    <li>AccÃ¨s immÃ©diat au programme complet</li>
-                    <li>Les 5 Ã©tapes du rituel C.A.L.M.E dÃ©taillÃ©es</li>
-                    <li>Guide PDF tÃ©lÃ©chargeable</li>
-                    <li>VidÃ©os explicatives pour chaque Ã©tape</li>
-                    <li>Support communautÃ© privÃ©e</li>
-                    <li>Garantie satisfait ou remboursÃ© 30 jours</li>
+                    <li>Accès immédiat au programme complet</li>
+                    <li>Les 5 étapes du rituel C.A.L.M.E détaillées</li>
+                    <li>Guide PDF téléchargeable</li>
+                    <li>Vidéos explicatives pour chaque étape</li>
+                    <li>Support communauté privée</li>
+                    <li>Garantie satisfait ou remboursé 30 jours</li>
                 </ul>
 
                 <div class="price-section">
-                    <span class="price">17â‚¬</span>
-                    <span class="old-price">97â‚¬</span>
+                    <span class="price">17€</span>
+                    <span class="old-price">97€</span>
                 </div>
 
                 <div class="guarantee">
-                    <h3>âœ“ Garantie 30 jours satisfait ou remboursÃ©</h3>
-                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intÃ©gralement. Sans question.</p>
+                    <h3>✓ Garantie 30 jours satisfait ou remboursé</h3>
+                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intégralement. Sans question.</p>
                 </div>
             </div>
 
             <div class="checkout-section">
                 <div id="loading" class="loading">
                     <div class="spinner"></div>
-                    <p>Chargement du paiement sÃ©curisÃ©...</p>
+                    <p>Chargement du paiement sécurisé...</p>
                 </div>
                 
                 <div id="payment-container" style="display: none;">
                     <!-- Express Checkout Element (Apple Pay, Google Pay, etc.) -->
                     <div id="express-checkout-element"></div>
                     
-                    <!-- SÃ©parateur -->
+                    <!-- Séparateur -->
                     <div class="payment-divider" id="payment-divider">
                         <span>ou payer par carte</span>
                     </div>
@@ -367,8 +367,8 @@
 
                         <div class="name-row">
                             <div class="form-field">
-                                <label for="prenom">PrÃ©nom</label>
-                                <input type="text" id="prenom" name="prenom" required placeholder="PrÃ©nom">
+                                <label for="prenom">Prénom</label>
+                                <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
                             </div>
 
                             <div class="form-field optional">
@@ -379,7 +379,7 @@
 
                         <div id="payment-element"></div>
                         <button id="submit">
-                            <span id="button-text">Commander maintenant - 17â‚¬</span>
+                            <span id="button-text">Commander maintenant - 17€</span>
                         </button>
                         <div id="payment-message"></div>
                     </form>
@@ -404,7 +404,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('Erreur lors de la crÃ©ation du paiement');
+                    throw new Error('Erreur lors de la création du paiement');
                 }
 
                 const { clientSecret } = await response.json();
@@ -429,7 +429,7 @@
                     clientSecret,
                 });
 
-                // CrÃ©er l'Express Checkout Element
+                // Créer l'Express Checkout Element
                 const expressCheckoutOptions = {
                     buttonHeight: 48,
                     buttonTheme: {
@@ -451,25 +451,25 @@
 
                 const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
 
-                // VÃ©rifier quels moyens de paiement sont disponibles
+                // Vérifier quels moyens de paiement sont disponibles
                 expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
                     console.log('=== DIAGNOSTIC COMPLET ===');
                     console.log('Moyens de paiement disponibles:', availablePaymentMethods);
                     
                     // Test ApplePaySession
                     if (window.ApplePaySession) {
-                        console.log('âœ… ApplePaySession disponible');
+                        console.log('✅ ApplePaySession disponible');
                         console.log('Version:', ApplePaySession.supportsVersion(3) ? 'v3+' : 'ancienne');
                         console.log('Peut faire paiements:', ApplePaySession.canMakePayments());
                     } else {
-                        console.log('âŒ ApplePaySession NON disponible');
+                        console.log('❌ ApplePaySession NON disponible');
                     }
                     
-                    // VÃ©rifier chaque moyen
+                    // Vérifier chaque moyen
                     if (availablePaymentMethods) {
-                        console.log('Apple Pay dÃ©tectÃ© ?', 'applePay' in availablePaymentMethods);
-                        console.log('Google Pay dÃ©tectÃ© ?', 'googlePay' in availablePaymentMethods);
-                        console.log('PayPal dÃ©tectÃ© ?', 'paypal' in availablePaymentMethods);
+                        console.log('Apple Pay détecté ?', 'applePay' in availablePaymentMethods);
+                        console.log('Google Pay détecté ?', 'googlePay' in availablePaymentMethods);
+                        console.log('PayPal détecté ?', 'paypal' in availablePaymentMethods);
                     }
                     
                     console.log('URL actuelle:', window.location.href);
@@ -484,7 +484,7 @@
                     }
                 });
 
-                // GÃ©rer le clic sur Express Checkout
+                // Gérer le clic sur Express Checkout
                 expressCheckoutElement.on('confirm', async (event) => {
                     const { error: submitError } = await elements.submit();
                     if (submitError) {
@@ -518,7 +518,7 @@
                 // Monter l'Express Checkout Element
                 expressCheckoutElement.mount('#express-checkout-element');
 
-                // CrÃ©er le Payment Element classique
+                // Créer le Payment Element classique
                 const paymentElementOptions = {
                     layout: {
                         type: 'tabs',
@@ -544,9 +544,9 @@
             } catch (error) {
                 console.error('Erreur:', error);
                 document.getElementById('loading').innerHTML = `
-                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez rÃ©essayer.</p>
+                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez réessayer.</p>
                     <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                        RÃ©essayer
+                        Réessayer
                     </button>
                 `;
             }
@@ -607,7 +607,7 @@
                 buttonText.textContent = "Traitement en cours...";
             } else {
                 submitButton.disabled = false;
-                buttonText.textContent = "Commander maintenant - 17â‚¬";
+                buttonText.textContent = "Commander maintenant - 17€";
             }
         }
     </script>
