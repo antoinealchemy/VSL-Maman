@@ -138,8 +138,36 @@
             background: #222222;
         }
 
-        #checkout {
-            min-height: 400px;
+        #payment-form {
+            max-width: 500px;
+        }
+
+        #payment-element {
+            margin-bottom: 24px;
+        }
+
+        #submit {
+            width: 100%;
+            background: linear-gradient(135deg, #3FB7A8, #50C4B3);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(63, 183, 168, 0.3);
+        }
+
+        #submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 183, 168, 0.4);
+        }
+
+        #submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .loading {
@@ -166,13 +194,14 @@
             100% { transform: rotate(360deg); }
         }
 
-        .error {
-            background: #ff4444;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            display: none;
+        #payment-message {
+            color: #ff4444;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            color: #3FB7A8 !important;
         }
 
         @media (max-width: 968px) {
@@ -245,136 +274,125 @@
             </div>
 
             <div class="checkout-section">
-                <div id="error-message" class="error"></div>
-                <div id="checkout">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Chargement du paiement sécurisé...</p>
-                    </div>
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Chargement du paiement sécurisé...</p>
                 </div>
+                
+                <form id="payment-form" style="display: none;">
+                    <div id="payment-element"></div>
+                    <button id="submit">
+                        <span id="button-text">Commander maintenant - 47€</span>
+                    </button>
+                    <div id="payment-message"></div>
+                </form>
             </div>
         </div>
     </div>
 
     <script>
+        // IMPORTANT: Remplacez cette URL par votre URL Vercel une fois déployé
+        const API_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3000'
+            : 'https://votre-projet.vercel.app';
+
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
-        // Fonction pour créer une session Checkout
-        async function createCheckoutSession() {
+        let elements;
+
+        initialize();
+
+        async function initialize() {
             try {
-                // Vous devez créer un endpoint sur votre serveur pour créer la session
-                // Pour l'instant, on utilise la méthode Payment Element qui ne nécessite pas de serveur
-                
-                const options = {
-                    mode: 'payment',
-                    amount: 4700, // 47€ en centimes
-                    currency: 'eur',
-                    appearance: {
-                        theme: 'night',
-                        variables: {
-                            colorPrimary: '#3FB7A8',
-                            colorBackground: '#222222',
-                            colorText: '#ffffff',
-                            colorDanger: '#ff4444',
-                            fontFamily: 'Nunito Sans, sans-serif',
-                            borderRadius: '8px',
-                        }
+                const response = await fetch(`${API_URL}/api/create-payment-intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la création du paiement');
+                }
+
+                const { clientSecret } = await response.json();
+
+                const appearance = {
+                    theme: 'night',
+                    variables: {
+                        colorPrimary: '#3FB7A8',
+                        colorBackground: '#222222',
+                        colorText: '#ffffff',
+                        colorDanger: '#ff4444',
+                        fontFamily: 'Nunito Sans, sans-serif',
+                        borderRadius: '8px',
+                        spacingUnit: '4px'
                     }
                 };
 
-                // Créer un Payment Element
-                const elements = stripe.elements(options);
+                elements = stripe.elements({ appearance, clientSecret });
                 const paymentElement = elements.create('payment');
-                
-                // Monter l'élément
-                document.querySelector('#checkout .loading').style.display = 'none';
-                paymentElement.mount('#checkout');
+                paymentElement.mount('#payment-element');
 
-                // Gérer la soumission du formulaire
-                const form = document.createElement('form');
-                form.id = 'payment-form';
-                
-                const submitButton = document.createElement('button');
-                submitButton.type = 'submit';
-                submitButton.textContent = 'Commander maintenant - 47€';
-                submitButton.style.cssText = `
-                    width: 100%;
-                    background: linear-gradient(135deg, #3FB7A8, #50C4B3);
-                    color: white;
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                    padding: 16px;
-                    border-radius: 8px;
-                    border: none;
-                    cursor: pointer;
-                    margin-top: 20px;
-                    transition: all 0.3s ease;
+                // Masquer le loading, afficher le formulaire
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('payment-form').style.display = 'block';
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez réessayer.</p>
+                    <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        Réessayer
+                    </button>
                 `;
-
-                form.appendChild(submitButton);
-                document.querySelector('#checkout').appendChild(form);
-
-                form.addEventListener('submit', async (event) => {
-                    event.preventDefault();
-                    submitButton.disabled = true;
-                    submitButton.textContent = 'Traitement...';
-
-                    // Cette partie nécessite un backend
-                    // Pour l'instant, on redirige vers Stripe Checkout classique
-                    window.location.href = 'https://buy.stripe.com/votre-lien-de-paiement';
-                });
-
-            } catch (error) {
-                console.error('Erreur:', error);
-                document.getElementById('error-message').textContent = 'Une erreur est survenue. Veuillez réessayer.';
-                document.getElementById('error-message').style.display = 'block';
             }
         }
 
-        // Alternative: Utiliser Stripe Checkout intégré via iframe
-        async function initStripeCheckout() {
-            try {
-                const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        'line_items[0][price]': 'price_1SHW1dPW27FSnXRnPYJDfJis',
-                        'line_items[0][quantity]': '1',
-                        'mode': 'payment',
-                        'success_url': window.location.origin + '/success.html',
-                        'cancel_url': window.location.origin + '/checkout.html',
-                    })
-                });
+        document.getElementById('payment-form').addEventListener('submit', handleSubmit);
 
-                // Cette approche nécessite un serveur backend
-                // Redirection simple pour l'instant
-                stripe.redirectToCheckout({
-                    lineItems: [{
-                        price: 'price_1SHW1dPW27FSnXRnPYJDfJis',
-                        quantity: 1,
-                    }],
-                    mode: 'payment',
-                    successUrl: window.location.origin + '/success.html',
-                    cancelUrl: window.location.origin + '/checkout.html',
-                    locale: 'fr',
-                }).then(function (result) {
-                    if (result.error) {
-                        document.getElementById('error-message').textContent = result.error.message;
-                        document.getElementById('error-message').style.display = 'block';
-                    }
-                });
+        async function handleSubmit(e) {
+            e.preventDefault();
+            setLoading(true);
 
-            } catch (error) {
-                console.error('Erreur:', error);
-                document.getElementById('error-message').textContent = 'Une erreur est survenue. Veuillez réessayer.';
-                document.getElementById('error-message').style.display = 'block';
+            const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: `${window.location.origin}/success.html`,
+                },
+            });
+
+            if (error) {
+                if (error.type === "card_error" || error.type === "validation_error") {
+                    showMessage(error.message);
+                } else {
+                    showMessage("Une erreur inattendue est survenue.");
+                }
             }
+
+            setLoading(false);
         }
 
-        // Initialiser au chargement
-        document.addEventListener('DOMContentLoaded', initStripeCheckout);
+        function showMessage(messageText) {
+            const messageContainer = document.querySelector("#payment-message");
+            messageContainer.textContent = messageText;
+            messageContainer.classList.remove('success-message');
+            
+            setTimeout(() => {
+                messageContainer.textContent = "";
+            }, 4000);
+        }
+
+        function setLoading(isLoading) {
+            const submitButton = document.querySelector("#submit");
+            const buttonText = document.querySelector("#button-text");
+            
+            if (isLoading) {
+                submitButton.disabled = true;
+                buttonText.textContent = "Traitement en cours...";
+            } else {
+                submitButton.disabled = false;
+                buttonText.textContent = "Commander maintenant - 47€";
+            }
+        }
     </script>
 </body>
 </html>
