@@ -143,11 +143,6 @@
             margin-bottom: 24px;
         }
 
-        /* Cacher le bouton "Afficher plus" et forcer l'affichage de tous les boutons */
-        #express-checkout-element iframe {
-            min-height: 200px !important;
-        }
-
         .payment-divider {
             text-align: center;
             margin: 24px 0;
@@ -443,7 +438,8 @@
                     },
                     paymentMethods: {
                         applePay: 'always',
-                        googlePay: 'always'
+                        googlePay: 'always',
+                        link: 'auto'
                     }
                 };
 
@@ -451,32 +447,27 @@
 
                 // Vérifier quels moyens de paiement sont disponibles
                 expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
-                    console.log('=== DIAGNOSTIC APPLE PAY ===');
+                    console.log('=== DIAGNOSTIC COMPLET ===');
                     console.log('Moyens de paiement disponibles:', availablePaymentMethods);
                     
-                    // Test 1: ApplePaySession existe ?
+                    // Test ApplePaySession
                     if (window.ApplePaySession) {
                         console.log('✅ ApplePaySession disponible');
-                        console.log('Version ApplePaySession:', ApplePaySession.supportsVersion(3) ? 'v3+' : 'ancienne');
+                        console.log('Version:', ApplePaySession.supportsVersion(3) ? 'v3+' : 'ancienne');
                         console.log('Peut faire paiements:', ApplePaySession.canMakePayments());
-                        
-                        // Test avec carte active
-                        ApplePaySession.canMakePaymentsWithActiveCard('merchant.com.stripe').then(canMake => {
-                            console.log('Peut payer avec carte active:', canMake);
-                        });
                     } else {
                         console.log('❌ ApplePaySession NON disponible');
                     }
                     
-                    // Test 2: Apple Pay dans availablePaymentMethods ?
+                    // Vérifier chaque moyen
                     if (availablePaymentMethods) {
-                        console.log('Apple Pay détecté par Stripe ?', 'applePay' in availablePaymentMethods);
-                        console.log('Google Pay détecté par Stripe ?', 'googlePay' in availablePaymentMethods);
-                        console.log('PayPal détecté par Stripe ?', 'paypal' in availablePaymentMethods);
+                        console.log('Apple Pay détecté ?', 'applePay' in availablePaymentMethods);
+                        console.log('Google Pay détecté ?', 'googlePay' in availablePaymentMethods);
+                        console.log('PayPal détecté ?', 'paypal' in availablePaymentMethods);
                     }
                     
-                    console.log('User Agent:', navigator.userAgent);
-                    console.log('=== FIN DIAGNOSTIC ===');
+                    console.log('URL actuelle:', window.location.href);
+                    console.log('=========================');
                     
                     if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
                         document.getElementById('express-checkout-element').style.display = 'block';
