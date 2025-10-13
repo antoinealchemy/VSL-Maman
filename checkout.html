@@ -86,100 +86,30 @@
             margin-bottom: 16px;
         }
 
-        .urg-badge {
-            display: none;
-        }
-
-        .mockup-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .mockup-img {
-            width: 100%;
-            max-width: 480px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        }
-
-        .badge-places {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #3FB7A8;
-            color: #fff;
-            font-weight: 700;
-            font-size: 13px;
-            padding: 6px 14px;
-            border-radius: 9999px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            white-space: nowrap;
-            z-index: 10;
-        }
-
-        #mockup {
-            display: none;
-        }
-
-        .inc-row {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-        }
-
-        .inc-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-
-        .inc-label {
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--dark);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .inc-right {
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--muted);
-            text-align: right;
-            white-space: nowrap;
-        }
-
-        .inc-divider {
-            height: 1px;
-            background: #E5E7EB;
-            margin: 12px 0 16px;
-        }
-
-        @media (max-width: 360px) {
-            .inc-label {
-                max-width: 65vw;
-            }
-        }
-
         .included-block {
-            display: none;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 28px;
+            margin-bottom: 25px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .included-block .section-title {
+            margin-bottom: 20px;
         }
 
         .included-item {
-            display: none;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            padding: 12px 0;
+            align-items: center;
         }
 
         .item-left {
-            display: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .check-icon {
@@ -197,11 +127,16 @@
         }
 
         .item-label {
-            display: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
         }
 
         .item-price {
-            display: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--muted);
+            text-align: right;
         }
 
         .val-red {
@@ -210,7 +145,9 @@
         }
 
         .pricing-divider {
-            display: none;
+            height: 1px;
+            background: #e5e5e5;
+            margin: 24px 0 20px 0;
         }
 
         .pricing-summary {
@@ -220,6 +157,7 @@
         .old-price {
             font-size: 17px;
             color: #9CA3AF;
+            text-decoration: line-through;
             margin-bottom: 8px;
         }
 
@@ -235,7 +173,7 @@
         }
 
         .price-big {
-            font-size: 50px;
+            font-size: 48px;
             font-weight: 800;
             color: var(--teal-1);
             line-height: 1;
@@ -249,7 +187,31 @@
         }
 
         .urgency-block {
-            display: none;
+            background: white;
+            border: 2px solid #F87171;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .urgency-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .urgency-text {
+            font-size: 14px;
+            color: #DC2626;
+            font-weight: 600;
         }
 
         .checkout-section {
@@ -627,67 +589,63 @@
                     Découvre dès maintenant la méthode qui a aidé +5 000 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
                 </p>
 
-                <div class="urg-badge" role="status" aria-live="polite">
-                    <span class="dot"></span> Seulement 12 places restantes pour octobre 2025
-                </div>
-
-                <div class="inc-card">
+                <div class="included-block">
                     <img id="mockup" src="mockup.png" alt="Programme Rituel C.A.L.M.E - Guide complet, version audio et checklist progression" loading="lazy">
                     
-                    <h2 class="section-title">Ce qui est inclus dans le pack Rituel C.A.L.M.E</h2>
+                    <h2 class="section-title">Ce qui est inclus :</h2>
                     
-                    <div class="inc-row">
-                        <div class="inc-left">
+                    <div class="included-item">
+                        <div class="item-left">
                             <span class="check-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
-                            <span class="inc-label">Guide complet RITUEL C.A.L.M.E™</span>
+                            <span class="item-label">Guide complet RITUEL CALME™</span>
                         </div>
-                        <span class="inc-right">(valeur : <span class="val-red">67€</span>)</span>
+                        <span class="item-price">(valeur : <span class="val-red">67€</span>)</span>
                     </div>
 
-                    <div class="inc-row">
-                        <div class="inc-left">
+                    <div class="included-item">
+                        <div class="item-left">
                             <span class="check-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
-                            <span class="inc-label">Version AUDIO guidée</span>
+                            <span class="item-label">Version AUDIO guidée</span>
                         </div>
-                        <span class="inc-right">(valeur : <span class="val-red">37€</span>)</span>
+                        <span class="item-price">(valeur : <span class="val-red">37€</span>)</span>
                     </div>
 
-                    <div class="inc-row">
-                        <div class="inc-left">
+                    <div class="included-item">
+                        <div class="item-left">
                             <span class="check-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
-                            <span class="inc-label">Guide de RECHUTE ÉMOTIONNELLE</span>
+                            <span class="item-label">Guide de RECHUTE ÉMOTIONNELLE</span>
                         </div>
-                        <span class="inc-right">(valeur : <span class="val-red">27€</span>)</span>
+                        <span class="item-price">(valeur : <span class="val-red">27€</span>)</span>
                     </div>
 
-                    <div class="inc-row">
-                        <div class="inc-left">
+                    <div class="included-item">
+                        <div class="item-left">
                             <span class="check-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
-                            <span class="inc-label">CHECKLIST progression 21 jours</span>
+                            <span class="item-label">CHECKLIST progression 21 jours</span>
                         </div>
-                        <span class="inc-right">(valeur : <span class="val-red">16€</span>)</span>
+                        <span class="item-price">(valeur : <span class="val-red">16€</span>)</span>
                     </div>
 
-                    <div class="inc-divider"></div>
+                    <div class="pricing-divider"></div>
 
                     <div class="pricing-summary">
-                        <div class="old-price"><s>Valeur totale du pack : 147€</s></div>
+                        <div class="old-price">Valeur totale du pack : 147€</div>
                         <div class="new-price-wrapper">
                             <div class="price-label-today">Aujourd'hui :</div>
                             <div class="price-big">17€</div>
@@ -704,6 +662,11 @@
                 </div>
                 
                 <div id="payment-container" style="display: none;">
+                    <div class="urgency-block">
+                        <span class="urgency-icon">⏳</span>
+                        <span class="urgency-text">Il reste actuellement 27 places disponibles pour cette offre.</span>
+                    </div>
+
                     <div id="express-checkout-element"></div>
                     
                     <div class="payment-divider" id="payment-divider">
