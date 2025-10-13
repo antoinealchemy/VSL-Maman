@@ -36,7 +36,7 @@
 
         body {
             font-family: 'Nunito Sans', sans-serif;
-            background-color: var(--brand-teal);
+            background-color: #ffffff;
             color: #111111;
             min-height: 100vh;
             padding: 0;
@@ -791,6 +791,43 @@
                 grid-template-columns: 1fr;
                 padding: 0 15px 30px;
             }
+
+            .footer-disclaimer {
+                font-size: 0.65rem;
+                margin-bottom: 10px;
+            }
+
+            .footer-links {
+                gap: 12px;
+                margin-bottom: 10px;
+            }
+
+            .footer-link {
+                font-size: 0.65rem;
+            }
+
+            .footer-copyright {
+                font-size: 0.6rem;
+                margin-top: 8px;
+            }
+
+            .modal-content {
+                margin: 10% 15px;
+                padding: 25px;
+                max-height: 85vh;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .modal-text {
+                font-size: 14px;
+            }
+
+            .modal-text h3 {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -1026,6 +1063,89 @@
         </div>
     </section>
 
+    <footer>
+        <div class="footer-content">
+            <p class="footer-disclaimer">
+                Ce site n'est pas affilié à Facebook, Instagram ou Meta. Il s'agit d'un site web indépendant. Ce site est sécurisé et vos données sont protégées.
+            </p>
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="openModal('cgv'); return false;">Conditions Générales de Vente</a>
+                <a href="#" class="footer-link" onclick="openModal('mentions'); return false;">Mentions Légales</a>
+                <a href="#" class="footer-link" onclick="openModal('confidentialite'); return false;">Politique de Confidentialité</a>
+            </div>
+            <p class="footer-copyright">
+                © 2025 drsarahdumont.com - Tous droits réservés
+            </p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="cgvModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('cgv')">&times;</button>
+            <h2 class="modal-title">Conditions Générales de Vente</h2>
+            <div class="modal-text">
+                <h3>1. Objet</h3>
+                <p>Les présentes conditions générales de vente régissent la vente de produits et services proposés sur drsarahdumont.com.</p>
+                
+                <h3>2. Prix</h3>
+                <p>Les prix sont indiqués en euros et toutes taxes comprises. Nous nous réservons le droit de modifier nos prix à tout moment.</p>
+                
+                <h3>3. Paiement</h3>
+                <p>Le paiement s'effectue en ligne de manière sécurisée par carte bancaire ou tout autre moyen de paiement proposé sur le site.</p>
+                
+                <h3>4. Livraison</h3>
+                <p>Pour les produits numériques, l'accès est fourni immédiatement après validation du paiement.</p>
+                
+                <h3>5. Droit de rétractation</h3>
+                <p>Conformément à la législation en vigueur, vous disposez d'un délai de 14 jours pour exercer votre droit de rétractation.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="mentionsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('mentions')">&times;</button>
+            <h2 class="modal-title">Mentions Légales</h2>
+            <div class="modal-text">
+                <h3>Éditeur du site</h3>
+                <p>drsarahdumont.com</p>
+                
+                <h3>Hébergement</h3>
+                <p>Ce site est hébergé par un prestataire professionnel garantissant la sécurité et la confidentialité des données.</p>
+                
+                <h3>Propriété intellectuelle</h3>
+                <p>L'ensemble du contenu de ce site (textes, images, vidéos) est protégé par le droit d'auteur. Toute reproduction est interdite sans autorisation préalable.</p>
+                
+                <h3>Responsabilité</h3>
+                <p>Nous nous efforçons de maintenir les informations de ce site à jour et exactes, mais ne pouvons garantir l'absence d'erreurs.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="confidentialiteModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('confidentialite')">&times;</button>
+            <h2 class="modal-title">Politique de Confidentialité</h2>
+            <div class="modal-text">
+                <h3>Collecte des données</h3>
+                <p>Nous collectons uniquement les données nécessaires au bon fonctionnement de nos services et à l'amélioration de votre expérience.</p>
+                
+                <h3>Utilisation des données</h3>
+                <p>Vos données personnelles sont utilisées uniquement dans le cadre de la fourniture de nos services et ne sont jamais vendues à des tiers.</p>
+                
+                <h3>Sécurité</h3>
+                <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles pour protéger vos données contre tout accès non autorisé.</p>
+                
+                <h3>Vos droits</h3>
+                <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles.</p>
+                
+                <h3>Cookies</h3>
+                <p>Ce site utilise des cookies pour améliorer votre expérience de navigation. Vous pouvez les désactiver dans les paramètres de votre navigateur.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         const API_URL = 'https://vsl-maman.vercel.app';
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
@@ -1238,6 +1358,36 @@
                 buttonText.textContent = "Commander maintenant";
             }
         }
+
+        // Scripts modals
+        function openModal(type) {
+            const modalId = type + 'Modal';
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(type) {
+            const modalId = type + 'Modal';
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
     </script>
 </body>
 </html>
