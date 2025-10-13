@@ -86,7 +86,7 @@
         }
 
         .product-features li:before {
-            content: "✓";
+            content: "âœ“";
             position: absolute;
             left: 0;
             color: #3FB7A8;
@@ -246,15 +246,6 @@
             color: #3FB7A8 !important;
         }
 
-        .debug-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f0f0f0;
-            border-radius: 8px;
-            font-size: 12px;
-            color: #666;
-        }
-
         @media (max-width: 968px) {
             .content-wrapper {
                 grid-template-columns: 1fr;
@@ -293,41 +284,41 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌟 Rituel C.A.L.M.E</h1>
-            <p>Retrouve ta sérénité en 3 minutes par jour</p>
+            <h1>ðŸŒŸ Rituel C.A.L.M.E</h1>
+            <p>Retrouve ta sÃ©rÃ©nitÃ© en 3 minutes par jour</p>
         </div>
 
         <div class="content-wrapper">
             <div class="product-info">
                 <h2 class="product-title">Le Programme Complet</h2>
                 <p class="product-description">
-                    Accède immédiatement au rituel qui a aidé 4 783 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
+                    AccÃ¨de immÃ©diatement au rituel qui a aidÃ© 4 783 mamans Ã  passer leur stress de 8/10 Ã  2/10 en seulement 3 semaines.
                 </p>
 
                 <ul class="product-features">
-                    <li>Accès immédiat au programme complet</li>
-                    <li>Les 5 étapes du rituel C.A.L.M.E détaillées</li>
-                    <li>Guide PDF téléchargeable</li>
-                    <li>Vidéos explicatives pour chaque étape</li>
-                    <li>Support communauté privée</li>
-                    <li>Garantie satisfait ou remboursé 30 jours</li>
+                    <li>AccÃ¨s immÃ©diat au programme complet</li>
+                    <li>Les 5 Ã©tapes du rituel C.A.L.M.E dÃ©taillÃ©es</li>
+                    <li>Guide PDF tÃ©lÃ©chargeable</li>
+                    <li>VidÃ©os explicatives pour chaque Ã©tape</li>
+                    <li>Support communautÃ© privÃ©e</li>
+                    <li>Garantie satisfait ou remboursÃ© 30 jours</li>
                 </ul>
 
                 <div class="price-section">
-                    <span class="price">17€</span>
-                    <span class="old-price">97€</span>
+                    <span class="price">17â‚¬</span>
+                    <span class="old-price">97â‚¬</span>
                 </div>
 
                 <div class="guarantee">
-                    <h3>✅ Garantie 30 jours satisfait ou remboursé</h3>
-                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intégralement. Sans question.</p>
+                    <h3>âœ… Garantie 30 jours satisfait ou remboursÃ©</h3>
+                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intÃ©gralement. Sans question.</p>
                 </div>
             </div>
 
             <div class="checkout-section">
                 <div id="loading" class="loading">
                     <div class="spinner"></div>
-                    <p>Chargement du paiement sécurisé...</p>
+                    <p>Chargement du paiement sÃ©curisÃ©...</p>
                 </div>
                 
                 <form id="payment-form" style="display: none;">
@@ -338,8 +329,8 @@
 
                     <div class="name-row">
                         <div class="form-field">
-                            <label for="prenom">Prénom</label>
-                            <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
+                            <label for="prenom">PrÃ©nom</label>
+                            <input type="text" id="prenom" name="prenom" required placeholder="PrÃ©nom">
                         </div>
 
                         <div class="form-field optional">
@@ -350,18 +341,9 @@
 
                     <div id="payment-element"></div>
                     <button id="submit">
-                        <span id="button-text">Commander maintenant - 17€</span>
+                        <span id="button-text">Commander maintenant - 17â‚¬</span>
                     </button>
                     <div id="payment-message"></div>
-                    
-                    <!-- Info de débogage temporaire -->
-                    <div id="debug-info" class="debug-info" style="display: none;">
-                        <strong>Debug Info:</strong><br>
-                        Navigateur: <span id="browser-info"></span><br>
-                        Apple Pay disponible: <span id="applepay-available"></span><br>
-                        HTTPS: <span id="https-check"></span><br>
-                        Domaine: <span id="domain-check"></span>
-                    </div>
                 </form>
             </div>
         </div>
@@ -373,26 +355,6 @@
 
         let elements;
 
-        // Fonction de débogage
-        function showDebugInfo() {
-            const debugDiv = document.getElementById('debug-info');
-            const isApplePayAvailable = window.ApplePaySession && ApplePaySession.canMakePayments();
-            
-            document.getElementById('browser-info').textContent = navigator.userAgent.includes('Safari') ? 'Safari' : 'Autre';
-            document.getElementById('applepay-available').textContent = isApplePayAvailable ? 'Oui ✓' : 'Non ✗';
-            document.getElementById('https-check').textContent = window.location.protocol === 'https:' ? 'Oui ✓' : 'Non ✗';
-            document.getElementById('domain-check').textContent = window.location.hostname;
-            
-            debugDiv.style.display = 'block';
-            
-            console.log('🔍 Debug Apple Pay:', {
-                isApplePayAvailable,
-                protocol: window.location.protocol,
-                hostname: window.location.hostname,
-                userAgent: navigator.userAgent
-            });
-        }
-
         initialize();
 
         async function initialize() {
@@ -403,7 +365,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('Erreur lors de la création du paiement');
+                    throw new Error('Erreur lors de la crÃ©ation du paiement');
                 }
 
                 const { clientSecret } = await response.json();
@@ -426,13 +388,11 @@
                     clientSecret,
                 });
                 
-                // Configuration optimisée pour Apple Pay et Google Pay
+                // Configuration corrigÃ©e pour activer Apple Pay et Google Pay
                 const paymentElementOptions = {
                     layout: {
-                        type: 'accordion',
+                        type: 'tabs',
                         defaultCollapsed: false,
-                        radios: true,
-                        spacedAccordionItems: true
                     },
                     wallets: {
                         applePay: 'auto',
@@ -449,21 +409,6 @@
                 };
                 
                 const paymentElement = elements.create('payment', paymentElementOptions);
-                
-                // Événements de débogage
-                paymentElement.on('ready', () => {
-                    console.log('✅ Payment Element ready');
-                    showDebugInfo();
-                });
-
-                paymentElement.on('change', (event) => {
-                    console.log('🔄 Payment method changed:', event);
-                });
-
-                paymentElement.on('loaderror', (event) => {
-                    console.error('❌ Load error:', event);
-                });
-
                 paymentElement.mount('#payment-element');
 
                 // Cacher le loading, afficher le formulaire
@@ -471,11 +416,11 @@
                 document.getElementById('payment-form').style.display = 'block';
 
             } catch (error) {
-                console.error('❌ Erreur:', error);
+                console.error('Erreur:', error);
                 document.getElementById('loading').innerHTML = `
-                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez réessayer.</p>
+                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez rÃ©essayer.</p>
                     <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                        Réessayer
+                        RÃ©essayer
                     </button>
                 `;
             }
@@ -536,7 +481,7 @@
                 buttonText.textContent = "Traitement en cours...";
             } else {
                 submitButton.disabled = false;
-                buttonText.textContent = "Commander maintenant - 17€";
+                buttonText.textContent = "Commander maintenant - 17â‚¬";
             }
         }
     </script>
