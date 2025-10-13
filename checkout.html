@@ -44,7 +44,7 @@
 
         /* Header image responsive */
         .site-header {
-            background: var(--brand-teal);
+            background: #ffffff;
             display: block;
             width: 100%;
             max-width: 1200px;
@@ -411,6 +411,7 @@
             width: 20px;
             height: 20px;
             cursor: pointer;
+            accent-color: #E11D48;
         }
 
         .upsell-checkbox label {
@@ -969,10 +970,10 @@
                                 <span class="upsell-title">Offre complémentaire exclusive</span>
                             </div>
                             <p class="upsell-description">
-                                Ajoute le pack bonus "Respiration Instantanée" pour seulement 29€
+                                Ajoute le pack bonus "Respiration Instantanée" pour seulement 27€
                             </p>
                             <div class="upsell-checkbox">
-                                <input type="checkbox" id="upsell" name="upsell">
+                                <input type="checkbox" id="upsell" name="upsell" checked>
                                 <label for="upsell">Oui, j'ajoute ce pack à ma commande</label>
                             </div>
                         </div>
@@ -1151,6 +1152,7 @@
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
         let elements;
+        let currentClientSecret;
 
         initialize();
 
@@ -1158,9 +1160,13 @@
             try {
                 console.log('Début de l\'initialisation...');
                 
+                // Checkbox cochée par défaut, donc on envoie includeUpsell: true
+                const includeUpsell = document.getElementById('upsell').checked;
+                
                 const response = await fetch(`${API_URL}/api/create-payment-intent`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ includeUpsell })
                 });
 
                 console.log('Réponse API reçue:', response.status);
@@ -1175,6 +1181,7 @@
                 console.log('Données reçues:', data);
 
                 const { clientSecret } = data;
+                currentClientSecret = clientSecret;
 
                 if (!clientSecret) {
                     throw new Error('Client secret manquant');
@@ -1244,7 +1251,7 @@
 
                     const { error } = await stripe.confirmPayment({
                         elements,
-                        clientSecret,
+                        clientSecret: currentClientSecret,
                         confirmParams: {
                             return_url: `${window.location.origin}/success.html`,
                             receipt_email: email,
@@ -1288,6 +1295,9 @@
                 document.getElementById('payment-container').style.display = 'block';
                 console.log('Interface affichée');
 
+                // Écouter les changements sur la checkbox
+                document.getElementById('upsell').addEventListener('change', handleUpsellChange);
+
             } catch (error) {
                 console.error('Erreur complète:', error);
                 document.getElementById('loading').innerHTML = `
@@ -1297,6 +1307,78 @@
                         Réessayer
                     </button>
                 `;
+            }
+        }
+
+        async function handleUpsellChange() {
+            const includeUpsell = document.getElementById('upsell').checked;
+            console.log('Upsell changé:', includeUpsell);
+
+            try {
+                setLoading(true);
+
+                // Créer un nouveau PaymentIntent avec le bon montant
+                const response = await fetch(`${API_URL}/api/create-payment-intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ includeUpsell })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la mise à jour du montant');
+                }
+
+                const data = await response.json();
+                currentClientSecret = data.clientSecret;
+
+                // Recréer les elements avec le nouveau clientSecret
+                const appearance = {
+                    theme: 'stripe',
+                    variables: {
+                        colorPrimary: '#3FB7A8',
+                        colorBackground: '#ffffff',
+                        colorText: '#111111',
+                        colorDanger: '#ff4444',
+                        fontFamily: 'Nunito Sans, sans-serif',
+                        borderRadius: '8px',
+                        spacingUnit: '4px'
+                    }
+                };
+
+                elements = stripe.elements({ 
+                    appearance, 
+                    clientSecret: currentClientSecret,
+                });
+
+                const paymentElementOptions = {
+                    layout: {
+                        type: 'tabs',
+                        defaultCollapsed: false,
+                    },
+                    fields: {
+                        billingDetails: {
+                            name: 'never',
+                            email: 'never',
+                            phone: 'never',
+                            address: 'never'
+                        }
+                    }
+                };
+                
+                const paymentElement = elements.create('payment', paymentElementOptions);
+                
+                // Démonter l'ancien élément et monter le nouveau
+                const paymentElementContainer = document.getElementById('payment-element');
+                paymentElementContainer.innerHTML = '';
+                paymentElement.mount('#payment-element');
+
+                console.log('Montant mis à jour:', data.amount / 100, '€');
+                setLoading(false);
+
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour:', error);
+                showMessage('Erreur lors de la mise à jour du montant');
+                setLoading(false);
             }
         }
 

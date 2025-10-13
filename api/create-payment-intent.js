@@ -22,8 +22,8 @@ module.exports = async (req, res) => {
     // Prix de base : 17€ (1700 centimes)
     const baseAmount = 1700;
     
-    // Prix de l'upsell : 29€ (2900 centimes)
-    const upsellAmount = 2900;
+    // Prix de l'upsell : 27€ (2700 centimes)
+    const upsellAmount = 2700;
     
     // Calculer le montant total
     const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
         product: 'Rituel C.A.L.M.E',
         includeUpsell: includeUpsell ? 'true' : 'false',
         baseProduct: 'Rituel C.A.L.M.E Complet - 17€',
-        upsellProduct: includeUpsell ? 'Kit Anti-Rechute Complet - 29€' : 'none'
+        upsellProduct: includeUpsell ? 'Pack Respiration Instantanée - 27€' : 'none'
       }
     });
 
