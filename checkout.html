@@ -1226,9 +1226,124 @@
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
         let elements;
+        let paymentElement;
+        let expressCheckoutElement;
         let currentClientSecret;
 
         initialize();
+
+        // Fonction pour démonter proprement les éléments
+        function unmountElements() {
+            try { 
+                if (paymentElement) paymentElement.unmount(); 
+            } catch (e) {
+                console.log('Erreur démontage paymentElement:', e);
+            }
+            try { 
+                if (expressCheckoutElement) expressCheckoutElement.unmount(); 
+            } catch (e) {
+                console.log('Erreur démontage expressCheckoutElement:', e);
+            }
+        }
+
+        // Fonction pour monter tous les éléments
+        function mountAllElements(clientSecret) {
+            unmountElements();
+
+            const appearance = {
+                theme: 'stripe',
+                variables: {
+                    colorPrimary: '#3FB7A8',
+                    colorBackground: '#ffffff',
+                    colorText: '#111111',
+                    colorDanger: '#ff4444',
+                    fontFamily: 'Nunito Sans, sans-serif',
+                    borderRadius: '8px',
+                    spacingUnit: '4px'
+                }
+            };
+
+            elements = stripe.elements({ appearance, clientSecret });
+
+            // Express Checkout
+            expressCheckoutElement = elements.create('expressCheckout', {
+                buttonHeight: 48,
+                buttonTheme: {
+                    applePay: 'black',
+                    googlePay: 'black'
+                },
+                buttonType: {
+                    googlePay: 'buy'
+                },
+                paymentMethods: {
+                    applePay: 'always',
+                    googlePay: 'always',
+                    link: 'auto'
+                }
+            });
+
+            expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
+                console.log('Moyens de paiement disponibles:', availablePaymentMethods);
+                
+                const hasAny = availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0;
+                document.getElementById('express-checkout-element').style.display = hasAny ? 'block' : 'none';
+                document.getElementById('payment-divider').style.display = hasAny ? 'block' : 'none';
+            });
+
+            expressCheckoutElement.on('confirm', async (event) => {
+                console.log('Confirmation Express Checkout...');
+                
+                const { error: submitError } = await elements.submit();
+                if (submitError) {
+                    showMessage(submitError.message);
+                    return;
+                }
+
+                const email = document.getElementById('email').value || event.billingDetails?.email || '';
+                const name = event.billingDetails?.name || 'Client';
+
+                const { error } = await stripe.confirmPayment({
+                    elements,
+                    clientSecret: currentClientSecret,
+                    confirmParams: {
+                        return_url: `${window.location.origin}/success.html`,
+                        receipt_email: email,
+                        payment_method_data: {
+                            billing_details: {
+                                name: name,
+                                email: email
+                            }
+                        }
+                    },
+                });
+
+                if (error) {
+                    showMessage(error.message);
+                }
+            });
+
+            expressCheckoutElement.mount('#express-checkout-element');
+            console.log('Express Checkout monté');
+
+            // Payment Element (carte)
+            paymentElement = elements.create('payment', {
+                layout: {
+                    type: 'tabs',
+                    defaultCollapsed: false,
+                },
+                fields: {
+                    billingDetails: {
+                        name: 'never',
+                        email: 'never',
+                        phone: 'never',
+                        address: 'never'
+                    }
+                }
+            });
+            
+            paymentElement.mount('#payment-element');
+            console.log('Payment Element monté');
+        }
 
         async function initialize() {
             try {
@@ -1254,116 +1369,17 @@
                 const data = await response.json();
                 console.log('Données reçues:', data);
 
-                const { clientSecret } = data;
+                const { clientSecret, paymentIntentId } = data;
                 currentClientSecret = clientSecret;
 
                 if (!clientSecret) {
                     throw new Error('Client secret manquant');
                 }
 
-                const appearance = {
-                    theme: 'stripe',
-                    variables: {
-                        colorPrimary: '#3FB7A8',
-                        colorBackground: '#ffffff',
-                        colorText: '#111111',
-                        colorDanger: '#ff4444',
-                        fontFamily: 'Nunito Sans, sans-serif',
-                        borderRadius: '8px',
-                        spacingUnit: '4px'
-                    }
-                };
+                console.log('PaymentIntent ID:', paymentIntentId);
 
-                elements = stripe.elements({ 
-                    appearance, 
-                    clientSecret,
-                });
-
-                console.log('Elements Stripe créés');
-
-                const expressCheckoutOptions = {
-                    buttonHeight: 48,
-                    buttonTheme: {
-                        applePay: 'black',
-                        googlePay: 'black'
-                    },
-                    buttonType: {
-                        googlePay: 'buy'
-                    },
-                    paymentMethods: {
-                        applePay: 'always',
-                        googlePay: 'always',
-                        link: 'auto'
-                    }
-                };
-
-                const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
-
-                expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
-                    console.log('Moyens de paiement disponibles:', availablePaymentMethods);
-                    
-                    if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
-                        document.getElementById('express-checkout-element').style.display = 'block';
-                        document.getElementById('payment-divider').style.display = 'block';
-                    } else {
-                        document.getElementById('express-checkout-element').style.display = 'none';
-                        document.getElementById('payment-divider').style.display = 'none';
-                    }
-                });
-
-                expressCheckoutElement.on('confirm', async (event) => {
-                    console.log('Confirmation Express Checkout...');
-                    
-                    const { error: submitError } = await elements.submit();
-                    if (submitError) {
-                        showMessage(submitError.message);
-                        return;
-                    }
-
-                    const email = document.getElementById('email').value || event.billingDetails?.email || '';
-                    const name = event.billingDetails?.name || 'Client';
-
-                    const { error } = await stripe.confirmPayment({
-                        elements,
-                        clientSecret: currentClientSecret,
-                        confirmParams: {
-                            return_url: `${window.location.origin}/success.html`,
-                            receipt_email: email,
-                            payment_method_data: {
-                                billing_details: {
-                                    name: name,
-                                    email: email
-                                }
-                            }
-                        },
-                    });
-
-                    if (error) {
-                        showMessage(error.message);
-                    }
-                });
-
-                expressCheckoutElement.mount('#express-checkout-element');
-                console.log('Express Checkout monté');
-
-                const paymentElementOptions = {
-                    layout: {
-                        type: 'tabs',
-                        defaultCollapsed: false,
-                    },
-                    fields: {
-                        billingDetails: {
-                            name: 'never',
-                            email: 'never',
-                            phone: 'never',
-                            address: 'never'
-                        }
-                    }
-                };
-                
-                const paymentElement = elements.create('payment', paymentElementOptions);
-                paymentElement.mount('#payment-element');
-                console.log('Payment Element monté');
+                // Monter tous les éléments
+                mountAllElements(currentClientSecret);
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('payment-container').style.display = 'block';
@@ -1403,50 +1419,14 @@
                 }
 
                 const data = await response.json();
+                console.log('Nouveau montant:', data.amount / 100, '€');
+                console.log('PaymentIntent ID:', data.paymentIntentId);
+                
                 currentClientSecret = data.clientSecret;
 
-                // Recréer les elements avec le nouveau clientSecret
-                const appearance = {
-                    theme: 'stripe',
-                    variables: {
-                        colorPrimary: '#3FB7A8',
-                        colorBackground: '#ffffff',
-                        colorText: '#111111',
-                        colorDanger: '#ff4444',
-                        fontFamily: 'Nunito Sans, sans-serif',
-                        borderRadius: '8px',
-                        spacingUnit: '4px'
-                    }
-                };
+                // Remonter tous les éléments avec le nouveau clientSecret
+                mountAllElements(currentClientSecret);
 
-                elements = stripe.elements({ 
-                    appearance, 
-                    clientSecret: currentClientSecret,
-                });
-
-                const paymentElementOptions = {
-                    layout: {
-                        type: 'tabs',
-                        defaultCollapsed: false,
-                    },
-                    fields: {
-                        billingDetails: {
-                            name: 'never',
-                            email: 'never',
-                            phone: 'never',
-                            address: 'never'
-                        }
-                    }
-                };
-                
-                const paymentElement = elements.create('payment', paymentElementOptions);
-                
-                // Démonter l'ancien élément et monter le nouveau
-                const paymentElementContainer = document.getElementById('payment-element');
-                paymentElementContainer.innerHTML = '';
-                paymentElement.mount('#payment-element');
-
-                console.log('Montant mis à jour:', data.amount / 100, '€');
                 setLoading(false);
 
             } catch (error) {
@@ -1461,35 +1441,39 @@
         async function handleSubmit(e) {
             e.preventDefault();
             setLoading(true);
+            
+            try {
+                const email = document.getElementById('email').value;
+                const prenom = document.getElementById('prenom').value;
+                const nom = document.getElementById('nom').value;
+                const fullName = nom ? `${prenom} ${nom}` : prenom;
 
-            const email = document.getElementById('email').value;
-            const prenom = document.getElementById('prenom').value;
-            const nom = document.getElementById('nom').value;
-            const fullName = nom ? `${prenom} ${nom}` : prenom;
-
-            const { error } = await stripe.confirmPayment({
-                elements,
-                confirmParams: {
-                    return_url: `${window.location.origin}/success.html`,
-                    receipt_email: email,
-                    payment_method_data: {
-                        billing_details: {
-                            name: fullName,
-                            email: email
+                const { error } = await stripe.confirmPayment({
+                    elements,
+                    clientSecret: currentClientSecret,
+                    confirmParams: {
+                        return_url: `${window.location.origin}/success.html`,
+                        receipt_email: email,
+                        payment_method_data: {
+                            billing_details: {
+                                name: fullName,
+                                email: email
+                            }
                         }
-                    }
-                },
-            });
+                    },
+                });
 
-            if (error) {
-                if (error.type === "card_error" || error.type === "validation_error") {
-                    showMessage(error.message);
-                } else {
-                    showMessage("Une erreur inattendue est survenue.");
+                if (error) {
+                    showMessage(error.message || "Échec du paiement.");
                 }
+                // Si 3DS/redirect requis, Stripe redirige et on ne revient pas ici
+            } catch (err) {
+                console.error(err);
+                showMessage(err.message || "Erreur inattendue.");
+            } finally {
+                // Si pas de redirection, on réactive
+                setLoading(false);
             }
-
-            setLoading(false);
         }
 
         function showMessage(messageText) {

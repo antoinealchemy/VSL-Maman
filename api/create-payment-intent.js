@@ -16,16 +16,11 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // Récupérer le paramètre includeUpsell depuis le body
     const { includeUpsell } = req.body;
     
-    // Prix de base : 17€ (1700 centimes)
-    const baseAmount = 100;
+    const baseAmount = 1700;  // 17€
+    const upsellAmount = 2700; // 27€
     
-    // Prix de l'upsell : 27€ (2700 centimes)
-    const upsellAmount = 100;
-    
-    // Calculer le montant total
     const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
 
     const paymentIntent = await stripe.paymentIntents.create({
@@ -42,8 +37,10 @@ module.exports = async (req, res) => {
       }
     });
 
+    // Renvoyer aussi l'ID pour tracer
     res.status(200).json({
       clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
       amount: totalAmount,
       includeUpsell: includeUpsell
     });
