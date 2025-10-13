@@ -14,102 +14,57 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Nunito Sans', sans-serif;
             background-color: #ffffff;
-            color: #ffffff;
+            color: #111111;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* HERO SECTION - 2 COLONNES DESKTOP */
         .hero-section {
-            background: #2a2a2a;
+            background: #F5F5F5;
             border-radius: 16px;
             padding: 40px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
-        .hero-grid {
+        .hero-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: start;
-        }
-
-        /* COLONNE GAUCHE - CONTENU */
-        .left-column {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .hero-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 30px;
-        }
-
-        .hero-image {
-            flex: 0 0 300px;
+            gap: 40px;
+            align-items: center;
         }
 
         .hero-image img {
             width: 100%;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
-        .hero-info {
-            flex: 1;
-        }
-
-        .logo-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: #3FB7A8;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-        }
-
-        .hero-title {
-            font-size: 28px;
+        .hero-text h1 {
+            font-size: 32px;
             font-weight: 700;
-            color: #ffffff;
+            color: #111111;
+            margin-bottom: 15px;
+            line-height: 1.2;
         }
 
-        .tagline {
-            font-size: 16px;
-            color: #b0b0b0;
+        .hero-text .tagline {
+            font-size: 18px;
+            color: #5C5C5C;
             margin-bottom: 25px;
             line-height: 1.5;
         }
 
-        .price-section {
-            margin-bottom: 15px;
-        }
-
-        .price-row {
+        .price-hero {
             display: flex;
             align-items: baseline;
             gap: 15px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .price-current {
@@ -120,140 +75,172 @@
 
         .price-old {
             font-size: 24px;
-            color: #666;
+            color: #999;
             text-decoration: line-through;
         }
 
-        .price-badge {
-            display: inline-block;
-            background: rgba(63, 183, 168, 0.15);
+        .price-label {
+            font-size: 14px;
             color: #3FB7A8;
+            font-weight: 600;
+            background: #F0F9F8;
             padding: 6px 12px;
             border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
         }
 
         .trust-badges {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 15px;
+            margin-top: 30px;
         }
 
         .trust-badge {
-            background: #1a1a1a;
-            padding: 12px;
-            border-radius: 8px;
             text-align: center;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 8px;
         }
 
         .trust-badge svg {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             margin: 0 auto 8px;
             display: block;
         }
 
-        .trust-badge-text {
+        .trust-badge .text {
             font-size: 12px;
-            color: #b0b0b0;
+            color: #5C5C5C;
             font-weight: 600;
-            line-height: 1.3;
         }
 
-        /* INCLUS SECTION */
-        .included-box {
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 25px;
+        .included-section {
+            background: #F5F5F5;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
         }
 
-        .included-title {
-            font-size: 18px;
+        .included-section h2 {
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 20px;
-            color: #ffffff;
+            color: #111111;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
         .included-items {
             display: grid;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 20px;
         }
 
         .included-item {
             display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
             align-items: center;
-            gap: 12px;
-            font-size: 14px;
         }
 
-        .check-icon {
-            width: 20px;
-            height: 20px;
+        .included-item svg {
+            width: 40px;
+            height: 40px;
             flex-shrink: 0;
         }
 
-        .item-text {
+        .included-item .content {
             flex: 1;
-            color: #d0d0d0;
         }
 
-        .item-price {
+        .included-item .title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 5px;
+        }
+
+        .included-item .description {
+            font-size: 14px;
+            color: #5C5C5C;
+            line-height: 1.5;
+        }
+
+        .included-item .value {
+            font-size: 18px;
             font-weight: 700;
             color: #3FB7A8;
+            flex-shrink: 0;
+        }
+
+        .total-value {
+            text-align: center;
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #F0F9F8, #E6F5F3);
+            border-radius: 12px;
+        }
+
+        .total-value .label {
             font-size: 16px;
+            color: #5C5C5C;
+            margin-bottom: 8px;
         }
 
-        .value-summary {
-            border-top: 2px solid #3a3a3a;
-            padding-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .value-label {
-            font-size: 14px;
-            color: #b0b0b0;
-        }
-
-        .value-prices {
-            display: flex;
-            align-items: baseline;
-            gap: 12px;
-        }
-
-        .value-old {
-            font-size: 20px;
-            color: #666;
+        .total-value .amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #111111;
             text-decoration: line-through;
         }
 
-        .value-new {
-            font-size: 28px;
-            font-weight: 700;
-            color: #3FB7A8;
+        .checkout-section {
+            background: #F5F5F5;
+            border-radius: 16px;
+            padding: 40px;
         }
 
-        /* COLONNE DROITE - CHECKOUT */
-        .right-column {
-            position: sticky;
-            top: 20px;
-        }
-
-        .checkout-box {
-            background: #2a2a2a;
+        .order-summary {
+            background: #ffffff;
+            padding: 20px;
             border-radius: 12px;
-            padding: 30px;
-            border: 1px solid #3a3a3a;
+            margin-bottom: 30px;
         }
 
-        .checkout-title {
+        .order-summary h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 15px;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 15px;
+            color: #5C5C5C;
+        }
+
+        .summary-line.total {
+            border-top: 2px solid #E8E8E8;
+            margin-top: 10px;
+            padding-top: 15px;
             font-size: 20px;
             font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
+            color: #111111;
+        }
+
+        .summary-line.total .amount {
+            color: #3FB7A8;
+            font-size: 28px;
+        }
+
+        #payment-form {
+            max-width: 100%;
         }
 
         .form-field {
@@ -264,20 +251,19 @@
             display: block;
             font-size: 14px;
             font-weight: 600;
-            color: #ffffff;
+            color: #111111;
             margin-bottom: 6px;
         }
 
         .form-field input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #3a3a3a;
+            border: 1px solid #D1D5DB;
             border-radius: 8px;
             font-size: 15px;
             font-family: 'Nunito Sans', sans-serif;
-            background: #1a1a1a;
-            color: #ffffff;
-            transition: all 0.2s;
+            background: #ffffff;
+            transition: border-color 0.2s;
         }
 
         .form-field input:focus {
@@ -286,84 +272,120 @@
             box-shadow: 0 0 0 3px rgba(63, 183, 168, 0.1);
         }
 
-        .form-row {
+        .name-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 16px;
         }
 
-        #payment-element {
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
-        /* UPSELL COMPACT */
-        .upsell-compact {
-            background: #1a1a1a;
-            border: 1px solid #FF4444;
+        .payment-method-btn {
+            padding: 14px;
+            border: 2px solid #D1D5DB;
             border-radius: 8px;
-            padding: 16px;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #111111;
+        }
+
+        .payment-method-btn.active {
+            border-color: #3FB7A8;
+            background: #F0F9F8;
+        }
+
+        .payment-method-btn:hover {
+            border-color: #3FB7A8;
+        }
+
+        .payment-method-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        #payment-element {
+            margin-bottom: 24px;
+        }
+
+        .upsell-box {
+            background: #ffffff;
+            border: 2px solid #FF4444;
+            border-radius: 12px;
+            padding: 25px;
             margin-bottom: 20px;
             position: relative;
         }
 
-        .upsell-badge-small {
+        .upsell-badge {
             position: absolute;
-            top: -10px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
             background: #FF4444;
             color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 11px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 700;
-            letter-spacing: 0.5px;
         }
 
-        .upsell-content-compact {
+        .upsell-content {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             align-items: flex-start;
         }
 
-        .upsell-checkbox-compact {
+        .upsell-checkbox {
             flex-shrink: 0;
             margin-top: 2px;
         }
 
-        .upsell-checkbox-compact input {
-            width: 20px;
-            height: 20px;
+        .upsell-checkbox input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
             cursor: pointer;
-            accent-color: #FF4444;
+            accent-color: #3FB7A8;
         }
 
-        .upsell-info-compact {
+        .upsell-info {
             flex: 1;
         }
 
-        .upsell-title-compact {
-            font-size: 15px;
+        .upsell-info h3 {
+            font-size: 17px;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 6px;
+            color: #111111;
+            margin-bottom: 10px;
         }
 
-        .upsell-benefits-compact {
+        .upsell-benefits {
             list-style: none;
-            font-size: 12px;
-            color: #b0b0b0;
+            margin-top: 10px;
         }
 
-        .upsell-benefits-compact li {
-            padding-left: 16px;
+        .upsell-benefits li {
+            font-size: 13px;
+            color: #5C5C5C;
+            padding-left: 20px;
             position: relative;
-            margin-bottom: 4px;
-            line-height: 1.3;
+            margin-bottom: 6px;
+            line-height: 1.4;
         }
 
-        .upsell-benefits-compact li:before {
+        .upsell-benefits li:before {
             content: "";
             position: absolute;
             left: 0;
@@ -375,22 +397,37 @@
             transform: rotate(-45deg);
         }
 
-        .upsell-price-compact {
-            flex-shrink: 0;
-            text-align: right;
+        .upsell-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #E8E8E8;
         }
 
-        .upsell-price-old-compact {
-            font-size: 13px;
-            color: #666;
+        .upsell-price-label {
+            font-size: 14px;
+            color: #5C5C5C;
+            font-weight: 600;
+        }
+
+        .upsell-prices {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .upsell-price-old {
+            font-size: 16px;
+            color: #999;
             text-decoration: line-through;
-            display: block;
         }
 
-        .upsell-price-new-compact {
-            font-size: 18px;
+        .upsell-price-new {
+            font-size: 22px;
             font-weight: 700;
-            color: #FF4444;
+            color: #3FB7A8;
         }
 
         #submit {
@@ -399,17 +436,17 @@
             color: white;
             font-size: 18px;
             font-weight: 700;
-            padding: 16px;
+            padding: 18px;
+            border-radius: 12px;
             border: none;
-            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(63, 183, 168, 0.25);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(63, 183, 168, 0.3);
         }
 
         #submit:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(63, 183, 168, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 183, 168, 0.4);
         }
 
         #submit:disabled {
@@ -418,47 +455,42 @@
         }
 
         .guarantee-box {
-            background: rgba(255, 251, 240, 0.05);
-            border: 1px solid rgba(232, 213, 183, 0.2);
-            border-radius: 8px;
-            padding: 16px;
+            background: #FFF9E6;
+            border: 2px solid #FFE8A3;
+            border-radius: 12px;
+            padding: 20px;
             margin-top: 20px;
             text-align: center;
         }
 
-        .guarantee-icon {
-            display: inline-block;
-            margin-bottom: 8px;
+        .guarantee-box svg {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto 10px;
+            display: block;
         }
 
-        .guarantee-icon svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .guarantee-title {
-            font-size: 15px;
+        .guarantee-box h4 {
+            font-size: 16px;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
+            color: #111111;
+            margin-bottom: 10px;
         }
 
-        .guarantee-text {
-            font-size: 12px;
-            color: #b0b0b0;
+        .guarantee-box p {
+            font-size: 13px;
+            color: #5C5C5C;
             line-height: 1.5;
         }
 
-        /* TESTIMONIALS */
         .testimonials-section {
-            background: #2a2a2a;
+            background: #F5F5F5;
             border-radius: 16px;
             padding: 40px;
             margin-top: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
-        .section-title {
+        .testimonials-section h2 {
             font-size: 24px;
             font-weight: 700;
             text-align: center;
@@ -467,35 +499,35 @@
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
         .testimonial {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 3px solid #3FB7A8;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #3FB7A8;
         }
 
-        .testimonial-stars {
+        .testimonial .stars {
             color: #FFD700;
-            font-size: 16px;
-            margin-bottom: 12px;
+            font-size: 18px;
+            margin-bottom: 10px;
         }
 
-        .testimonial-text {
-            font-size: 14px;
-            color: #d0d0d0;
-            font-style: italic;
+        .testimonial .text {
+            font-size: 15px;
+            color: #5C5C5C;
             line-height: 1.6;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            font-style: italic;
         }
 
-        .testimonial-author {
-            font-size: 13px;
-            font-weight: 700;
-            color: #ffffff;
+        .testimonial .author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111111;
         }
 
         .loading {
@@ -503,11 +535,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 60px 20px;
+            min-height: 400px;
+            color: #3FB7A8;
         }
 
         .spinner {
-            border: 3px solid #3a3a3a;
+            border: 3px solid #E8E8E8;
             border-top: 3px solid #3FB7A8;
             border-radius: 50%;
             width: 50px;
@@ -528,238 +561,243 @@
             text-align: center;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .right-column {
-                position: static;
-            }
-
-            .hero-header {
-                flex-direction: column;
-            }
-
-            .hero-image {
-                flex: 1;
-                max-width: 100%;
-            }
-        }
-
         @media (max-width: 768px) {
             body {
-                padding: 15px;
+                padding: 10px;
+                background-color: #F5F5F5;
             }
 
-            .hero-section,
-            .checkout-box,
-            .testimonials-section {
-                padding: 25px 20px;
+            .hero-content {
+                grid-template-columns: 1fr;
             }
 
             .trust-badges {
                 grid-template-columns: 1fr;
             }
 
-            .form-row {
+            .checkout-section {
+                background: transparent;
+                padding: 0;
+                border-radius: 0;
+            }
+
+            .order-summary,
+            .form-field input,
+            .upsell-box,
+            .guarantee-box,
+            .payment-method-btn {
+                background: #ffffff;
+            }
+
+            .payment-methods {
                 grid-template-columns: 1fr;
             }
 
             .testimonials-grid {
                 grid-template-columns: 1fr;
             }
-
-            .upsell-content-compact {
-                flex-direction: column;
-            }
-
-            .upsell-price-compact {
-                text-align: left;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- HERO SECTION - 2 COLONNES -->
         <div class="hero-section">
-            <div class="hero-grid">
-                <!-- COLONNE GAUCHE -->
-                <div class="left-column">
-                    <!-- En-tête avec image et infos -->
-                    <div class="hero-header">
-                        <div class="hero-image">
-                            <img src="mockup.png" alt="Bundle Rituel C.A.L.M.E" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%232a2a2a%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2220%22 fill=%22%233FB7A8%22%3ERituel C.A.L.M.E%3C/text%3E%3C/svg%3E'">
-                        </div>
-                        <div class="hero-info">
-                            <div class="logo-title">
-                                <div class="logo-icon">🌿</div>
-                                <h1 class="hero-title">Rituel C.A.L.M.E</h1>
-                            </div>
-                            <p class="tagline">Fais passer ton stress de 8/10 à 2/10 en seulement 3 semaines grâce à 3 minutes par jour</p>
-                            
-                            <div class="price-section">
-                                <div class="price-row">
-                                    <span class="price-current">17€</span>
-                                    <span class="price-old">147€</span>
-                                </div>
-                                <span class="price-badge">Offre limitée : -88%</span>
-                            </div>
-
-                            <div class="trust-badges">
-                                <div class="trust-badge">
-                                    <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                                    <div class="trust-badge-text">Paiement 100% sécurisé</div>
-                                </div>
-                                <div class="trust-badge">
-                                    <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-                                    <div class="trust-badge-text">Garantie 14 jours</div>
-                                </div>
-                                <div class="trust-badge">
-                                    <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                                    <div class="trust-badge-text">Accès immédiat</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Box Inclus -->
-                    <div class="included-box">
-                        <h3 class="included-title">Inclus dans le programme</h3>
-                        <div class="included-items">
-                            <div class="included-item">
-                                <svg class="check-icon" fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-                                <span class="item-text">Guide complet RITUEL C.A.L.M.E™</span>
-                                <span class="item-price">67€</span>
-                            </div>
-                            <div class="included-item">
-                                <svg class="check-icon" fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-                                <span class="item-text">Version AUDIO guidée</span>
-                                <span class="item-price">37€</span>
-                            </div>
-                            <div class="included-item">
-                                <svg class="check-icon" fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-                                <span class="item-text">Guide de RECHUTE émotionnelle</span>
-                                <span class="item-price">27€</span>
-                            </div>
-                            <div class="included-item">
-                                <svg class="check-icon" fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-                                <span class="item-text">Checklist de progression 21 jours</span>
-                                <span class="item-price">16€</span>
-                            </div>
-                        </div>
-                        <div class="value-summary">
-                            <div>
-                                <div class="value-label">Valeur totale</div>
-                                <div class="value-label" style="margin-top: 4px;">Prix après réduction</div>
-                            </div>
-                            <div class="value-prices">
-                                <span class="value-old">147€</span>
-                                <span class="value-new">17€</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="hero-content">
+                <div class="hero-image">
+                    <img src="mockup.png" alt="Rituel C.A.L.M.E - Bundle complet" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23F5F5F5%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2220%22 fill=%22%233FB7A8%22%3ERituel C.A.L.M.E%3C/text%3E%3C/svg%3E'">
                 </div>
+                <div class="hero-text">
+                    <h1>Rituel C.A.L.M.E</h1>
+                    <p class="tagline">Fais passer ton stress de 8/10 à 2/10 en seulement 3 semaines grâce à 3 minutes par jour</p>
+                    
+                    <div class="price-hero">
+                        <span class="price-current">17€</span>
+                        <span class="price-old">147€</span>
+                    </div>
+                    <span class="price-label">Offre limitée : -88%</span>
 
-                <!-- COLONNE DROITE - CHECKOUT -->
-                <div class="right-column">
-                    <div class="checkout-box">
-                        <div id="loading" class="loading">
-                            <div class="spinner"></div>
-                            <p style="color: #b0b0b0; font-weight: 600;">Chargement du paiement sécurisé...</p>
+                    <div class="trust-badges">
+                        <div class="trust-badge">
+                            <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                            <div class="text">Paiement 100% sécurisé</div>
                         </div>
-                        
-                        <div id="payment-container" style="display: none;">
-                            <h2 class="checkout-title">Finaliser la commande</h2>
-
-                            <form id="payment-form">
-                                <div class="form-field">
-                                    <label for="email">Email</label>
-                                    <input type="email" id="email" required placeholder="votre@email.com">
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-field">
-                                        <label for="prenom">Prénom</label>
-                                        <input type="text" id="prenom" required placeholder="Prénom">
-                                    </div>
-                                    <div class="form-field">
-                                        <label for="nom">Nom (optionnel)</label>
-                                        <input type="text" id="nom" placeholder="Nom">
-                                    </div>
-                                </div>
-
-                                <div id="payment-element"></div>
-
-                                <!-- UPSELL COMPACT -->
-                                <div class="upsell-compact">
-                                    <div class="upsell-badge-small">OFFRE LIMITÉE</div>
-                                    
-                                    <div class="upsell-content-compact">
-                                        <div class="upsell-checkbox-compact">
-                                            <input type="checkbox" id="upsell-checkbox">
-                                        </div>
-                                        
-                                        <div class="upsell-info-compact">
-                                            <h3 class="upsell-title-compact">Ajoute le Kit Anti-Rechute Complet</h3>
-                                            <ul class="upsell-benefits-compact">
-                                                <li>Protocole d'urgence 90 secondes</li>
-                                                <li>Scripts avec ton conjoint</li>
-                                                <li>Techniques de récupération express</li>
-                                                <li>Plan d'action personnalisé</li>
-                                            </ul>
-                                        </div>
-                                        
-                                        <div class="upsell-price-compact">
-                                            <span class="upsell-price-old-compact">67€</span>
-                                            <span class="upsell-price-new-compact">+27€</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <button id="submit" type="submit">
-                                    <span id="button-text">Commander maintenant · <span id="button-price">17€</span></span>
-                                </button>
-                                
-                                <div class="guarantee-box">
-                                    <div class="guarantee-icon">
-                                        <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-                                    </div>
-                                    <div class="guarantee-title">Garantie DOUBLE remboursement 14 jours</div>
-                                    <p class="guarantee-text">Si ton stress ne passe pas de 8/10 à au moins 4/10, je te rembourse 17€ + je te verse 20€ supplémentaires</p>
-                                </div>
-                                
-                                <div id="payment-message"></div>
-                            </form>
+                        <div class="trust-badge">
+                            <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                            <div class="text">Garantie 14 jours satisfait ou remboursé</div>
+                        </div>
+                        <div class="trust-badge">
+                            <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            <div class="text">Accès immédiat</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TÉMOIGNAGES -->
+        <div class="included-section">
+            <h2>Ce que tu reçois MAINTENANT</h2>
+            
+            <div class="included-items">
+                <div class="included-item">
+                    <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    <div class="content">
+                        <div class="title">Guide complet RITUEL C.A.L.M.E</div>
+                        <div class="description">Les 5 étapes détaillées du rituel, expliquées simplement pour que tu puisses commencer dès aujourd'hui</div>
+                    </div>
+                    <div class="value">67€</div>
+                </div>
+
+                <div class="included-item">
+                    <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <div class="content">
+                        <div class="title">Version AUDIO guidée</div>
+                        <div class="description">Écoute le rituel dans ta voiture, les yeux fermés, pendant tes trajets quotidiens</div>
+                    </div>
+                    <div class="value">37€</div>
+                </div>
+
+                <div class="included-item">
+                    <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                    <div class="content">
+                        <div class="title">Guide de RECHUTE émotionnelle</div>
+                        <div class="description">Que faire quand tu craques, quand tu exploses ? Les techniques exactes pour ne pas tout perdre</div>
+                    </div>
+                    <div class="value">27€</div>
+                </div>
+
+                <div class="included-item">
+                    <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                    <div class="content">
+                        <div class="title">Checklist de progression 21 jours</div>
+                        <div class="description">Suis tes progrès jour après jour et vois concrètement ton stress diminuer</div>
+                    </div>
+                    <div class="value">16€</div>
+                </div>
+            </div>
+
+            <div class="total-value">
+                <div class="label">Valeur totale du programme</div>
+                <div class="amount">147€</div>
+            </div>
+        </div>
+
+        <div class="checkout-section">
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Chargement du paiement sécurisé...</p>
+            </div>
+            
+            <div id="payment-container" style="display: none;">
+                <div class="order-summary">
+                    <h3>Récapitulatif de ta commande</h3>
+                    <div class="summary-line">
+                        <span>Rituel C.A.L.M.E Complet</span>
+                        <span>17€</span>
+                    </div>
+                    <div class="summary-line" id="upsell-line">
+                        <span>Kit Anti-Rechute Complet</span>
+                        <span>27€</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total à payer aujourd'hui</span>
+                        <span class="amount" id="total-amount">44€</span>
+                    </div>
+                </div>
+
+                <form id="payment-form">
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                    </div>
+
+                    <div class="name-row">
+                        <div class="form-field">
+                            <label for="prenom">Prénom</label>
+                            <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nom">Nom (facultatif)</label>
+                            <input type="text" id="nom" name="nom" placeholder="Nom">
+                        </div>
+                    </div>
+
+                    <div class="payment-methods">
+                        <button type="button" class="payment-method-btn active" id="card-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                            Carte bancaire
+                        </button>
+                        <button type="button" class="payment-method-btn" id="paypal-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#003087"><path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.032.17a.804.804 0 01-.794.679H7.72a.483.483 0 01-.477-.558L9.22 7.848a.964.964 0 01.952-.814h4.242c.748 0 1.43.09 2.039.28.18.057.355.12.525.193.848.362 1.463.97 1.89 1.971z"/><path d="M7.215 3.102C7.688 2.382 8.447 2 9.505 2h5.975c1.036 0 1.91.232 2.6.69.325.215.603.48.835.79.402.542.674 1.206.825 1.997.076.396.11.818.11 1.265v.483c.425.174.815.397 1.167.677.88.7 1.442 1.7 1.664 2.966.037.213.065.43.084.653.3 3.69-.733 6.22-3.336 8.17-1.542 1.154-3.582 1.705-6.097 1.705h-.55a1.93 1.93 0 00-1.902 1.628l-.743 4.71a1.218 1.218 0 01-1.205 1.03H3.136a.483.483 0 01-.477-.558l3.556-22.604z" fill="#0070E0"/></svg>
+                            PayPal
+                        </button>
+                    </div>
+
+                    <div id="payment-element"></div>
+
+                    <div class="upsell-box">
+                        <div class="upsell-badge">OFFRE EXCLUSIVE</div>
+                        
+                        <div class="upsell-content">
+                            <div class="upsell-checkbox">
+                                <input type="checkbox" id="upsell-checkbox" checked>
+                            </div>
+                            
+                            <div class="upsell-info">
+                                <h3>Oui ! J'ajoute le Kit Anti-Rechute Complet</h3>
+                                <ul class="upsell-benefits">
+                                    <li>Protocole d'urgence 90 secondes (quand tu sens la crise arriver)</li>
+                                    <li>Scripts de communication avec ton conjoint</li>
+                                    <li>Techniques de récupération express</li>
+                                    <li>Plan d'action personnalisé selon ton profil</li>
+                                </ul>
+                                
+                                <div class="upsell-price-row">
+                                    <span class="upsell-price-label">Prix supplémentaire :</span>
+                                    <div class="upsell-prices">
+                                        <span class="upsell-price-old">67€</span>
+                                        <span class="upsell-price-new">+27€</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="submit">
+                        <span id="button-text">Commander maintenant</span>
+                    </button>
+                    
+                    <div class="guarantee-box">
+                        <svg fill="none" stroke="#3FB7A8" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                        <h4>Garantie DOUBLE remboursement 14 jours</h4>
+                        <p>Si ton stress ne passe pas de 8/10 à au moins 4/10, je te rembourse 17€ + je te verse 20€ supplémentaires pour ton temps investi.</p>
+                    </div>
+                    
+                    <div id="payment-message"></div>
+                </form>
+            </div>
+        </div>
+
         <div class="testimonials-section">
-            <h2 class="section-title">Ce que disent les mamans qui l'ont testé</h2>
+            <h2>Ce que disent les mamans qui l'ont testé</h2>
             
             <div class="testimonials-grid">
                 <div class="testimonial">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">Avant, je m'endormais à 1h du matin en pleurant. Aujourd'hui, je dors 8 heures d'affilée pour la première fois en 5 ans.</div>
-                    <div class="testimonial-author">Julie, 39 ans, 2 enfants</div>
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"Avant, je m'endormais à 1h du matin en pleurant. Aujourd'hui, je dors 8 heures d'affilée pour la première fois en 5 ans. Mon stress est passé de 8/10 à 2/10."</div>
+                    <div class="author">Julie, 39 ans, 2 enfants</div>
                 </div>
 
                 <div class="testimonial">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">En 3 semaines, mon stress est passé de 8/10 à 2/10. Mon mari m'a demandé 'qu'est-ce qui t'arrive ? Tu as l'air différente'.</div>
-                    <div class="testimonial-author">Nadia, 42 ans, 3 enfants</div>
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"En 3 semaines, mon stress est passé de 8/10 à 2/10. Je ne croyais pas que 3 minutes par jour pouvaient tout changer. Mon mari m'a demandé 'qu'est-ce qui t'arrive ? Tu as l'air différente'."</div>
+                    <div class="author">Nadia, 42 ans, 3 enfants</div>
                 </div>
 
                 <div class="testimonial">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">J'ai arrêté de crier sur mes enfants. Pour la première fois depuis des mois, j'ai bu mon café chaud ce matin.</div>
-                    <div class="testimonial-author">Sophie, 45 ans, 2 enfants</div>
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"J'ai arrêté de crier sur mes enfants. Pour la première fois depuis des mois, j'ai bu mon café chaud ce matin. Je me reconnais à nouveau dans le miroir."</div>
+                    <div class="author">Sophie, 45 ans, 2 enfants</div>
                 </div>
             </div>
         </div>
@@ -773,12 +811,18 @@
         let clientSecret;
 
         const upsellCheckbox = document.getElementById('upsell-checkbox');
-        const buttonPrice = document.getElementById('button-price');
+        const upsellLine = document.getElementById('upsell-line');
+        const totalAmount = document.getElementById('total-amount');
 
         upsellCheckbox.addEventListener('change', async () => {
-            const isChecked = upsellCheckbox.checked;
-            buttonPrice.textContent = isChecked ? '44€' : '17€';
-            await updatePaymentIntent(isChecked);
+            if (upsellCheckbox.checked) {
+                upsellLine.style.display = 'flex';
+                totalAmount.textContent = '44€';
+            } else {
+                upsellLine.style.display = 'none';
+                totalAmount.textContent = '17€';
+            }
+            await updatePaymentIntent();
         });
 
         initialize();
@@ -788,7 +832,7 @@
                 const response = await fetch(`${API_URL}/api/create-payment-intent`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ includeUpsell: false })
+                    body: JSON.stringify({ includeUpsell: true })
                 });
 
                 if (!response.ok) throw new Error('Erreur lors de la création du paiement');
@@ -797,20 +841,21 @@
                 clientSecret = data.clientSecret;
 
                 const appearance = {
-                    theme: 'night',
+                    theme: 'stripe',
                     variables: {
                         colorPrimary: '#3FB7A8',
-                        colorBackground: '#1a1a1a',
-                        colorText: '#ffffff',
+                        colorBackground: '#ffffff',
+                        colorText: '#111111',
                         colorDanger: '#ff4444',
                         fontFamily: 'Nunito Sans, sans-serif',
-                        borderRadius: '8px'
+                        borderRadius: '8px',
+                        spacingUnit: '4px'
                     }
                 };
 
                 elements = stripe.elements({ appearance, clientSecret });
 
-                const paymentElement = elements.create('payment', {
+                const paymentElementOptions = {
                     layout: 'tabs',
                     fields: {
                         billingDetails: {
@@ -820,8 +865,9 @@
                             address: 'never'
                         }
                     }
-                });
+                };
                 
+                const paymentElement = elements.create('payment', paymentElementOptions);
                 paymentElement.mount('#payment-element');
 
                 document.getElementById('loading').style.display = 'none';
@@ -830,20 +876,20 @@
             } catch (error) {
                 console.error('Erreur:', error);
                 document.getElementById('loading').innerHTML = `
-                    <p style="color: #ff4444; font-weight: 600;">Une erreur est survenue. Veuillez réessayer.</p>
-                    <button onclick="location.reload()" style="margin-top: 20px; padding: 12px 24px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez réessayer.</p>
+                    <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer;">
                         Réessayer
                     </button>
                 `;
             }
         }
 
-        async function updatePaymentIntent(includeUpsell) {
+        async function updatePaymentIntent() {
             try {
                 const response = await fetch(`${API_URL}/api/create-payment-intent`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ includeUpsell })
+                    body: JSON.stringify({ includeUpsell: upsellCheckbox.checked })
                 });
 
                 if (!response.ok) throw new Error('Erreur lors de la mise à jour du paiement');
@@ -852,20 +898,21 @@
                 clientSecret = data.clientSecret;
 
                 const appearance = {
-                    theme: 'night',
+                    theme: 'stripe',
                     variables: {
                         colorPrimary: '#3FB7A8',
-                        colorBackground: '#1a1a1a',
-                        colorText: '#ffffff',
+                        colorBackground: '#ffffff',
+                        colorText: '#111111',
                         colorDanger: '#ff4444',
                         fontFamily: 'Nunito Sans, sans-serif',
-                        borderRadius: '8px'
+                        borderRadius: '8px',
+                        spacingUnit: '4px'
                     }
                 };
 
                 elements = stripe.elements({ appearance, clientSecret });
 
-                const paymentElement = elements.create('payment', {
+                const paymentElementOptions = {
                     layout: 'tabs',
                     fields: {
                         billingDetails: {
@@ -875,7 +922,9 @@
                             address: 'never'
                         }
                     }
-                });
+                };
+                
+                const paymentElement = elements.create('payment', paymentElementOptions);
                 
                 const container = document.getElementById('payment-element');
                 container.innerHTML = '';
@@ -941,8 +990,7 @@
                 buttonText.textContent = "Traitement en cours...";
             } else {
                 submitButton.disabled = false;
-                const price = upsellCheckbox.checked ? '44€' : '17€';
-                buttonText.innerHTML = `Commander maintenant · <span id="button-price">${price}</span>`;
+                buttonText.textContent = "Commander maintenant";
             }
         }
     </script>
