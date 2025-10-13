@@ -18,12 +18,38 @@
             --success-bg: #E9FBF8;
             --warning-bg: #FFF9E6;
             --warning-border: #FBC02D;
+            --brand-teal: #3FB7A8;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* iOS safe area strip */
+        .ios-safe-area {
+            background: var(--brand-teal);
+            height: env(safe-area-inset-top, 0);
+            height: constant(safe-area-inset-top, 0);
+        }
+
+        /* Header image responsive */
+        .site-header {
+            background: var(--brand-teal);
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .site-header__img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            object-fit: cover;
+            vertical-align: middle;
         }
 
         body {
@@ -159,18 +185,6 @@
             }
         }
 
-        .included-block {
-            display: none;
-        }
-
-        .included-item {
-            display: none;
-        }
-
-        .item-left {
-            display: none;
-        }
-
         .check-icon {
             width: 20px;
             height: 20px;
@@ -185,21 +199,9 @@
             fill: none;
         }
 
-        .item-label {
-            display: none;
-        }
-
-        .item-price {
-            display: none;
-        }
-
         .val-red {
             color: #E11D48;
             font-weight: 700;
-        }
-
-        .pricing-divider {
-            display: none;
         }
 
         .pricing-summary {
@@ -235,10 +237,6 @@
             color: var(--muted);
             font-weight: 400;
             margin-top: 6px;
-        }
-
-        .urgency-block {
-            display: none;
         }
 
         .checkout-section {
@@ -394,10 +392,6 @@
             font-weight: 600;
             color: var(--dark);
             cursor: pointer;
-        }
-
-        .order-summary {
-            display: none;
         }
 
         #submit {
@@ -608,6 +602,25 @@
     </style>
 </head>
 <body>
+    <!-- iOS safe-area strip (remplit l'encoche au-dessus du header en vert) -->
+    <div class="ios-safe-area" aria-hidden="true"></div>
+
+    <!-- Header image responsive -->
+    <header class="site-header" role="banner" aria-label="Dr Sarah Dumont — Docteur en psychologie">
+        <picture>
+            <!-- Mobile en priorité -->
+            <source srcset="headermobile.png" media="(max-width: 768px)">
+            <!-- Desktop par défaut (et tablettes paysage) -->
+            <img
+                src="headerdesktop.png"
+                alt="Dr Sarah Dumont — Docteur en psychologie. +5 000 femmes lui ont déjà fait confiance."
+                loading="eager"
+                decoding="async"
+                class="site-header__img"
+                width="2000" height="500">
+        </picture>
+    </header>
+
     <div class="container">
         <div class="content-wrapper">
             <div class="product-info">
@@ -835,7 +848,7 @@
                     headers: { 'Content-Type': 'application/json' },
                 });
 
-                console.log('Réponse API reçue:', response.status);
+                console.log('Réponse API reçue :', response.status);
 
                 if (!response.ok) {
                     const errorText = await response.text();
