@@ -17,11 +17,10 @@ module.exports = async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1700, // 17â‚¬ en centimes
+      amount: 1700,
       currency: 'eur',
       automatic_payment_methods: { 
-        enabled: true,
-        allow_redirects: 'always'
+        enabled: true
       },
       metadata: {
         product: 'Rituel C.A.L.M.E'
