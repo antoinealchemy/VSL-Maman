@@ -449,6 +449,19 @@
                 expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
                     console.log('Moyens de paiement disponibles:', availablePaymentMethods);
                     
+                    // Diagnostic Apple Pay
+                    if (window.ApplePaySession) {
+                        console.log('✅ ApplePaySession disponible');
+                        console.log('Version ApplePaySession:', ApplePaySession.supportsVersion(3) ? 'v3+' : 'ancienne');
+                        console.log('Peut faire des paiements Apple Pay:', ApplePaySession.canMakePayments());
+                    } else {
+                        console.log('❌ ApplePaySession non disponible sur cet appareil');
+                    }
+                    
+                    if (availablePaymentMethods) {
+                        console.log('Apple Pay dans la liste ?', 'applePay' in availablePaymentMethods);
+                    }
+                    
                     if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
                         document.getElementById('express-checkout-element').style.display = 'block';
                         document.getElementById('payment-divider').style.display = 'block';
