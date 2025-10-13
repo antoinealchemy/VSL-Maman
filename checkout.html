@@ -127,6 +127,7 @@
             font-weight: 700;
             font-size: 13px;
             margin-bottom: 16px;
+            animation: pulse-badge 2s ease-in-out infinite;
         }
 
         .urg-badge .dot {
@@ -134,6 +135,7 @@
             height: 6px;
             border-radius: 9999px;
             background: #3B82F6;
+            animation: pulse-badge 2s ease-in-out infinite;
         }
 
         .inc-card {
@@ -147,14 +149,14 @@
         .inc-row {
             display: grid;
             grid-template-columns: 1fr auto;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
             padding: 10px 0;
         }
 
         .inc-left {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 10px;
             min-width: 0;
         }
@@ -163,9 +165,10 @@
             font-weight: 600;
             font-size: 15px;
             color: var(--dark);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            word-wrap: break-word;
         }
 
         .inc-right {
@@ -174,6 +177,8 @@
             color: var(--muted);
             text-align: right;
             white-space: nowrap;
+            align-self: flex-start;
+            padding-top: 2px;
         }
 
         .inc-divider {
@@ -184,7 +189,11 @@
 
         @media (max-width: 360px) {
             .inc-label {
-                max-width: 65vw;
+                font-size: 14px;
+            }
+            
+            .inc-right {
+                font-size: 13px;
             }
         }
 
@@ -192,6 +201,7 @@
             width: 20px;
             height: 20px;
             flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .check-icon svg {
@@ -247,6 +257,14 @@
             background: var(--card-bg);
         }
 
+        .payment-header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
         .loading {
             display: flex;
             flex-direction: column;
@@ -271,12 +289,17 @@
             100% { transform: rotate(360deg); }
         }
 
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         #payment-form {
             max-width: 100%;
         }
 
         .form-field {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .form-field label {
@@ -313,7 +336,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         #payment-element {
@@ -607,7 +630,8 @@
             }
 
             .name-row {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
             }
 
             .testimonials {
@@ -731,6 +755,8 @@
                 </div>
                 
                 <div id="payment-container" style="display: none;">
+                    <h2 class="payment-header">Étapes de paiement</h2>
+                    
                     <div id="express-checkout-element"></div>
                     
                     <div class="payment-divider" id="payment-divider">
