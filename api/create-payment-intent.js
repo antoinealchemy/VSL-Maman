@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 4700, // 47€ en centimes
+      amount: 100, // 47€ en centimes
       currency: 'eur',
       automatic_payment_methods: { enabled: true },
       metadata: {
