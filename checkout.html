@@ -350,9 +350,7 @@
     </div>
 
     <script>
-        // URL de votre API Vercel
         const API_URL = 'https://vsl-maman.vercel.app';
-
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
         let elements;
@@ -390,8 +388,12 @@
                     clientSecret,
                 });
                 
+                // Configuration corrigée pour activer Apple Pay et Google Pay
                 const paymentElementOptions = {
-                    layout: 'tabs',
+                    layout: {
+                        type: 'tabs',
+                        defaultCollapsed: false,
+                    },
                     wallets: {
                         applePay: 'auto',
                         googlePay: 'auto'
@@ -401,25 +403,15 @@
                             name: 'never',
                             email: 'never',
                             phone: 'never',
-                            address: {
-                                country: 'never',
-                                line1: 'never',
-                                line2: 'never',
-                                city: 'never',
-                                state: 'never',
-                                postalCode: 'never'
-                            }
+                            address: 'never'
                         }
-                    },
-                    terms: {
-                        card: 'never'
                     }
                 };
                 
                 const paymentElement = elements.create('payment', paymentElementOptions);
                 paymentElement.mount('#payment-element');
 
-                // Masquer le loading, afficher le formulaire
+                // Cacher le loading, afficher le formulaire
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('payment-form').style.display = 'block';
 
@@ -440,7 +432,6 @@
             e.preventDefault();
             setLoading(true);
 
-            // Récupérer les données du formulaire
             const email = document.getElementById('email').value;
             const prenom = document.getElementById('prenom').value;
             const nom = document.getElementById('nom').value;
