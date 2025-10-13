@@ -1221,7 +1221,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         const API_URL = 'https://vsl-maman.vercel.app';
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
@@ -1441,8 +1441,16 @@
         async function handleSubmit(e) {
             e.preventDefault();
             setLoading(true);
-            
+
             try {
+                // 1) Valider le Payment Element et collecter les données nécessaires
+                const { error: submitError } = await elements.submit();
+                if (submitError) {
+                    showMessage(submitError.message || "Vérifie les informations de paiement.");
+                    return;
+                }
+
+                // 2) Confirmer le paiement
                 const email = document.getElementById('email').value;
                 const prenom = document.getElementById('prenom').value;
                 const nom = document.getElementById('nom').value;
@@ -1455,23 +1463,21 @@
                         return_url: `${window.location.origin}/success.html`,
                         receipt_email: email,
                         payment_method_data: {
-                            billing_details: {
-                                name: fullName,
-                                email: email
-                            }
+                            billing_details: { name: fullName, email }
                         }
                     },
                 });
 
                 if (error) {
+                    // Erreurs synchrones (ex: carte refusée)
                     showMessage(error.message || "Échec du paiement.");
                 }
-                // Si 3DS/redirect requis, Stripe redirige et on ne revient pas ici
+                // Si 3DS/redirect requis, Stripe redirige automatiquement (on ne revient pas ici).
             } catch (err) {
                 console.error(err);
                 showMessage(err.message || "Erreur inattendue.");
             } finally {
-                // Si pas de redirection, on réactive
+                // Si pas de redirection, on réactive le bouton
                 setLoading(false);
             }
         }
