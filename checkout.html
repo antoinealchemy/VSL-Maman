@@ -334,14 +334,23 @@
                 
                 const paymentElementOptions = {
                     layout: 'tabs',
-                    paymentMethodOrder: ['card', 'paypal', 'google_pay', 'apple_pay'],
                     fields: {
                         billingDetails: {
                             name: 'auto',
                             email: 'auto',
                             phone: 'never',
-                            address: 'never'
+                            address: {
+                                country: 'never',
+                                line1: 'never',
+                                line2: 'never',
+                                city: 'never',
+                                state: 'never',
+                                postalCode: 'never'
+                            }
                         }
+                    },
+                    terms: {
+                        card: 'never'
                     }
                 };
                 

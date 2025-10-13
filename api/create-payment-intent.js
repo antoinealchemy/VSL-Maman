@@ -1,7 +1,6 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async (req, res) => {
-  // Autoriser les requêtes CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -18,9 +17,13 @@ module.exports = async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 100, // 47€ en centimes
+      amount: 1700, // 17€ en centimes
       currency: 'eur',
-      automatic_payment_methods: { enabled: true },
+      automatic_payment_methods: { 
+        enabled: true,
+        allow_redirects: 'always'
+      },
+      payment_method_types: ['card', 'paypal', 'link'],
       metadata: {
         product: 'Rituel C.A.L.M.E'
       }
