@@ -7,167 +7,262 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
     <style>
+        :root {
+            --teal-1: #3FB7A8;
+            --teal-2: #50C4B3;
+            --dark: #2a2a2a;
+            --muted: #6B7280;
+            --danger: #ff4444;
+            --bg: #F9FAFB;
+            --card-bg: #ffffff;
+            --success-bg: #E9FBF8;
+            --warning-bg: #FFF9E6;
+            --warning-border: #FBC02D;
+            --brand-teal: #3FB7A8;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* iOS safe area strip */
+        .ios-safe-area {
+            background: var(--brand-teal);
+            height: env(safe-area-inset-top, 0);
+            height: constant(safe-area-inset-top, 0);
+        }
+
         body {
             font-family: 'Nunito Sans', sans-serif;
-            background-color: #F9FAFB;
+            background-color: #ffffff;
             color: #111111;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 0;
+        }
+
+        /* Header image responsive */
+        .site-header {
+            background: #ffffff;
+            display: block;
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 0;
+        }
+
+        .site-header__img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            object-fit: cover;
+            vertical-align: middle;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #3FB7A8, #50C4B3);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            border-radius: 16px 16px 0 0;
-        }
-
-        .header h1 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 18px;
-            opacity: 0.95;
+            background-color: var(--bg);
+            padding: 40px 15px;
         }
 
         .content-wrapper {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 30px;
-            background: #2a2a2a;
-            border-radius: 0 0 16px 16px;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 0;
+            background: var(--card-bg);
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .product-info {
             padding: 40px;
-            border-right: 1px solid #3a3a3a;
+            background: #fafafa;
+            border-right: 1px solid #e5e5e5;
         }
 
         .product-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 15px;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 12px;
         }
 
-        .product-description {
+        .product-subtitle {
             font-size: 16px;
-            color: #b0b0b0;
+            color: var(--muted);
             line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .product-features {
-            list-style: none;
             margin-bottom: 30px;
         }
 
-        .product-features li {
-            padding: 10px 0;
-            padding-left: 30px;
-            position: relative;
-            color: #e0e0e0;
+        #mockup {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            margin: 0 auto 30px auto;
+            display: block;
         }
 
-        .product-features li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #3FB7A8;
-            font-weight: bold;
-            font-size: 20px;
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 16px;
         }
 
-        .price-section {
-            padding: 25px;
-            background: #1f1f1f;
-            border-radius: 12px;
+        .urg-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #E0F2FE;
+            color: #075985;
+            border: 1px solid #93C5FD;
+            border-radius: 9999px;
+            padding: 6px 12px;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 16px;
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+
+        .urg-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 9999px;
+            background: #3B82F6;
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+
+        .inc-card {
+            border: 1px solid #E5E7EB;
+            border-radius: 10px;
+            padding: 18px;
+            background: #fff;
             margin-bottom: 25px;
         }
 
-        .price {
-            font-size: 42px;
+        .inc-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+        }
+
+        .inc-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .inc-label {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--dark);
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            word-wrap: break-word;
+        }
+
+        .inc-right {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--muted);
+            text-align: right;
+            white-space: nowrap;
+            align-self: flex-start;
+            padding-top: 2px;
+        }
+
+        .inc-divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 12px 0 16px;
+        }
+
+        @media (max-width: 360px) {
+            .inc-label {
+                font-size: 14px;
+            }
+            
+            .inc-right {
+                font-size: 13px;
+            }
+        }
+
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .check-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #22C55E;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .val-red {
+            color: #E11D48;
             font-weight: 700;
-            color: #3FB7A8;
+        }
+
+        .pricing-summary {
+            text-align: center;
         }
 
         .old-price {
-            font-size: 22px;
-            color: #666;
-            text-decoration: line-through;
-            margin-left: 15px;
+            font-size: 17px;
+            color: #9CA3AF;
+            margin-bottom: 8px;
         }
 
-        .guarantee {
-            padding: 20px;
-            background: rgba(63, 183, 168, 0.1);
-            border-radius: 12px;
-            border: 1px solid rgba(63, 183, 168, 0.3);
+        .new-price-wrapper {
+            margin-bottom: 8px;
         }
 
-        .guarantee h3 {
-            color: #3FB7A8;
-            font-size: 18px;
-            margin-bottom: 10px;
+        .price-label-today {
+            font-size: 16px;
+            color: var(--muted);
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .guarantee p {
-            color: #b0b0b0;
+        .price-big {
+            font-size: 50px;
+            font-weight: 800;
+            color: var(--teal-1);
+            line-height: 1;
+        }
+
+        .savings-text {
             font-size: 14px;
-            line-height: 1.5;
+            color: var(--muted);
+            font-weight: 400;
+            margin-top: 6px;
         }
 
         .checkout-section {
             padding: 40px;
-            background: #222222;
+            background: var(--card-bg);
         }
 
-        #payment-form {
-            max-width: 500px;
-        }
-
-        #payment-element {
-            margin-bottom: 24px;
-        }
-
-        #submit {
-            width: 100%;
-            background: linear-gradient(135deg, #3FB7A8, #50C4B3);
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
-            padding: 16px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(63, 183, 168, 0.3);
-        }
-
-        #submit:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(63, 183, 168, 0.4);
-        }
-
-        #submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .payment-header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
         }
 
         .loading {
@@ -176,12 +271,12 @@
             align-items: center;
             justify-content: center;
             min-height: 400px;
-            color: #3FB7A8;
+            color: var(--teal-1);
         }
 
         .spinner {
-            border: 3px solid #3a3a3a;
-            border-top: 3px solid #3FB7A8;
+            border: 3px solid #e5e5e5;
+            border-top: 3px solid var(--teal-1);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -194,14 +289,450 @@
             100% { transform: rotate(360deg); }
         }
 
-        #payment-message {
-            color: #ff4444;
-            margin-top: 15px;
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        #payment-form {
+            max-width: 100%;
+        }
+
+        .form-field {
+            margin-bottom: 12px;
+        }
+
+        .form-field label {
+            display: block;
             font-size: 14px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 6px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Nunito Sans', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: var(--teal-1);
+            box-shadow: 0 0 0 3px rgba(63, 183, 168, 0.1);
+        }
+
+        .form-field.optional label::after {
+            content: " (facultatif)";
+            font-weight: 400;
+            color: var(--muted);
+        }
+
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        #payment-element {
+            margin-bottom: 20px;
+        }
+
+        #express-checkout-element {
+            margin-bottom: 20px;
+        }
+
+        .payment-divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .payment-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e5e5e5;
+        }
+
+        .payment-divider span {
+            background: var(--card-bg);
+            padding: 0 12px;
+            position: relative;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .upsell-block {
+            background: var(--warning-bg);
+            border: 2px solid var(--warning-border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .upsell-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .upsell-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .upsell-description {
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .upsell-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .upsell-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #E11D48;
+        }
+
+        .upsell-checkbox label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        #submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--teal-1), var(--teal-2));
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 16px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(63, 183, 168, 0.3);
+            margin-bottom: 12px;
+        }
+
+        #submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 183, 168, 0.4);
+        }
+
+        #submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .secure-payment-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .secure-payment-image img {
+            max-width: 100%;
+            height: auto;
+            max-height: 60px;
+        }
+
+        .guarantee-block {
+            background: var(--success-bg);
+            border: 2px solid var(--teal-1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .guarantee-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .guarantee-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--teal-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guarantee-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .guarantee-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .guarantee-text {
+            font-size: 14px;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        #payment-message {
+            color: var(--danger);
+            margin-top: 12px;
+            font-size: 14px;
+            text-align: center;
         }
 
         .success-message {
-            color: #3FB7A8 !important;
+            color: var(--teal-1) !important;
+        }
+
+        .testimonials {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 0 15px;
+            background-color: var(--bg);
+        }
+
+        .testimonials-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 30px;
+            padding-top: 40px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding-bottom: 40px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e5;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--teal-1);
+        }
+
+        .testimonial-author {
+            flex: 1;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--dark);
+            margin-bottom: 2px;
+        }
+
+        .testimonial-location {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .testimonial-stars {
+            color: #FFA500;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-headline {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            color: #4a4a4a;
+            line-height: 1.6;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #E8E8E8;
+            color: #6B6B6B;
+            padding: 20px 15px;
+            margin-top: 60px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.7rem;
+            margin-bottom: 12px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #6B6B6B;
+            text-decoration: none;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            border-bottom: 1px solid rgba(107, 107, 107, 0.4);
+            padding-bottom: 1px;
+        }
+
+        .footer-link:hover {
+            opacity: 0.7;
+        }
+
+        .footer-copyright {
+            font-size: 0.65rem;
+            opacity: 0.85;
+            margin-top: 10px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeInModal 0.3s ease;
+        }
+
+        @keyframes fadeInModal {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: #111;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #3FB7A8;
+            margin-bottom: 20px;
+            padding-right: 40px;
+        }
+
+        .modal-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .modal-text h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal-text p {
+            margin-bottom: 15px;
         }
 
         @media (max-width: 968px) {
@@ -211,21 +742,22 @@
 
             .product-info {
                 border-right: none;
-                border-bottom: 1px solid #3a3a3a;
+                border-bottom: 1px solid #e5e5e5;
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 520px) {
             body {
-                padding: 20px 15px;
+                padding: 0;
             }
 
-            .header {
-                padding: 30px 20px;
+            .site-header {
+                margin: 0;
+                max-width: 100%;
             }
 
-            .header h1 {
-                font-size: 24px;
+            .container {
+                padding: 20px 10px;
             }
 
             .product-info,
@@ -233,43 +765,172 @@
                 padding: 25px 20px;
             }
 
-            .price {
-                font-size: 32px;
+            .product-title {
+                font-size: 26px;
+            }
+
+            #mockup {
+                max-width: 100%;
+                margin: 0 auto 25px auto;
+            }
+
+            .price-big {
+                font-size: 42px;
+            }
+
+            .name-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .testimonials {
+                padding: 0;
+                margin-top: 0;
+            }
+
+            .testimonials-title {
+                padding: 30px 15px 20px;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                padding: 0 15px 30px;
+            }
+
+            .footer-disclaimer {
+                font-size: 0.65rem;
+                margin-bottom: 10px;
+            }
+
+            .footer-links {
+                gap: 12px;
+                margin-bottom: 10px;
+            }
+
+            .footer-link {
+                font-size: 0.65rem;
+            }
+
+            .footer-copyright {
+                font-size: 0.6rem;
+                margin-top: 8px;
+            }
+
+            .modal-content {
+                margin: 10% 15px;
+                padding: 25px;
+                max-height: 85vh;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .modal-text {
+                font-size: 14px;
+            }
+
+            .modal-text h3 {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🌟 Rituel C.A.L.M.E</h1>
-            <p>Retrouve ta sérénité en 3 minutes par jour</p>
-        </div>
+    <!-- iOS safe-area strip (remplit l'encoche au-dessus du header en vert) -->
+    <div class="ios-safe-area" aria-hidden="true"></div>
 
+    <!-- Header image responsive -->
+    <header class="site-header" role="banner" aria-label="Dr Sarah Dumont — Docteur en psychologie">
+        <picture>
+            <!-- Mobile en priorité -->
+            <source srcset="headermobile.png" media="(max-width: 768px)">
+            <!-- Desktop par défaut (et tablettes paysage) -->
+            <img
+                src="headerdesktop.png"
+                alt="Dr Sarah Dumont — Docteur en psychologie. +5 000 femmes lui ont déjà fait confiance."
+                loading="eager"
+                decoding="async"
+                class="site-header__img"
+                width="2000" height="500">
+        </picture>
+    </header>
+
+    <div class="container">
         <div class="content-wrapper">
             <div class="product-info">
-                <h2 class="product-title">Le Programme Complet</h2>
-                <p class="product-description">
-                    Accède immédiatement au rituel qui a aidé 4 783 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
+                <h1 class="product-title">Accède au Rituel C.A.L.M.E Immédiatement.</h1>
+                <p class="product-subtitle">
+                    Découvre dès maintenant la méthode qui a aidé +5 000 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
                 </p>
 
-                <ul class="product-features">
-                    <li>Accès immédiat au programme complet</li>
-                    <li>Les 5 étapes du rituel C.A.L.M.E détaillées</li>
-                    <li>Guide PDF téléchargeable</li>
-                    <li>Vidéos explicatives pour chaque étape</li>
-                    <li>Support communauté privée</li>
-                    <li>Garantie satisfait ou remboursé 30 jours</li>
-                </ul>
-
-                <div class="price-section">
-                    <span class="price">17€</span>
-                    <span class="old-price">97€</span>
+                <div class="urg-badge" role="status" aria-live="polite">
+                    <span class="dot"></span> Seulement 12 places restantes pour octobre 2025
                 </div>
 
-                <div class="guarantee">
-                    <h3>✅ Garantie 30 jours satisfait ou remboursé</h3>
-                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intégralement. Sans question.</p>
+                <div class="inc-card">
+                    <img id="mockup" src="mockup.png" alt="Programme Rituel C.A.L.M.E - Guide complet, version audio et checklist progression" loading="lazy">
+                    
+                    <h2 class="section-title">Ce qui est inclus dans le pack Rituel C.A.L.M.E</h2>
+                    
+                    <div class="inc-row">
+                        <div class="inc-left">
+                            <span class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="inc-label">Guide complet RITUEL C.A.L.M.E™</span>
+                        </div>
+                        <span class="inc-right">(valeur : <span class="val-red">67€</span>)</span>
+                    </div>
+
+                    <div class="inc-row">
+                        <div class="inc-left">
+                            <span class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="inc-label">Version AUDIO guidée</span>
+                        </div>
+                        <span class="inc-right">(valeur : <span class="val-red">37€</span>)</span>
+                    </div>
+
+                    <div class="inc-row">
+                        <div class="inc-left">
+                            <span class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="inc-label">Guide de RECHUTE ÉMOTIONNELLE</span>
+                        </div>
+                        <span class="inc-right">(valeur : <span class="val-red">27€</span>)</span>
+                    </div>
+
+                    <div class="inc-row">
+                        <div class="inc-left">
+                            <span class="check-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="inc-label">CHECKLIST progression 21 jours</span>
+                        </div>
+                        <span class="inc-right">(valeur : <span class="val-red">16€</span>)</span>
+                    </div>
+
+                    <div class="inc-divider"></div>
+
+                    <div class="pricing-summary">
+                        <div class="old-price"><s>Valeur totale du pack : 147€</s></div>
+                        <div class="new-price-wrapper">
+                            <div class="price-label-today">Aujourd'hui :</div>
+                            <div class="price-big">17€</div>
+                        </div>
+                        <div class="savings-text">Tu économises 130€</div>
+                    </div>
                 </div>
             </div>
 
@@ -279,46 +940,261 @@
                     <p>Chargement du paiement sécurisé...</p>
                 </div>
                 
-                <form id="payment-form" style="display: none;">
-                    <div id="payment-element"></div>
-                    <button id="submit">
-                        <span id="button-text">Commander maintenant - 17€</span>
-                    </button>
-                    <div id="payment-message"></div>
-                </form>
+                <div id="payment-container" style="display: none;">
+                    <h2 class="payment-header">Étapes de paiement</h2>
+                    
+                    <div id="express-checkout-element"></div>
+                    
+                    <div class="payment-divider" id="payment-divider">
+                        <span>ou payer par carte</span>
+                    </div>
+
+                    <form id="payment-form">
+                        <div class="form-field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                        </div>
+
+                        <div class="name-row">
+                            <div class="form-field">
+                                <label for="prenom">Prénom</label>
+                                <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
+                            </div>
+
+                            <div class="form-field optional">
+                                <label for="nom">Nom</label>
+                                <input type="text" id="nom" name="nom" placeholder="Nom">
+                            </div>
+                        </div>
+
+                        <div id="payment-element"></div>
+
+                        <div class="upsell-block">
+                            <div class="upsell-header">
+                                <span class="upsell-title">Offre complémentaire exclusive</span>
+                            </div>
+                            <p class="upsell-description">
+                                Ajoute le pack bonus "Respiration Instantanée" pour seulement 27€
+                            </p>
+                            <div class="upsell-checkbox">
+                                <input type="checkbox" id="upsell" name="upsell" checked>
+                                <label for="upsell">Oui, j'ajoute ce pack à ma commande</label>
+                            </div>
+                        </div>
+
+                        <button id="submit" type="submit">
+                            <span id="button-text">Commander maintenant</span>
+                        </button>
+
+                        <div class="secure-text">
+                            Paiement sécurisé & Garantie 14 jours
+                        </div>
+
+                        <div class="guarantee-block">
+                            <div class="guarantee-header">
+                                <span class="guarantee-icon">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                </span>
+                                <span class="guarantee-title">14 jours — Satisfait ou remboursé</span>
+                            </div>
+                            <p class="guarantee-text">
+                                Si ton stress n'a pas baissé d'au moins 4 points (ex: 8→4) après 3 semaines de pratique, nous te remboursons intégralement et t'envoyons en plus 20€ pour le temps investi.
+                            </p>
+                        </div>
+
+                        <div id="payment-message"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="testimonials">
+        <h2 class="testimonials-title">Ce que disent les mamans qui ont essayé</h2>
+        <div class="testimonials-grid">
+            <article class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="https://ui-avatars.com/api/?name=Sophie+Martinez&background=3FB7A8&color=fff" alt="Sophie Martinez" class="testimonial-avatar">
+                    <div class="testimonial-author">
+                        <div class="testimonial-name">Sophie Martinez</div>
+                        <div class="testimonial-location">Lyon</div>
+                    </div>
+                </div>
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-headline">J'ai enfin retrouvé du souffle</div>
+                <p class="testimonial-text">Je l'ai essayé pendant 3 semaines et mon stress est passé d'un 9/10 à environ 3/10. Le rituel ne prend que 3 minutes et pourtant il change tout — j'ai recommencé à profiter de mes soirées sans m'effondrer.</p>
+            </article>
+
+            <article class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="https://ui-avatars.com/api/?name=Marine+Lefevre&background=3FB7A8&color=fff" alt="Marine Lefèvre" class="testimonial-avatar">
+                    <div class="testimonial-author">
+                        <div class="testimonial-name">Marine Lefèvre</div>
+                        <div class="testimonial-location">Paris</div>
+                    </div>
+                </div>
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-headline">Simple, rapide, efficace</div>
+                <p class="testimonial-text">Je n'y croyais pas au début — encore une méthode de plus. Mais en 2 semaines j'ai senti ma tension baisser, j'ai moins crié et j'ai retrouvé l'envie de peindre le soir.</p>
+            </article>
+
+            <article class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="https://ui-avatars.com/api/?name=Celine+Dubois&background=3FB7A8&color=fff" alt="Céline Dubois" class="testimonial-avatar">
+                    <div class="testimonial-author">
+                        <div class="testimonial-name">Céline Dubois</div>
+                        <div class="testimonial-location">Nantes</div>
+                    </div>
+                </div>
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-headline">Moins de culpabilité, plus de présent</div>
+                <p class="testimonial-text">Avant je passais mes journées avec la boule au ventre. Maintenant je peux être présente pour mes enfants sans m'épuiser. Le guide de rechute m'a aidée quand j'ai craqué.</p>
+            </article>
+
+            <article class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="https://ui-avatars.com/api/?name=Audrey+Bernard&background=3FB7A8&color=fff" alt="Audrey Bernard" class="testimonial-avatar">
+                    <div class="testimonial-author">
+                        <div class="testimonial-name">Audrey Bernard</div>
+                        <div class="testimonial-location">Marseille</div>
+                    </div>
+                </div>
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-headline">Valeur incroyable pour le prix</div>
+                <p class="testimonial-text">Ce petit programme a eu plus d'effet que des semaines de lecture d'articles. Pour 17€, c'est un cadeau que je me suis enfin permis, et je ne le regrette pas.</p>
+            </article>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-disclaimer">
+                Ce site n'est pas affilié à Facebook, Instagram ou Meta. Il s'agit d'un site web indépendant. Ce site est sécurisé et vos données sont protégées.
+            </p>
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="openModal('cgv'); return false;">Conditions Générales de Vente</a>
+                <a href="#" class="footer-link" onclick="openModal('mentions'); return false;">Mentions Légales</a>
+                <a href="#" class="footer-link" onclick="openModal('confidentialite'); return false;">Politique de Confidentialité</a>
+            </div>
+            <p class="footer-copyright">
+                © 2025 drsarahdumont.com - Tous droits réservés
+            </p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="cgvModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('cgv')">&times;</button>
+            <h2 class="modal-title">Conditions Générales de Vente</h2>
+            <div class="modal-text">
+                <h3>1. Objet</h3>
+                <p>Les présentes conditions générales de vente régissent la vente de produits et services proposés sur drsarahdumont.com.</p>
+                
+                <h3>2. Prix</h3>
+                <p>Les prix sont indiqués en euros et toutes taxes comprises. Nous nous réservons le droit de modifier nos prix à tout moment.</p>
+                
+                <h3>3. Paiement</h3>
+                <p>Le paiement s'effectue en ligne de manière sécurisée par carte bancaire ou tout autre moyen de paiement proposé sur le site.</p>
+                
+                <h3>4. Livraison</h3>
+                <p>Pour les produits numériques, l'accès est fourni immédiatement après validation du paiement.</p>
+                
+                <h3>5. Droit de rétractation</h3>
+                <p>Conformément à la législation en vigueur, vous disposez d'un délai de 14 jours pour exercer votre droit de rétractation.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="mentionsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('mentions')">&times;</button>
+            <h2 class="modal-title">Mentions Légales</h2>
+            <div class="modal-text">
+                <h3>Éditeur du site</h3>
+                <p>drsarahdumont.com</p>
+                
+                <h3>Hébergement</h3>
+                <p>Ce site est hébergé par un prestataire professionnel garantissant la sécurité et la confidentialité des données.</p>
+                
+                <h3>Propriété intellectuelle</h3>
+                <p>L'ensemble du contenu de ce site (textes, images, vidéos) est protégé par le droit d'auteur. Toute reproduction est interdite sans autorisation préalable.</p>
+                
+                <h3>Responsabilité</h3>
+                <p>Nous nous efforçons de maintenir les informations de ce site à jour et exactes, mais ne pouvons garantir l'absence d'erreurs.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="confidentialiteModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('confidentialite')">&times;</button>
+            <h2 class="modal-title">Politique de Confidentialité</h2>
+            <div class="modal-text">
+                <h3>Collecte des données</h3>
+                <p>Nous collectons uniquement les données nécessaires au bon fonctionnement de nos services et à l'amélioration de votre expérience.</p>
+                
+                <h3>Utilisation des données</h3>
+                <p>Vos données personnelles sont utilisées uniquement dans le cadre de la fourniture de nos services et ne sont jamais vendues à des tiers.</p>
+                
+                <h3>Sécurité</h3>
+                <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles pour protéger vos données contre tout accès non autorisé.</p>
+                
+                <h3>Vos droits</h3>
+                <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles.</p>
+                
+                <h3>Cookies</h3>
+                <p>Ce site utilise des cookies pour améliorer votre expérience de navigation. Vous pouvez les désactiver dans les paramètres de votre navigateur.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // URL de votre API Vercel
         const API_URL = 'https://vsl-maman.vercel.app';
-
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
         let elements;
+        let currentClientSecret;
 
         initialize();
 
         async function initialize() {
             try {
+                console.log('Début de l\'initialisation...');
+                
+                // Checkbox cochée par défaut
+                const includeUpsell = document.getElementById('upsell').checked;
+                
                 const response = await fetch(`${API_URL}/api/create-payment-intent`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ includeUpsell })
                 });
+
+                console.log('Réponse API:', response.status);
 
                 if (!response.ok) {
                     throw new Error('Erreur lors de la création du paiement');
                 }
 
-                const { clientSecret } = await response.json();
+                const data = await response.json();
+                console.log('Données reçues:', data);
+
+                const { clientSecret } = data;
+                currentClientSecret = clientSecret;
+
+                if (!clientSecret) {
+                    throw new Error('Client secret manquant');
+                }
 
                 const appearance = {
-                    theme: 'night',
+                    theme: 'stripe',
                     variables: {
                         colorPrimary: '#3FB7A8',
-                        colorBackground: '#222222',
-                        colorText: '#ffffff',
+                        colorBackground: '#ffffff',
+                        colorText: '#111111',
                         colorDanger: '#ff4444',
                         fontFamily: 'Nunito Sans, sans-serif',
                         borderRadius: '8px',
@@ -327,22 +1203,117 @@
                 };
 
                 elements = stripe.elements({ appearance, clientSecret });
-                const paymentElement = elements.create('payment');
-                paymentElement.mount('#payment-element');
 
-                // Masquer le loading, afficher le formulaire
+                // Express Checkout
+                const expressCheckoutElement = elements.create('expressCheckout', {
+                    buttonHeight: 48,
+                    buttonTheme: {
+                        applePay: 'black',
+                        googlePay: 'black'
+                    },
+                    buttonType: {
+                        googlePay: 'buy'
+                    },
+                    paymentMethods: {
+                        applePay: 'always',
+                        googlePay: 'always',
+                        link: 'auto'
+                    }
+                });
+
+                expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
+                    console.log('Moyens de paiement disponibles:', availablePaymentMethods);
+                    
+                    if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
+                        document.getElementById('express-checkout-element').style.display = 'block';
+                        document.getElementById('payment-divider').style.display = 'block';
+                    } else {
+                        document.getElementById('express-checkout-element').style.display = 'none';
+                        document.getElementById('payment-divider').style.display = 'none';
+                    }
+                });
+
+                expressCheckoutElement.on('confirm', async (event) => {
+                    console.log('Confirmation Express Checkout...');
+                    
+                    const { error: submitError } = await elements.submit();
+                    if (submitError) {
+                        showMessage(submitError.message);
+                        return;
+                    }
+
+                    const email = document.getElementById('email').value || event.billingDetails?.email || '';
+                    const name = event.billingDetails?.name || 'Client';
+
+                    const { error } = await stripe.confirmPayment({
+                        elements,
+                        clientSecret: currentClientSecret,
+                        confirmParams: {
+                            return_url: `${window.location.origin}/success.html`,
+                            receipt_email: email,
+                            payment_method_data: {
+                                billing_details: {
+                                    name: name,
+                                    email: email
+                                }
+                            }
+                        },
+                    });
+
+                    if (error) {
+                        showMessage(error.message);
+                    }
+                });
+
+                expressCheckoutElement.mount('#express-checkout-element');
+                console.log('Express Checkout monté');
+
+                // Payment Element classique
+                const paymentElementOptions = {
+                    layout: {
+                        type: 'tabs',
+                        defaultCollapsed: false,
+                    },
+                    fields: {
+                        billingDetails: {
+                            name: 'never',
+                            email: 'never',
+                            phone: 'never',
+                            address: 'never'
+                        }
+                    }
+                };
+                
+                const paymentElement = elements.create('payment', paymentElementOptions);
+                paymentElement.mount('#payment-element');
+                console.log('Payment Element monté');
+
                 document.getElementById('loading').style.display = 'none';
-                document.getElementById('payment-form').style.display = 'block';
+                document.getElementById('payment-container').style.display = 'block';
+                console.log('Interface affichée');
+
+                // Écouter les changements sur la checkbox
+                document.getElementById('upsell').addEventListener('change', handleUpsellChange);
 
             } catch (error) {
-                console.error('Erreur:', error);
+                console.error('Erreur complète:', error);
                 document.getElementById('loading').innerHTML = `
-                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez réessayer.</p>
-                    <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                    <p style="color: #ff4444; text-align: center; margin-bottom: 10px;">Une erreur est survenue lors du chargement du paiement.</p>
+                    <p style="color: #6B7280; font-size: 14px; text-align: center; margin-bottom: 20px;">${error.message}</p>
+                    <button onclick="location.reload()" style="padding: 12px 24px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
                         Réessayer
                     </button>
                 `;
             }
+        }
+
+        async function handleUpsellChange() {
+            const includeUpsell = document.getElementById('upsell').checked;
+            console.log('Upsell changé:', includeUpsell);
+
+            // IMPORTANT : On ne recrée PAS les elements
+            // On recharge juste la page pour recréer un nouveau PaymentIntent
+            window.location.reload();
         }
 
         document.getElementById('payment-form').addEventListener('submit', handleSubmit);
@@ -351,22 +1322,50 @@
             e.preventDefault();
             setLoading(true);
 
-            const { error } = await stripe.confirmPayment({
-                elements,
-                confirmParams: {
-                    return_url: `${window.location.origin}/success.html`,
-                },
-            });
-
-            if (error) {
-                if (error.type === "card_error" || error.type === "validation_error") {
-                    showMessage(error.message);
-                } else {
-                    showMessage("Une erreur inattendue est survenue.");
+            try {
+                // 1) Valider le Payment Element d'abord
+                const { error: submitError } = await elements.submit();
+                if (submitError) {
+                    showMessage(submitError.message || "Vérifie les informations de paiement.");
+                    setLoading(false);
+                    return;
                 }
-            }
 
-            setLoading(false);
+                // 2) Confirmer le paiement
+                const email = document.getElementById('email').value;
+                const prenom = document.getElementById('prenom').value;
+                const nom = document.getElementById('nom').value;
+                const fullName = nom ? `${prenom} ${nom}` : prenom;
+
+                const { error } = await stripe.confirmPayment({
+                    elements,
+                    clientSecret: currentClientSecret,
+                    confirmParams: {
+                        return_url: `${window.location.origin}/success.html`,
+                        receipt_email: email,
+                        payment_method_data: {
+                            billing_details: {
+                                name: fullName,
+                                email: email
+                            }
+                        }
+                    },
+                });
+
+                if (error) {
+                    if (error.type === "card_error" || error.type === "validation_error") {
+                        showMessage(error.message);
+                    } else {
+                        showMessage("Une erreur inattendue est survenue.");
+                    }
+                }
+
+            } catch (err) {
+                console.error(err);
+                showMessage(err.message || "Erreur inattendue.");
+            } finally {
+                setLoading(false);
+            }
         }
 
         function showMessage(messageText) {
@@ -388,9 +1387,39 @@
                 buttonText.textContent = "Traitement en cours...";
             } else {
                 submitButton.disabled = false;
-                buttonText.textContent = "Commander maintenant - 17€";
+                buttonText.textContent = "Commander maintenant";
             }
         }
+
+        // Scripts modals
+        function openModal(type) {
+            const modalId = type + 'Modal';
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(type) {
+            const modalId = type + 'Modal';
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
     </script>
 </body>
 </html>
