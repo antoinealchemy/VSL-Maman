@@ -27,7 +27,6 @@
             box-sizing: border-box;
         }
 
-        /* iOS safe area strip */
         .ios-safe-area {
             background: var(--brand-teal);
             height: env(safe-area-inset-top, 0);
@@ -42,7 +41,6 @@
             padding: 0;
         }
 
-        /* Header image responsive */
         .site-header {
             background: #ffffff;
             display: block;
@@ -185,16 +183,6 @@
             height: 1px;
             background: #E5E7EB;
             margin: 12px 0 16px;
-        }
-
-        @media (max-width: 360px) {
-            .inc-label {
-                font-size: 14px;
-            }
-            
-            .inc-right {
-                font-size: 13px;
-            }
         }
 
         .check-icon {
@@ -542,230 +530,6 @@
             color: var(--teal-1) !important;
         }
 
-        .testimonials {
-            max-width: 1200px;
-            margin: 40px auto 0;
-            padding: 0 15px;
-            background-color: var(--bg);
-        }
-
-        .testimonials-title {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 30px;
-            padding-top: 40px;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            padding-bottom: 40px;
-        }
-
-        .testimonial-card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            border: 1px solid #e5e5e5;
-        }
-
-        .testimonial-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .testimonial-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: 2px solid var(--teal-1);
-        }
-
-        .testimonial-author {
-            flex: 1;
-        }
-
-        .testimonial-name {
-            font-weight: 700;
-            font-size: 15px;
-            color: var(--dark);
-            margin-bottom: 2px;
-        }
-
-        .testimonial-location {
-            font-size: 13px;
-            color: var(--muted);
-        }
-
-        .testimonial-stars {
-            color: #FFA500;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .testimonial-headline {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .testimonial-text {
-            font-size: 14px;
-            color: #4a4a4a;
-            line-height: 1.6;
-        }
-
-        /* Footer styles */
-        footer {
-            background-color: #E8E8E8;
-            color: #6B6B6B;
-            padding: 20px 15px;
-            margin-top: 60px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .footer-content {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .footer-disclaimer {
-            font-size: 0.7rem;
-            margin-bottom: 12px;
-            opacity: 0.9;
-            line-height: 1.4;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: #6B6B6B;
-            text-decoration: none;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-            border-bottom: 1px solid rgba(107, 107, 107, 0.4);
-            padding-bottom: 1px;
-        }
-
-        .footer-link:hover {
-            opacity: 0.7;
-        }
-
-        .footer-copyright {
-            font-size: 0.65rem;
-            opacity: 0.85;
-            margin-top: 10px;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            animation: fadeInModal 0.3s ease;
-        }
-
-        @keyframes fadeInModal {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 700px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .close-modal {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #888;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            background: none;
-            border: none;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-modal:hover {
-            color: #111;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #3FB7A8;
-            margin-bottom: 20px;
-            padding-right: 40px;
-        }
-
-        .modal-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .modal-text h3 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #111;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .modal-text p {
-            margin-bottom: 15px;
-        }
-
         @media (max-width: 968px) {
             .content-wrapper {
                 grid-template-columns: 1fr;
@@ -814,57 +578,6 @@
                 gap: 10px;
             }
 
-            .testimonials {
-                padding: 0;
-                margin-top: 0;
-            }
-
-            .testimonials-title {
-                padding: 30px 15px 20px;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-                padding: 0 15px 30px;
-            }
-
-            .footer-disclaimer {
-                font-size: 0.65rem;
-                margin-bottom: 10px;
-            }
-
-            .footer-links {
-                gap: 12px;
-                margin-bottom: 10px;
-            }
-
-            .footer-link {
-                font-size: 0.65rem;
-            }
-
-            .footer-copyright {
-                font-size: 0.6rem;
-                margin-top: 8px;
-            }
-
-            .modal-content {
-                margin: 10% 15px;
-                padding: 25px;
-                max-height: 85vh;
-            }
-
-            .modal-title {
-                font-size: 20px;
-            }
-
-            .modal-text {
-                font-size: 14px;
-            }
-
-            .modal-text h3 {
-                font-size: 16px;
-            }
-
             .guarantee-block {
                 flex-direction: column;
                 align-items: center;
@@ -884,22 +597,12 @@
     </style>
 </head>
 <body>
-    <!-- iOS safe-area strip (remplit l'encoche au-dessus du header en vert) -->
     <div class="ios-safe-area" aria-hidden="true"></div>
 
-    <!-- Header image responsive -->
-    <header class="site-header" role="banner" aria-label="Dr Sarah Dumont — Docteur en psychologie">
+    <header class="site-header" role="banner">
         <picture>
-            <!-- Mobile en priorité -->
             <source srcset="headermobile.png" media="(max-width: 768px)">
-            <!-- Desktop par défaut (et tablettes paysage) -->
-            <img
-                src="headerdesktop.png"
-                alt="Dr Sarah Dumont — Docteur en psychologie. +5 000 femmes lui ont déjà fait confiance."
-                loading="eager"
-                decoding="async"
-                class="site-header__img"
-                width="2000" height="500">
+            <img src="headerdesktop.png" alt="Dr Sarah Dumont — Docteur en psychologie" loading="eager" class="site-header__img" width="2000" height="500">
         </picture>
     </header>
 
@@ -916,14 +619,14 @@
                 </div>
 
                 <div class="inc-card">
-                    <img id="mockup" src="mockup.png" alt="Programme Rituel C.A.L.M.E - Guide complet, version audio et checklist progression" loading="lazy">
+                    <img id="mockup" src="mockup.png" alt="Programme Rituel C.A.L.M.E" loading="lazy">
                     
                     <h2 class="section-title">Ce qui est inclus dans le pack Rituel C.A.L.M.E</h2>
                     
                     <div class="inc-row">
                         <div class="inc-left">
                             <span class="check-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
@@ -935,7 +638,7 @@
                     <div class="inc-row">
                         <div class="inc-left">
                             <span class="check-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
@@ -947,7 +650,7 @@
                     <div class="inc-row">
                         <div class="inc-left">
                             <span class="check-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
@@ -959,7 +662,7 @@
                     <div class="inc-row">
                         <div class="inc-left">
                             <span class="check-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
@@ -992,7 +695,7 @@
                     
                     <div id="express-checkout-element"></div>
                     
-                    <div class="payment-divider" id="payment-divider">
+                    <div class="payment-divider" id="payment-divider" style="display: none;">
                         <span>ou payer par carte</span>
                     </div>
 
@@ -1034,7 +737,7 @@
                         </button>
 
                         <div class="secure-payment-image">
-                            <img src="paiement.png" alt="Paiement sécurisé - CB, Mastercard, Visa, PayPal" loading="lazy">
+                            <img src="paiement.png" alt="Paiement sécurisé" loading="lazy">
                         </div>
 
                         <div class="guarantee-block">
@@ -1081,146 +784,6 @@
         </div>
     </div>
 
-    <section class="testimonials">
-        <h2 class="testimonials-title">Ce que disent les mamans qui ont essayé</h2>
-        <div class="testimonials-grid">
-            <article class="testimonial-card">
-                <div class="testimonial-header">
-                    <img src="https://ui-avatars.com/api/?name=Sophie+Martinez&background=3FB7A8&color=fff" alt="Sophie Martinez" class="testimonial-avatar">
-                    <div class="testimonial-author">
-                        <div class="testimonial-name">Sophie Martinez</div>
-                        <div class="testimonial-location">Lyon</div>
-                    </div>
-                </div>
-                <div class="testimonial-stars">★★★★★</div>
-                <div class="testimonial-headline">J'ai enfin retrouvé du souffle</div>
-                <p class="testimonial-text">Je l'ai essayé pendant 3 semaines et mon stress est passé d'un 9/10 à environ 3/10. Le rituel ne prend que 3 minutes et pourtant il change tout — j'ai recommencé à profiter de mes soirées sans m'effondrer.</p>
-            </article>
-
-            <article class="testimonial-card">
-                <div class="testimonial-header">
-                    <img src="https://ui-avatars.com/api/?name=Marine+Lefevre&background=3FB7A8&color=fff" alt="Marine Lefèvre" class="testimonial-avatar">
-                    <div class="testimonial-author">
-                        <div class="testimonial-name">Marine Lefèvre</div>
-                        <div class="testimonial-location">Paris</div>
-                    </div>
-                </div>
-                <div class="testimonial-stars">★★★★★</div>
-                <div class="testimonial-headline">Simple, rapide, efficace</div>
-                <p class="testimonial-text">Je n'y croyais pas au début — encore une méthode de plus. Mais en 2 semaines j'ai senti ma tension baisser, j'ai moins crié et j'ai retrouvé l'envie de peindre le soir.</p>
-            </article>
-
-            <article class="testimonial-card">
-                <div class="testimonial-header">
-                    <img src="https://ui-avatars.com/api/?name=Celine+Dubois&background=3FB7A8&color=fff" alt="Céline Dubois" class="testimonial-avatar">
-                    <div class="testimonial-author">
-                        <div class="testimonial-name">Céline Dubois</div>
-                        <div class="testimonial-location">Nantes</div>
-                    </div>
-                </div>
-                <div class="testimonial-stars">★★★★★</div>
-                <div class="testimonial-headline">Moins de culpabilité, plus de présent</div>
-                <p class="testimonial-text">Avant je passais mes journées avec la boule au ventre. Maintenant je peux être présente pour mes enfants sans m'épuiser. Le guide de rechute m'a aidée quand j'ai craqué.</p>
-            </article>
-
-            <article class="testimonial-card">
-                <div class="testimonial-header">
-                    <img src="https://ui-avatars.com/api/?name=Audrey+Bernard&background=3FB7A8&color=fff" alt="Audrey Bernard" class="testimonial-avatar">
-                    <div class="testimonial-author">
-                        <div class="testimonial-name">Audrey Bernard</div>
-                        <div class="testimonial-location">Marseille</div>
-                    </div>
-                </div>
-                <div class="testimonial-stars">★★★★★</div>
-                <div class="testimonial-headline">Valeur incroyable pour le prix</div>
-                <p class="testimonial-text">Ce petit programme a eu plus d'effet que des semaines de lecture d'articles. Pour 17€, c'est un cadeau que je me suis enfin permis, et je ne le regrette pas.</p>
-            </article>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <p class="footer-disclaimer">
-                Ce site n'est pas affilié à Facebook, Instagram ou Meta. Il s'agit d'un site web indépendant. Ce site est sécurisé et vos données sont protégées.
-            </p>
-            <div class="footer-links">
-                <a href="#" class="footer-link" onclick="openModal('cgv'); return false;">Conditions Générales de Vente</a>
-                <a href="#" class="footer-link" onclick="openModal('mentions'); return false;">Mentions Légales</a>
-                <a href="#" class="footer-link" onclick="openModal('confidentialite'); return false;">Politique de Confidentialité</a>
-            </div>
-            <p class="footer-copyright">
-                © 2025 drsarahdumont.com - Tous droits réservés
-            </p>
-        </div>
-    </footer>
-
-    <!-- Modals -->
-    <div id="cgvModal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('cgv')">&times;</button>
-            <h2 class="modal-title">Conditions Générales de Vente</h2>
-            <div class="modal-text">
-                <h3>1. Objet</h3>
-                <p>Les présentes conditions générales de vente régissent la vente de produits et services proposés sur drsarahdumont.com.</p>
-                
-                <h3>2. Prix</h3>
-                <p>Les prix sont indiqués en euros et toutes taxes comprises. Nous nous réservons le droit de modifier nos prix à tout moment.</p>
-                
-                <h3>3. Paiement</h3>
-                <p>Le paiement s'effectue en ligne de manière sécurisée par carte bancaire ou tout autre moyen de paiement proposé sur le site.</p>
-                
-                <h3>4. Livraison</h3>
-                <p>Pour les produits numériques, l'accès est fourni immédiatement après validation du paiement.</p>
-                
-                <h3>5. Droit de rétractation</h3>
-                <p>Conformément à la législation en vigueur, vous disposez d'un délai de 14 jours pour exercer votre droit de rétractation.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="mentionsModal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('mentions')">&times;</button>
-            <h2 class="modal-title">Mentions Légales</h2>
-            <div class="modal-text">
-                <h3>Éditeur du site</h3>
-                <p>drsarahdumont.com</p>
-                
-                <h3>Hébergement</h3>
-                <p>Ce site est hébergé par un prestataire professionnel garantissant la sécurité et la confidentialité des données.</p>
-                
-                <h3>Propriété intellectuelle</h3>
-                <p>L'ensemble du contenu de ce site (textes, images, vidéos) est protégé par le droit d'auteur. Toute reproduction est interdite sans autorisation préalable.</p>
-                
-                <h3>Responsabilité</h3>
-                <p>Nous nous efforçons de maintenir les informations de ce site à jour et exactes, mais ne pouvons garantir l'absence d'erreurs.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="confidentialiteModal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('confidentialite')">&times;</button>
-            <h2 class="modal-title">Politique de Confidentialité</h2>
-            <div class="modal-text">
-                <h3>Collecte des données</h3>
-                <p>Nous collectons uniquement les données nécessaires au bon fonctionnement de nos services et à l'amélioration de votre expérience.</p>
-                
-                <h3>Utilisation des données</h3>
-                <p>Vos données personnelles sont utilisées uniquement dans le cadre de la fourniture de nos services et ne sont jamais vendues à des tiers.</p>
-                
-                <h3>Sécurité</h3>
-                <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles pour protéger vos données contre tout accès non autorisé.</p>
-                
-                <h3>Vos droits</h3>
-                <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles.</p>
-                
-                <h3>Cookies</h3>
-                <p>Ce site utilise des cookies pour améliorer votre expérience de navigation. Vous pouvez les désactiver dans les paramètres de votre navigateur.</p>
-            </div>
-        </div>
-    </div>
-
     <script>
         const API_URL = 'https://vsl-maman.vercel.app';
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
@@ -1234,7 +797,6 @@
             try {
                 console.log('Début de l\'initialisation...');
                 
-                // Checkbox cochée par défaut, donc on envoie includeUpsell: true
                 const includeUpsell = document.getElementById('upsell').checked;
                 
                 const response = await fetch(`${API_URL}/api/create-payment-intent`, {
@@ -1243,7 +805,7 @@
                     body: JSON.stringify({ includeUpsell })
                 });
 
-                console.log('Réponse API reçue:', response.status);
+                console.log('Réponse API:', response.status);
 
                 if (!response.ok) {
                     const errorText = await response.text();
@@ -1252,7 +814,7 @@
                 }
 
                 const data = await response.json();
-                console.log('Données reçues:', data);
+                console.log('PaymentIntent créé:', data);
 
                 const { clientSecret } = data;
                 currentClientSecret = clientSecret;
@@ -1281,6 +843,7 @@
 
                 console.log('Elements Stripe créés');
 
+                // Express Checkout Element
                 const expressCheckoutOptions = {
                     buttonHeight: 48,
                     buttonTheme: {
@@ -1300,29 +863,30 @@
                 const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
 
                 expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
-                    console.log('Moyens de paiement disponibles:', availablePaymentMethods);
+                    console.log('Express Checkout ready:', availablePaymentMethods);
                     
                     if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
                         document.getElementById('express-checkout-element').style.display = 'block';
                         document.getElementById('payment-divider').style.display = 'block';
-                    } else {
-                        document.getElementById('express-checkout-element').style.display = 'none';
-                        document.getElementById('payment-divider').style.display = 'none';
                     }
                 });
 
+                // CORRECTION CRITIQUE: Ajouter elements.submit() pour Express Checkout
                 expressCheckoutElement.on('confirm', async (event) => {
                     console.log('Confirmation Express Checkout...');
                     
+                    // 1) Valider les éléments avant de confirmer
                     const { error: submitError } = await elements.submit();
                     if (submitError) {
-                        showMessage(submitError.message);
+                        console.error('Erreur submit Express:', submitError);
+                        showMessage(submitError.message || "Vérifie les informations de paiement.");
                         return;
                     }
 
                     const email = document.getElementById('email').value || event.billingDetails?.email || '';
                     const name = event.billingDetails?.name || 'Client';
 
+                    // 2) Confirmer le paiement avec le clientSecret actuel
                     const { error } = await stripe.confirmPayment({
                         elements,
                         clientSecret: currentClientSecret,
@@ -1339,13 +903,15 @@
                     });
 
                     if (error) {
-                        showMessage(error.message);
+                        console.error('Erreur confirmation Express:', error);
+                        showMessage(error.message || "Échec du paiement.");
                     }
                 });
 
                 expressCheckoutElement.mount('#express-checkout-element');
                 console.log('Express Checkout monté');
 
+                // Payment Element classique
                 const paymentElementOptions = {
                     layout: {
                         type: 'tabs',
@@ -1369,7 +935,7 @@
                 document.getElementById('payment-container').style.display = 'block';
                 console.log('Interface affichée');
 
-                // Écouter les changements sur la checkbox
+                // Écouter les changements sur la checkbox upsell
                 document.getElementById('upsell').addEventListener('change', handleUpsellChange);
 
             } catch (error) {
@@ -1403,6 +969,7 @@
                 }
 
                 const data = await response.json();
+                console.log('Nouveau PaymentIntent:', data);
                 currentClientSecret = data.clientSecret;
 
                 // Recréer les elements avec le nouveau clientSecret
@@ -1458,38 +1025,64 @@
 
         document.getElementById('payment-form').addEventListener('submit', handleSubmit);
 
+        // CORRECTION CRITIQUE: Ajouter elements.submit() avant confirmPayment
         async function handleSubmit(e) {
             e.preventDefault();
             setLoading(true);
 
-            const email = document.getElementById('email').value;
-            const prenom = document.getElementById('prenom').value;
-            const nom = document.getElementById('nom').value;
-            const fullName = nom ? `${prenom} ${nom}` : prenom;
+            try {
+                console.log('Début du traitement du paiement...');
 
-            const { error } = await stripe.confirmPayment({
-                elements,
-                confirmParams: {
-                    return_url: `${window.location.origin}/success.html`,
-                    receipt_email: email,
-                    payment_method_data: {
-                        billing_details: {
-                            name: fullName,
-                            email: email
-                        }
-                    }
-                },
-            });
-
-            if (error) {
-                if (error.type === "card_error" || error.type === "validation_error") {
-                    showMessage(error.message);
-                } else {
-                    showMessage("Une erreur inattendue est survenue.");
+                // 1) ÉTAPE CRITIQUE: Valider le Payment Element et collecter les données
+                const { error: submitError } = await elements.submit();
+                if (submitError) {
+                    console.error('Erreur validation:', submitError);
+                    showMessage(submitError.message || "Vérifie les informations de paiement.");
+                    setLoading(false);
+                    return;
                 }
-            }
 
-            setLoading(false);
+                console.log('Validation réussie, confirmation en cours...');
+
+                const email = document.getElementById('email').value;
+                const prenom = document.getElementById('prenom').value;
+                const nom = document.getElementById('nom').value;
+                const fullName = nom ? `${prenom} ${nom}` : prenom;
+
+                // 2) Confirmer le paiement avec le clientSecret actuel
+                const { error } = await stripe.confirmPayment({
+                    elements,
+                    clientSecret: currentClientSecret,
+                    confirmParams: {
+                        return_url: `${window.location.origin}/success.html`,
+                        receipt_email: email,
+                        payment_method_data: {
+                            billing_details: {
+                                name: fullName,
+                                email: email
+                            }
+                        }
+                    },
+                });
+
+                if (error) {
+                    console.error('Erreur confirmation:', error);
+                    if (error.type === "card_error" || error.type === "validation_error") {
+                        showMessage(error.message);
+                    } else {
+                        showMessage("Une erreur inattendue est survenue.");
+                    }
+                    setLoading(false);
+                } else {
+                    // Si 3DS requis, Stripe redirige automatiquement
+                    console.log('Paiement confirmé ou redirection 3DS en cours...');
+                }
+
+            } catch (err) {
+                console.error('Erreur inattendue:', err);
+                showMessage(err.message || "Erreur inattendue.");
+                setLoading(false);
+            }
         }
 
         function showMessage(messageText) {
@@ -1514,36 +1107,6 @@
                 buttonText.textContent = "Commander maintenant";
             }
         }
-
-        // Scripts modals
-        function openModal(type) {
-            const modalId = type + 'Modal';
-            document.getElementById(modalId).style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(type) {
-            const modalId = type + 'Modal';
-            document.getElementById(modalId).style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                const modals = document.querySelectorAll('.modal');
-                modals.forEach(modal => {
-                    modal.style.display = 'none';
-                });
-                document.body.style.overflow = 'auto';
-            }
-        });
     </script>
 </body>
 </html>
