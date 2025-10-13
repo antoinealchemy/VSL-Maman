@@ -96,10 +96,9 @@
 
         .price-section {
             padding: 25px;
-            background: white;
+            background: #1f1f1f;
             border-radius: 12px;
             margin-bottom: 25px;
-            border: 2px solid #E8E8E8;
         }
 
         .price {
@@ -110,16 +109,16 @@
 
         .old-price {
             font-size: 22px;
-            color: #999;
+            color: #666;
             text-decoration: line-through;
             margin-left: 15px;
         }
 
         .guarantee {
             padding: 20px;
-            background: #F0F9F8;
+            background: rgba(63, 183, 168, 0.1);
             border-radius: 12px;
-            border: 1px solid #C7E9E4;
+            border: 1px solid rgba(63, 183, 168, 0.3);
         }
 
         .guarantee h3 {
@@ -129,87 +128,18 @@
         }
 
         .guarantee p {
-            color: #5C5C5C;
+            color: #b0b0b0;
             font-size: 14px;
             line-height: 1.5;
         }
 
         .checkout-section {
             padding: 40px;
-            background: white;
-        }
-
-        #express-checkout-element {
-            margin-bottom: 24px;
-        }
-
-        .payment-divider {
-            text-align: center;
-            margin: 24px 0;
-            position: relative;
-        }
-
-        .payment-divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #E8E8E8;
-        }
-
-        .payment-divider span {
-            background: white;
-            padding: 0 16px;
-            position: relative;
-            color: #6B7280;
-            font-size: 14px;
+            background: #222222;
         }
 
         #payment-form {
             max-width: 500px;
-        }
-
-        .form-field {
-            margin-bottom: 16px;
-        }
-
-        .form-field label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #111111;
-            margin-bottom: 6px;
-        }
-
-        .form-field input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #D1D5DB;
-            border-radius: 8px;
-            font-size: 15px;
-            font-family: 'Nunito Sans', sans-serif;
-            transition: border-color 0.2s;
-        }
-
-        .form-field input:focus {
-            outline: none;
-            border-color: #3FB7A8;
-            box-shadow: 0 0 0 3px rgba(63, 183, 168, 0.1);
-        }
-
-        .form-field.optional label::after {
-            content: " (facultatif)";
-            font-weight: 400;
-            color: #6B7280;
-        }
-
-        .name-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
         }
 
         #payment-element {
@@ -250,7 +180,7 @@
         }
 
         .spinner {
-            border: 3px solid #E8E8E8;
+            border: 3px solid #3a3a3a;
             border-top: 3px solid #3FB7A8;
             border-radius: 50%;
             width: 50px;
@@ -281,7 +211,7 @@
 
             .product-info {
                 border-right: none;
-                border-bottom: 1px solid #E8E8E8;
+                border-bottom: 1px solid #3a3a3a;
             }
         }
 
@@ -312,7 +242,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>💸 Rituel C.A.L.M.E</h1>
+            <h1>🌟 Rituel C.A.L.M.E</h1>
             <p>Retrouve ta sérénité en 3 minutes par jour</p>
         </div>
 
@@ -338,7 +268,7 @@
                 </div>
 
                 <div class="guarantee">
-                    <h3>✓ Garantie 30 jours satisfait ou remboursé</h3>
+                    <h3>✅ Garantie 30 jours satisfait ou remboursé</h3>
                     <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intégralement. Sans question.</p>
                 </div>
             </div>
@@ -349,47 +279,21 @@
                     <p>Chargement du paiement sécurisé...</p>
                 </div>
                 
-                <div id="payment-container" style="display: none;">
-                    <!-- Express Checkout Element (Apple Pay, Google Pay, etc.) -->
-                    <div id="express-checkout-element"></div>
-                    
-                    <!-- Séparateur -->
-                    <div class="payment-divider" id="payment-divider">
-                        <span>ou payer par carte</span>
-                    </div>
-
-                    <!-- Formulaire classique -->
-                    <form id="payment-form">
-                        <div class="form-field">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="votre@email.com">
-                        </div>
-
-                        <div class="name-row">
-                            <div class="form-field">
-                                <label for="prenom">Prénom</label>
-                                <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
-                            </div>
-
-                            <div class="form-field optional">
-                                <label for="nom">Nom</label>
-                                <input type="text" id="nom" name="nom" placeholder="Nom">
-                            </div>
-                        </div>
-
-                        <div id="payment-element"></div>
-                        <button id="submit">
-                            <span id="button-text">Commander maintenant - 17€</span>
-                        </button>
-                        <div id="payment-message"></div>
-                    </form>
-                </div>
+                <form id="payment-form" style="display: none;">
+                    <div id="payment-element"></div>
+                    <button id="submit">
+                        <span id="button-text">Commander maintenant - 17€</span>
+                    </button>
+                    <div id="payment-message"></div>
+                </form>
             </div>
         </div>
     </div>
 
     <script>
+        // URL de votre API Vercel
         const API_URL = 'https://vsl-maman.vercel.app';
+
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
         let elements;
@@ -409,13 +313,12 @@
 
                 const { clientSecret } = await response.json();
 
-                // Configuration de l'apparence
                 const appearance = {
-                    theme: 'stripe',
+                    theme: 'night',
                     variables: {
                         colorPrimary: '#3FB7A8',
-                        colorBackground: '#ffffff',
-                        colorText: '#111111',
+                        colorBackground: '#222222',
+                        colorText: '#ffffff',
                         colorDanger: '#ff4444',
                         fontFamily: 'Nunito Sans, sans-serif',
                         borderRadius: '8px',
@@ -423,97 +326,13 @@
                     }
                 };
 
-                // Initialiser Elements avec le clientSecret
-                elements = stripe.elements({ 
-                    appearance, 
-                    clientSecret,
-                });
-
-                // Créer l'Express Checkout Element
-                const expressCheckoutOptions = {
-                    buttonHeight: 48,
-                    buttonTheme: {
-                        applePay: 'black',
-                        googlePay: 'black'
-                    },
-                    paymentMethods: {
-                        applePay: 'always',
-                        googlePay: 'always',
-                        link: 'auto'
-                    }
-                };
-
-                const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
-
-                // Vérifier quels moyens de paiement sont disponibles
-                expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
-                    console.log('Moyens de paiement disponibles:', availablePaymentMethods);
-                    
-                    if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
-                        document.getElementById('express-checkout-element').style.display = 'block';
-                        document.getElementById('payment-divider').style.display = 'block';
-                    } else {
-                        document.getElementById('express-checkout-element').style.display = 'none';
-                        document.getElementById('payment-divider').style.display = 'none';
-                    }
-                });
-
-                // Gérer le clic sur Express Checkout
-                expressCheckoutElement.on('confirm', async (event) => {
-                    const { error: submitError } = await elements.submit();
-                    if (submitError) {
-                        showMessage(submitError.message);
-                        return;
-                    }
-
-                    const email = document.getElementById('email').value || event.billingDetails?.email || '';
-                    const name = event.billingDetails?.name || 'Client';
-
-                    const { error } = await stripe.confirmPayment({
-                        elements,
-                        clientSecret,
-                        confirmParams: {
-                            return_url: `${window.location.origin}/success.html`,
-                            receipt_email: email,
-                            payment_method_data: {
-                                billing_details: {
-                                    name: name,
-                                    email: email
-                                }
-                            }
-                        },
-                    });
-
-                    if (error) {
-                        showMessage(error.message);
-                    }
-                });
-
-                // Monter l'Express Checkout Element
-                expressCheckoutElement.mount('#express-checkout-element');
-
-                // Créer le Payment Element classique
-                const paymentElementOptions = {
-                    layout: {
-                        type: 'tabs',
-                        defaultCollapsed: false,
-                    },
-                    fields: {
-                        billingDetails: {
-                            name: 'never',
-                            email: 'never',
-                            phone: 'never',
-                            address: 'never'
-                        }
-                    }
-                };
-                
-                const paymentElement = elements.create('payment', paymentElementOptions);
+                elements = stripe.elements({ appearance, clientSecret });
+                const paymentElement = elements.create('payment');
                 paymentElement.mount('#payment-element');
 
-                // Afficher le formulaire
+                // Masquer le loading, afficher le formulaire
                 document.getElementById('loading').style.display = 'none';
-                document.getElementById('payment-container').style.display = 'block';
+                document.getElementById('payment-form').style.display = 'block';
 
             } catch (error) {
                 console.error('Erreur:', error);
@@ -532,22 +351,10 @@
             e.preventDefault();
             setLoading(true);
 
-            const email = document.getElementById('email').value;
-            const prenom = document.getElementById('prenom').value;
-            const nom = document.getElementById('nom').value;
-            const fullName = nom ? `${prenom} ${nom}` : prenom;
-
             const { error } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
                     return_url: `${window.location.origin}/success.html`,
-                    receipt_email: email,
-                    payment_method_data: {
-                        billing_details: {
-                            name: fullName,
-                            email: email
-                        }
-                    }
                 },
             });
 
