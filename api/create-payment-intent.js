@@ -18,8 +18,8 @@ module.exports = async (req, res) => {
   try {
     const { includeUpsell } = req.body;
     
-    const baseAmount = 1700;  // 17€
-    const upsellAmount = 2700; // 27€
+    const baseAmount = 100;  // 17€
+    const upsellAmount = 100; // 27€
     
     const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
 
