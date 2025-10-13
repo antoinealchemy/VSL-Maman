@@ -16,19 +16,36 @@ module.exports = async (req, res) => {
   }
 
   try {
+    // Récupérer le paramètre includeUpsell depuis le body
+    const { includeUpsell } = req.body;
+    
+    // Prix de base : 17€ (1700 centimes)
+    const baseAmount = 1700;
+    
+    // Prix de l'upsell : 29€ (2900 centimes)
+    const upsellAmount = 2900;
+    
+    // Calculer le montant total
+    const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1700,
+      amount: totalAmount,
       currency: 'eur',
       automatic_payment_methods: { 
         enabled: true
       },
       metadata: {
-        product: 'Rituel C.A.L.M.E'
+        product: 'Rituel C.A.L.M.E',
+        includeUpsell: includeUpsell ? 'true' : 'false',
+        baseProduct: 'Rituel C.A.L.M.E Complet - 17€',
+        upsellProduct: includeUpsell ? 'Kit Anti-Rechute Complet - 29€' : 'none'
       }
     });
 
     res.status(200).json({
       clientSecret: paymentIntent.client_secret,
+      amount: totalAmount,
+      includeUpsell: includeUpsell
     });
   } catch (error) {
     console.error('Erreur Stripe:', error);

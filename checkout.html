@@ -18,157 +18,326 @@
             background-color: #F9FAFB;
             color: #111111;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        .header {
-            background: linear-gradient(135deg, #3FB7A8, #50C4B3);
-            color: white;
+        .hero-section {
+            background: white;
+            border-radius: 16px;
             padding: 40px;
-            text-align: center;
-            border-radius: 16px 16px 0 0;
-        }
-
-        .header h1 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 18px;
-            opacity: 0.95;
-        }
-
-        .content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 30px;
-            background: #2a2a2a;
-            border-radius: 0 0 16px 16px;
-            overflow: hidden;
-        }
-
-        .product-info {
-            padding: 40px;
-            border-right: 1px solid #3a3a3a;
-        }
-
-        .product-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 15px;
-        }
-
-        .product-description {
-            font-size: 16px;
-            color: #b0b0b0;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .product-features {
-            list-style: none;
             margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .product-features li {
-            padding: 10px 0;
-            padding-left: 30px;
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .hero-text h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-text .tagline {
+            font-size: 18px;
+            color: #5C5C5C;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .price-hero {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .price-current {
+            font-size: 48px;
+            font-weight: 700;
+            color: #3FB7A8;
+        }
+
+        .price-old {
+            font-size: 24px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .price-label {
+            font-size: 14px;
+            color: #3FB7A8;
+            font-weight: 600;
+            background: #F0F9F8;
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .trust-badges {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .trust-badge {
+            text-align: center;
+            padding: 15px;
+            background: #F9FAFB;
+            border-radius: 8px;
+        }
+
+        .trust-badge .icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .trust-badge .text {
+            font-size: 12px;
+            color: #5C5C5C;
+            font-weight: 600;
+        }
+
+        .included-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .included-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .included-items {
+            display: grid;
+            gap: 20px;
+        }
+
+        .included-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: #F9FAFB;
+            border-radius: 12px;
+            align-items: center;
+        }
+
+        .included-item .icon {
+            font-size: 40px;
+            flex-shrink: 0;
+        }
+
+        .included-item .content {
+            flex: 1;
+        }
+
+        .included-item .title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 5px;
+        }
+
+        .included-item .description {
+            font-size: 14px;
+            color: #5C5C5C;
+            line-height: 1.5;
+        }
+
+        .included-item .value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #3FB7A8;
+            flex-shrink: 0;
+        }
+
+        .total-value {
+            text-align: center;
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #F0F9F8, #E6F5F3);
+            border-radius: 12px;
+        }
+
+        .total-value .label {
+            font-size: 16px;
+            color: #5C5C5C;
+            margin-bottom: 8px;
+        }
+
+        .total-value .amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #111111;
+            text-decoration: line-through;
+        }
+
+        .upsell-box {
+            background: white;
+            border: 3px dashed #FF4444;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.1);
             position: relative;
-            color: #e0e0e0;
         }
 
-        .product-features li:before {
+        .upsell-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FF4444;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(255, 68, 68, 0.3);
+        }
+
+        .upsell-content {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .upsell-checkbox {
+            flex-shrink: 0;
+        }
+
+        .upsell-checkbox input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .upsell-info {
+            flex: 1;
+        }
+
+        .upsell-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 8px;
+        }
+
+        .upsell-info p {
+            font-size: 15px;
+            color: #5C5C5C;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .upsell-benefits {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .upsell-benefits li {
+            font-size: 14px;
+            color: #5C5C5C;
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .upsell-benefits li:before {
             content: "✓";
             position: absolute;
             left: 0;
             color: #3FB7A8;
             font-weight: bold;
-            font-size: 20px;
         }
 
-        .price-section {
-            padding: 25px;
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 2px solid #E8E8E8;
+        .upsell-price {
+            flex-shrink: 0;
+            text-align: right;
         }
 
-        .price {
-            font-size: 42px;
-            font-weight: 700;
-            color: #3FB7A8;
-        }
-
-        .old-price {
-            font-size: 22px;
+        .upsell-price .old {
+            font-size: 18px;
             color: #999;
             text-decoration: line-through;
-            margin-left: 15px;
+            display: block;
         }
 
-        .guarantee {
-            padding: 20px;
-            background: #F0F9F8;
-            border-radius: 12px;
-            border: 1px solid #C7E9E4;
-        }
-
-        .guarantee h3 {
-            color: #3FB7A8;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .guarantee p {
-            color: #5C5C5C;
-            font-size: 14px;
-            line-height: 1.5;
+        .upsell-price .new {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FF4444;
         }
 
         .checkout-section {
+            background: white;
+            border-radius: 16px;
             padding: 40px;
-            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        #express-checkout-element {
-            margin-bottom: 24px;
+        .order-summary {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
         }
 
-        .payment-divider {
-            text-align: center;
-            margin: 24px 0;
-            position: relative;
+        .order-summary h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 15px;
         }
 
-        .payment-divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #E8E8E8;
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 15px;
+            color: #5C5C5C;
         }
 
-        .payment-divider span {
-            background: white;
-            padding: 0 16px;
-            position: relative;
-            color: #6B7280;
-            font-size: 14px;
+        .summary-line.total {
+            border-top: 2px solid #E8E8E8;
+            margin-top: 10px;
+            padding-top: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .summary-line.total .amount {
+            color: #3FB7A8;
+            font-size: 28px;
         }
 
         #payment-form {
-            max-width: 500px;
+            max-width: 100%;
         }
 
         .form-field {
@@ -199,12 +368,6 @@
             box-shadow: 0 0 0 3px rgba(63, 183, 168, 0.1);
         }
 
-        .form-field.optional label::after {
-            content: " (facultatif)";
-            font-weight: 400;
-            color: #6B7280;
-        }
-
         .name-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -220,10 +383,10 @@
             width: 100%;
             background: linear-gradient(135deg, #3FB7A8, #50C4B3);
             color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
-            padding: 16px;
-            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 18px;
+            border-radius: 12px;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -238,6 +401,76 @@
         #submit:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+        }
+
+        .guarantee-box {
+            background: #FFF9E6;
+            border: 2px solid #FFE8A3;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .guarantee-box h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 10px;
+        }
+
+        .guarantee-box p {
+            font-size: 14px;
+            color: #5C5C5C;
+            line-height: 1.5;
+        }
+
+        .testimonials-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .testimonials-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .testimonial {
+            background: #F9FAFB;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #3FB7A8;
+        }
+
+        .testimonial .stars {
+            color: #FFD700;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .testimonial .text {
+            font-size: 15px;
+            color: #5C5C5C;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .testimonial .author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111111;
         }
 
         .loading {
@@ -268,121 +501,227 @@
             color: #ff4444;
             margin-top: 15px;
             font-size: 14px;
-        }
-
-        .success-message {
-            color: #3FB7A8 !important;
-        }
-
-        @media (max-width: 968px) {
-            .content-wrapper {
-                grid-template-columns: 1fr;
-            }
-
-            .product-info {
-                border-right: none;
-                border-bottom: 1px solid #E8E8E8;
-            }
+            text-align: center;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 20px 15px;
+            .hero-content {
+                grid-template-columns: 1fr;
             }
 
-            .header {
-                padding: 30px 20px;
+            .trust-badges {
+                grid-template-columns: 1fr;
             }
 
-            .header h1 {
-                font-size: 24px;
+            .upsell-content {
+                flex-direction: column;
             }
 
-            .product-info,
-            .checkout-section {
-                padding: 25px 20px;
+            .upsell-price {
+                text-align: left;
             }
 
-            .price {
-                font-size: 32px;
+            .name-row {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>💸 Rituel C.A.L.M.E</h1>
-            <p>Retrouve ta sérénité en 3 minutes par jour</p>
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="hero-image">
+                    <img src="mockup.png" alt="Rituel C.A.L.M.E - Bundle complet">
+                </div>
+                <div class="hero-text">
+                    <h1>🌿 Rituel C.A.L.M.E</h1>
+                    <p class="tagline">Fais passer ton stress de 8/10 à 2/10 en seulement 3 semaines grâce à 3 minutes par jour</p>
+                    
+                    <div class="price-hero">
+                        <span class="price-current">17€</span>
+                        <span class="price-old">147€</span>
+                    </div>
+                    <span class="price-label">✨ Offre limitée : -88%</span>
+
+                    <div class="trust-badges">
+                        <div class="trust-badge">
+                            <div class="icon">🔒</div>
+                            <div class="text">Paiement 100% sécurisé</div>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="icon">✓</div>
+                            <div class="text">Garantie 14 jours satisfait ou remboursé</div>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="icon">⚡</div>
+                            <div class="text">Accès immédiat</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="content-wrapper">
-            <div class="product-info">
-                <h2 class="product-title">Le Programme Complet</h2>
-                <p class="product-description">
-                    Accède immédiatement au rituel qui a aidé 4 783 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
-                </p>
-
-                <ul class="product-features">
-                    <li>Accès immédiat au programme complet</li>
-                    <li>Les 5 étapes du rituel C.A.L.M.E détaillées</li>
-                    <li>Guide PDF téléchargeable</li>
-                    <li>Vidéos explicatives pour chaque étape</li>
-                    <li>Support communauté privée</li>
-                    <li>Garantie satisfait ou remboursé 30 jours</li>
-                </ul>
-
-                <div class="price-section">
-                    <span class="price">17€</span>
-                    <span class="old-price">97€</span>
+        <!-- Ce que tu reçois -->
+        <div class="included-section">
+            <h2>📦 Ce que tu reçois MAINTENANT</h2>
+            
+            <div class="included-items">
+                <div class="included-item">
+                    <div class="icon">📘</div>
+                    <div class="content">
+                        <div class="title">Guide complet RITUEL C.A.L.M.E™</div>
+                        <div class="description">Les 5 étapes détaillées du rituel, expliquées simplement pour que tu puisses commencer dès aujourd'hui</div>
+                    </div>
+                    <div class="value">67€</div>
                 </div>
 
-                <div class="guarantee">
-                    <h3>✓ Garantie 30 jours satisfait ou remboursé</h3>
-                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intégralement. Sans question.</p>
+                <div class="included-item">
+                    <div class="icon">🎧</div>
+                    <div class="content">
+                        <div class="title">Version AUDIO guidée</div>
+                        <div class="description">Écoute le rituel dans ta voiture, les yeux fermés, pendant tes trajets quotidiens</div>
+                    </div>
+                    <div class="value">37€</div>
+                </div>
+
+                <div class="included-item">
+                    <div class="icon">🆘</div>
+                    <div class="content">
+                        <div class="title">Guide de RECHUTE émotionnelle</div>
+                        <div class="description">Que faire quand tu craques, quand tu exploses ? Les techniques exactes pour ne pas tout perdre</div>
+                    </div>
+                    <div class="value">27€</div>
+                </div>
+
+                <div class="included-item">
+                    <div class="icon">✅</div>
+                    <div class="content">
+                        <div class="title">Checklist de progression 21 jours</div>
+                        <div class="description">Suis tes progrès jour après jour et vois concrètement ton stress diminuer</div>
+                    </div>
+                    <div class="value">16€</div>
                 </div>
             </div>
 
-            <div class="checkout-section">
-                <div id="loading" class="loading">
-                    <div class="spinner"></div>
-                    <p>Chargement du paiement sécurisé...</p>
+            <div class="total-value">
+                <div class="label">Valeur totale du programme</div>
+                <div class="amount">147€</div>
+            </div>
+        </div>
+
+        <!-- Upsell -->
+        <div class="upsell-box">
+            <div class="upsell-badge">🔥 OFFRE EXCLUSIVE</div>
+            
+            <div class="upsell-content">
+                <div class="upsell-checkbox">
+                    <input type="checkbox" id="upsell-checkbox" checked>
                 </div>
                 
-                <div id="payment-container" style="display: none;">
-                    <!-- Express Checkout Element (Apple Pay, Google Pay, etc.) -->
-                    <div id="express-checkout-element"></div>
-                    
-                    <!-- Séparateur -->
-                    <div class="payment-divider" id="payment-divider">
-                        <span>ou payer par carte</span>
+                <div class="upsell-info">
+                    <h3>✨ Oui ! J'ajoute le Kit Anti-Rechute Complet</h3>
+                    <p><strong>Pour les moments où tu sens que tu vas craquer...</strong></p>
+                    <p>Tu reçois en plus :</p>
+                    <ul class="upsell-benefits">
+                        <li>Protocole d'urgence 90 secondes (quand tu sens la crise arriver)</li>
+                        <li>Scripts de communication avec ton conjoint (dire ce que tu ressens sans exploser)</li>
+                        <li>Techniques de récupération express après une grosse journée</li>
+                        <li>Plan d'action personnalisé selon ton profil de stress</li>
+                    </ul>
+                </div>
+                
+                <div class="upsell-price">
+                    <span class="old">67€</span>
+                    <span class="new">+27€</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout -->
+        <div class="checkout-section">
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Chargement du paiement sécurisé...</p>
+            </div>
+            
+            <div id="payment-container" style="display: none;">
+                <div class="order-summary">
+                    <h3>📋 Récapitulatif de ta commande</h3>
+                    <div class="summary-line">
+                        <span>Rituel C.A.L.M.E™ Complet</span>
+                        <span>17€</span>
+                    </div>
+                    <div class="summary-line" id="upsell-line" style="display: flex;">
+                        <span>Kit Anti-Rechute Complet</span>
+                        <span>29€</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total à payer aujourd'hui</span>
+                        <span class="amount" id="total-amount">46€</span>
+                    </div>
+                </div>
+
+                <form id="payment-form">
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
                     </div>
 
-                    <!-- Formulaire classique -->
-                    <form id="payment-form">
+                    <div class="name-row">
                         <div class="form-field">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                            <label for="prenom">Prénom</label>
+                            <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
                         </div>
 
-                        <div class="name-row">
-                            <div class="form-field">
-                                <label for="prenom">Prénom</label>
-                                <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
-                            </div>
-
-                            <div class="form-field optional">
-                                <label for="nom">Nom</label>
-                                <input type="text" id="nom" name="nom" placeholder="Nom">
-                            </div>
+                        <div class="form-field">
+                            <label for="nom">Nom (facultatif)</label>
+                            <input type="text" id="nom" name="nom" placeholder="Nom">
                         </div>
+                    </div>
 
-                        <div id="payment-element"></div>
-                        <button id="submit">
-                            <span id="button-text">Commander maintenant - 17€</span>
-                        </button>
-                        <div id="payment-message"></div>
-                    </form>
+                    <div id="payment-element"></div>
+                    
+                    <button id="submit">
+                        <span id="button-text">🌟 Recevoir mon Rituel C.A.L.M.E maintenant</span>
+                    </button>
+                    
+                    <div class="guarantee-box">
+                        <h4>✓ Garantie DOUBLE remboursement 14 jours</h4>
+                        <p>Si ton stress ne passe pas de 8/10 à au moins 4/10, je te rembourse 17€ + je te verse 20€ supplémentaires pour ton temps investi.</p>
+                    </div>
+                    
+                    <div id="payment-message"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Témoignages -->
+        <div class="testimonials-section">
+            <h2>💬 Ce que disent les mamans qui l'ont testé</h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="text">"Avant, je m'endormais à 1h du matin en pleurant. Aujourd'hui, je dors 8 heures d'affilée pour la première fois en 5 ans. Mon stress est passé de 8/10 à 2/10."</div>
+                    <div class="author">Julie, 39 ans, 2 enfants</div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="text">"En 3 semaines, mon stress est passé de 8/10 à 2/10. Je ne croyais pas que 3 minutes par jour pouvaient tout changer. Mon mari m'a demandé 'qu'est-ce qui t'arrive ? Tu as l'air différente'."</div>
+                    <div class="author">Nadia, 42 ans, 3 enfants</div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="text">"J'ai arrêté de crier sur mes enfants. Pour la première fois depuis des mois, j'ai bu mon café chaud ce matin. Je me reconnais à nouveau dans le miroir."</div>
+                    <div class="author">Sophie, 45 ans, 2 enfants</div>
                 </div>
             </div>
         </div>
@@ -393,6 +732,22 @@
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
         let elements;
+        let clientSecret;
+
+        // Gestion de l'upsell
+        const upsellCheckbox = document.getElementById('upsell-checkbox');
+        const upsellLine = document.getElementById('upsell-line');
+        const totalAmount = document.getElementById('total-amount');
+
+        upsellCheckbox.addEventListener('change', () => {
+            if (upsellCheckbox.checked) {
+                upsellLine.style.display = 'flex';
+                totalAmount.textContent = '46€';
+            } else {
+                upsellLine.style.display = 'none';
+                totalAmount.textContent = '17€';
+            }
+        });
 
         initialize();
 
@@ -401,15 +756,18 @@
                 const response = await fetch(`${API_URL}/api/create-payment-intent`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        includeUpsell: upsellCheckbox.checked
+                    })
                 });
 
                 if (!response.ok) {
                     throw new Error('Erreur lors de la création du paiement');
                 }
 
-                const { clientSecret } = await response.json();
+                const data = await response.json();
+                clientSecret = data.clientSecret;
 
-                // Configuration de l'apparence
                 const appearance = {
                     theme: 'stripe',
                     variables: {
@@ -423,102 +781,11 @@
                     }
                 };
 
-                // Initialiser Elements avec le clientSecret
                 elements = stripe.elements({ 
                     appearance, 
                     clientSecret,
                 });
 
-                // Créer l'Express Checkout Element
-                const expressCheckoutOptions = {
-                    buttonHeight: 48,
-                    buttonTheme: {
-                        applePay: 'black',
-                        googlePay: 'black'
-                    },
-                    buttonType: {
-                        googlePay: 'buy'
-                    },
-                    paymentMethods: {
-                        applePay: 'always',
-                        googlePay: 'always',
-                        link: 'auto'
-                    },
-                    layout: {
-                        overflow: 'never'
-                    }
-                };
-
-                const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
-
-                // Vérifier quels moyens de paiement sont disponibles
-                expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
-                    console.log('=== DIAGNOSTIC COMPLET ===');
-                    console.log('Moyens de paiement disponibles:', availablePaymentMethods);
-                    
-                    // Test ApplePaySession
-                    if (window.ApplePaySession) {
-                        console.log('✅ ApplePaySession disponible');
-                        console.log('Version:', ApplePaySession.supportsVersion(3) ? 'v3+' : 'ancienne');
-                        console.log('Peut faire paiements:', ApplePaySession.canMakePayments());
-                    } else {
-                        console.log('❌ ApplePaySession NON disponible');
-                    }
-                    
-                    // Vérifier chaque moyen
-                    if (availablePaymentMethods) {
-                        console.log('Apple Pay détecté ?', 'applePay' in availablePaymentMethods);
-                        console.log('Google Pay détecté ?', 'googlePay' in availablePaymentMethods);
-                        console.log('PayPal détecté ?', 'paypal' in availablePaymentMethods);
-                    }
-                    
-                    console.log('URL actuelle:', window.location.href);
-                    console.log('=========================');
-                    
-                    if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
-                        document.getElementById('express-checkout-element').style.display = 'block';
-                        document.getElementById('payment-divider').style.display = 'block';
-                    } else {
-                        document.getElementById('express-checkout-element').style.display = 'none';
-                        document.getElementById('payment-divider').style.display = 'none';
-                    }
-                });
-
-                // Gérer le clic sur Express Checkout
-                expressCheckoutElement.on('confirm', async (event) => {
-                    const { error: submitError } = await elements.submit();
-                    if (submitError) {
-                        showMessage(submitError.message);
-                        return;
-                    }
-
-                    const email = document.getElementById('email').value || event.billingDetails?.email || '';
-                    const name = event.billingDetails?.name || 'Client';
-
-                    const { error } = await stripe.confirmPayment({
-                        elements,
-                        clientSecret,
-                        confirmParams: {
-                            return_url: `${window.location.origin}/success.html`,
-                            receipt_email: email,
-                            payment_method_data: {
-                                billing_details: {
-                                    name: name,
-                                    email: email
-                                }
-                            }
-                        },
-                    });
-
-                    if (error) {
-                        showMessage(error.message);
-                    }
-                });
-
-                // Monter l'Express Checkout Element
-                expressCheckoutElement.mount('#express-checkout-element');
-
-                // Créer le Payment Element classique
                 const paymentElementOptions = {
                     layout: {
                         type: 'tabs',
@@ -537,7 +804,6 @@
                 const paymentElement = elements.create('payment', paymentElementOptions);
                 paymentElement.mount('#payment-element');
 
-                // Afficher le formulaire
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('payment-container').style.display = 'block';
 
@@ -591,7 +857,6 @@
         function showMessage(messageText) {
             const messageContainer = document.querySelector("#payment-message");
             messageContainer.textContent = messageText;
-            messageContainer.classList.remove('success-message');
             
             setTimeout(() => {
                 messageContainer.textContent = "";
@@ -607,9 +872,83 @@
                 buttonText.textContent = "Traitement en cours...";
             } else {
                 submitButton.disabled = false;
-                buttonText.textContent = "Commander maintenant - 17€";
+                buttonText.textContent = "🌟 Recevoir mon Rituel C.A.L.M.E maintenant";
             }
         }
+
+        // Gestion du changement d'upsell dynamique
+        upsellCheckbox.addEventListener('change', async () => {
+            if (upsellCheckbox.checked) {
+                upsellLine.style.display = 'flex';
+                totalAmount.textContent = '46€';
+            } else {
+                upsellLine.style.display = 'none';
+                totalAmount.textContent = '17€';
+            }
+
+            // Recréer le payment intent avec le nouveau montant
+            try {
+                const response = await fetch(`${API_URL}/api/create-payment-intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        includeUpsell: upsellCheckbox.checked
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la mise à jour du paiement');
+                }
+
+                const data = await response.json();
+                clientSecret = data.clientSecret;
+
+                // Recréer les éléments avec le nouveau clientSecret
+                const appearance = {
+                    theme: 'stripe',
+                    variables: {
+                        colorPrimary: '#3FB7A8',
+                        colorBackground: '#ffffff',
+                        colorText: '#111111',
+                        colorDanger: '#ff4444',
+                        fontFamily: 'Nunito Sans, sans-serif',
+                        borderRadius: '8px',
+                        spacingUnit: '4px'
+                    }
+                };
+
+                elements = stripe.elements({ 
+                    appearance, 
+                    clientSecret,
+                });
+
+                const paymentElementOptions = {
+                    layout: {
+                        type: 'tabs',
+                        defaultCollapsed: false,
+                    },
+                    fields: {
+                        billingDetails: {
+                            name: 'never',
+                            email: 'never',
+                            phone: 'never',
+                            address: 'never'
+                        }
+                    }
+                };
+                
+                const paymentElement = elements.create('payment', paymentElementOptions);
+                
+                // Remonter l'ancien élément et monter le nouveau
+                const container = document.getElementById('payment-element');
+                container.innerHTML = '';
+                paymentElement.mount('#payment-element');
+
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour:', error);
+                showMessage('Erreur lors de la mise à jour du montant');
+            }
+        });
     </script>
 </body>
 </html>
