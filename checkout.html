@@ -143,6 +143,11 @@
             margin-bottom: 24px;
         }
 
+        /* Cacher le bouton "Afficher plus" et forcer l'affichage de tous les boutons */
+        #express-checkout-element iframe {
+            min-height: 200px !important;
+        }
+
         .payment-divider {
             text-align: center;
             margin: 24px 0;
@@ -438,14 +443,7 @@
                     },
                     paymentMethods: {
                         applePay: 'always',
-                        googlePay: 'always',
-                        link: 'auto',
-                        paypal: 'auto'
-                    },
-                    layout: {
-                        maxColumns: 1,
-                        maxRows: 4,
-                        overflow: 'never'
+                        googlePay: 'always'
                     }
                 };
 
