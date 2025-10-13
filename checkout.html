@@ -1227,6 +1227,7 @@
 
         let elements;
         let currentClientSecret;
+        let currentPaymentIntentId; // NOUVEAU: garder l'ID du PaymentIntent
 
         initialize();
 
@@ -1412,56 +1413,84 @@
 
         async function handleSubmit(e) {
             e.preventDefault();
-            console.log('Soumission du formulaire...');
+            console.log('🚀 Soumission du formulaire...');
             
             setLoading(true);
 
-            // Validation des champs requis
-            const email = document.getElementById('email').value;
-            const prenom = document.getElementById('prenom').value;
+            try {
+                // Validation des champs requis
+                const email = document.getElementById('email').value;
+                const prenom = document.getElementById('prenom').value;
 
-            if (!email || !prenom) {
-                showMessage('Veuillez remplir tous les champs obligatoires');
-                setLoading(false);
-                return;
-            }
+                console.log('📧 Email:', email);
+                console.log('👤 Prénom:', prenom);
 
-            const nom = document.getElementById('nom').value;
-            const fullName = nom ? `${prenom} ${nom}` : prenom;
+                if (!email || !prenom) {
+                    showMessage('Veuillez remplir tous les champs obligatoires');
+                    setLoading(false);
+                    return;
+                }
 
-            // Soumettre les éléments avant la confirmation
-            const { error: submitError } = await elements.submit();
-            if (submitError) {
-                showMessage(submitError.message);
-                setLoading(false);
-                return;
-            }
+                const nom = document.getElementById('nom').value;
+                const fullName = nom ? `${prenom} ${nom}` : prenom;
 
-            // Confirmer le paiement
-            const { error } = await stripe.confirmPayment({
-                elements,
-                confirmParams: {
-                    return_url: `${window.location.origin}/success.html`,
-                    receipt_email: email,
-                    payment_method_data: {
-                        billing_details: {
-                            name: fullName,
-                            email: email
+                console.log('✅ Validation OK, soumission à Stripe...');
+
+                // Soumettre les éléments avant la confirmation
+                const { error: submitError } = await elements.submit();
+                if (submitError) {
+                    console.error('❌ Erreur submit:', submitError);
+                    showMessage(submitError.message);
+                    setLoading(false);
+                    return;
+                }
+
+                console.log('✅ Submit OK, confirmation du paiement...');
+                console.log('🔑 Client Secret:', currentClientSecret);
+
+                // Confirmer le paiement
+                const { error, paymentIntent } = await stripe.confirmPayment({
+                    elements,
+                    clientSecret: currentClientSecret,
+                    confirmParams: {
+                        return_url: `${window.location.origin}/success.html`,
+                        receipt_email: email,
+                        payment_method_data: {
+                            billing_details: {
+                                name: fullName,
+                                email: email
+                            }
                         }
+                    },
+                    redirect: 'if_required'
+                });
+
+                if (error) {
+                    console.error('❌ Erreur de paiement:', error);
+                    if (error.type === "card_error" || error.type === "validation_error") {
+                        showMessage(error.message);
+                    } else {
+                        showMessage("Une erreur inattendue est survenue: " + error.message);
+                    }
+                    setLoading(false);
+                } else if (paymentIntent) {
+                    console.log('✅ PaymentIntent:', paymentIntent);
+                    if (paymentIntent.status === 'succeeded') {
+                        console.log('🎉 Paiement réussi !');
+                        showMessage('Paiement réussi ! Redirection...');
+                        setTimeout(() => {
+                            window.location.href = `${window.location.origin}/success.html`;
+                        }, 1000);
+                    } else {
+                        console.log('⏳ Statut:', paymentIntent.status);
+                        setLoading(false);
                     }
                 }
-            });
-
-            if (error) {
-                console.error('Erreur de paiement:', error);
-                if (error.type === "card_error" || error.type === "validation_error") {
-                    showMessage(error.message);
-                } else {
-                    showMessage("Une erreur inattendue est survenue.");
-                }
+            } catch (err) {
+                console.error('❌ Erreur inattendue:', err);
+                showMessage('Erreur technique: ' + err.message);
                 setLoading(false);
             }
-            // Si pas d'erreur, l'utilisateur sera redirigé vers return_url
         }
 
         function showMessage(messageText) {
