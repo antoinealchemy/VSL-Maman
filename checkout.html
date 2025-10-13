@@ -15,8 +15,8 @@
 
         body {
             font-family: 'Nunito Sans', sans-serif;
-            background-color: #1a1a1a;
-            color: #ffffff;
+            background-color: #F9FAFB;
+            color: #111111;
             min-height: 100vh;
             padding: 40px 20px;
         }
@@ -96,9 +96,10 @@
 
         .price-section {
             padding: 25px;
-            background: #1f1f1f;
+            background: white;
             border-radius: 12px;
             margin-bottom: 25px;
+            border: 2px solid #E8E8E8;
         }
 
         .price {
@@ -109,16 +110,16 @@
 
         .old-price {
             font-size: 22px;
-            color: #666;
+            color: #999;
             text-decoration: line-through;
             margin-left: 15px;
         }
 
         .guarantee {
             padding: 20px;
-            background: rgba(63, 183, 168, 0.1);
+            background: #F0F9F8;
             border-radius: 12px;
-            border: 1px solid rgba(63, 183, 168, 0.3);
+            border: 1px solid #C7E9E4;
         }
 
         .guarantee h3 {
@@ -128,14 +129,14 @@
         }
 
         .guarantee p {
-            color: #b0b0b0;
+            color: #5C5C5C;
             font-size: 14px;
             line-height: 1.5;
         }
 
         .checkout-section {
             padding: 40px;
-            background: #222222;
+            background: white;
         }
 
         #payment-form {
@@ -180,7 +181,7 @@
         }
 
         .spinner {
-            border: 3px solid #3a3a3a;
+            border: 3px solid #E8E8E8;
             border-top: 3px solid #3FB7A8;
             border-radius: 50%;
             width: 50px;
@@ -211,7 +212,7 @@
 
             .product-info {
                 border-right: none;
-                border-bottom: 1px solid #3a3a3a;
+                border-bottom: 1px solid #E8E8E8;
             }
         }
 
@@ -314,11 +315,11 @@
                 const { clientSecret } = await response.json();
 
                 const appearance = {
-                    theme: 'night',
+                    theme: 'stripe',
                     variables: {
                         colorPrimary: '#3FB7A8',
-                        colorBackground: '#222222',
-                        colorText: '#ffffff',
+                        colorBackground: '#ffffff',
+                        colorText: '#111111',
                         colorDanger: '#ff4444',
                         fontFamily: 'Nunito Sans, sans-serif',
                         borderRadius: '8px',
@@ -326,8 +327,25 @@
                     }
                 };
 
-                elements = stripe.elements({ appearance, clientSecret });
-                const paymentElement = elements.create('payment');
+                elements = stripe.elements({ 
+                    appearance, 
+                    clientSecret,
+                });
+                
+                const paymentElementOptions = {
+                    layout: 'tabs',
+                    paymentMethodOrder: ['card', 'paypal', 'google_pay', 'apple_pay'],
+                    fields: {
+                        billingDetails: {
+                            name: 'auto',
+                            email: 'auto',
+                            phone: 'never',
+                            address: 'never'
+                        }
+                    }
+                };
+                
+                const paymentElement = elements.create('payment', paymentElementOptions);
                 paymentElement.mount('#payment-element');
 
                 // Masquer le loading, afficher le formulaire
