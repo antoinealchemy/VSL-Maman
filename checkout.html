@@ -461,43 +461,74 @@
             background: var(--success-bg);
             border: 2px solid var(--teal-1);
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .guarantee-badge {
+            flex-shrink: 0;
+        }
+
+        .guarantee-badge img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .guarantee-content {
+            flex: 1;
         }
 
         .guarantee-header {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .guarantee-icon {
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             background: var(--teal-1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .guarantee-icon svg {
-            width: 18px;
-            height: 18px;
+            width: 14px;
+            height: 14px;
             fill: white;
         }
 
         .guarantee-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--dark);
         }
 
-        .guarantee-text {
+        .guarantee-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .guarantee-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
             font-size: 14px;
             color: var(--dark);
-            line-height: 1.6;
+            line-height: 1.5;
+        }
+
+        .guarantee-item:last-child {
+            margin-bottom: 0;
         }
 
         #payment-message {
@@ -833,6 +864,22 @@
             .modal-text h3 {
                 font-size: 16px;
             }
+
+            .guarantee-block {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .guarantee-badge img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .secure-payment-image img {
+                max-height: 50px;
+            }
         }
     </style>
 </head>
@@ -986,22 +1033,45 @@
                             <span id="button-text">Commander maintenant</span>
                         </button>
 
-                        <div class="secure-text">
-                            Paiement sécurisé & Garantie 14 jours
+                        <div class="secure-payment-image">
+                            <img src="paiement-securise.png" alt="Paiement sécurisé - CB, Mastercard, Visa, PayPal" loading="lazy">
                         </div>
 
                         <div class="guarantee-block">
-                            <div class="guarantee-header">
-                                <span class="guarantee-icon">
-                                    <svg viewBox="0 0 16 16">
-                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-                                    </svg>
-                                </span>
-                                <span class="guarantee-title">14 jours — Satisfait ou remboursé</span>
+                            <div class="guarantee-badge">
+                                <img src="garantie-14-jours.png" alt="Garantie 14 jours" loading="lazy">
                             </div>
-                            <p class="guarantee-text">
-                                Si ton stress n'a pas baissé d'au moins 4 points (ex: 8→4) après 3 semaines de pratique, nous te remboursons intégralement et t'envoyons en plus 20€ pour le temps investi.
-                            </p>
+                            <div class="guarantee-content">
+                                <div class="guarantee-header">
+                                    <span class="guarantee-title">14 jours — Satisfait ou remboursé</span>
+                                </div>
+                                <ul class="guarantee-list">
+                                    <li class="guarantee-item">
+                                        <span class="guarantee-icon">
+                                            <svg viewBox="0 0 16 16">
+                                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                            </svg>
+                                        </span>
+                                        Si ton stress n'a pas baissé d'au moins 4 points (ex: 8→4)
+                                    </li>
+                                    <li class="guarantee-item">
+                                        <span class="guarantee-icon">
+                                            <svg viewBox="0 0 16 16">
+                                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                            </svg>
+                                        </span>
+                                        Après 3 semaines de pratique régulière
+                                    </li>
+                                    <li class="guarantee-item">
+                                        <span class="guarantee-icon">
+                                            <svg viewBox="0 0 16 16">
+                                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                            </svg>
+                                        </span>
+                                        Nous te remboursons intégralement + 20€ pour le temps investi
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div id="payment-message"></div>
