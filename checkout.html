@@ -177,6 +177,13 @@
             color: #6B7280;
         }
 
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
         #payment-element {
             margin-bottom: 24px;
         }
@@ -320,14 +327,16 @@
                         <input type="email" id="email" name="email" required placeholder="votre@email.com">
                     </div>
 
-                    <div class="form-field">
-                        <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
-                    </div>
+                    <div class="name-row">
+                        <div class="form-field">
+                            <label for="prenom">Prénom</label>
+                            <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
+                        </div>
 
-                    <div class="form-field optional">
-                        <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" placeholder="Nom">
+                        <div class="form-field optional">
+                            <label for="nom">Nom</label>
+                            <input type="text" id="nom" name="nom" placeholder="Nom">
+                        </div>
                     </div>
 
                     <div id="payment-element"></div>
@@ -383,10 +392,14 @@
                 
                 const paymentElementOptions = {
                     layout: 'tabs',
+                    wallets: {
+                        applePay: 'auto',
+                        googlePay: 'auto'
+                    },
                     fields: {
                         billingDetails: {
-                            name: 'auto',
-                            email: 'auto',
+                            name: 'never',
+                            email: 'never',
                             phone: 'never',
                             address: {
                                 country: 'never',
