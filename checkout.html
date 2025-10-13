@@ -34,12 +34,21 @@
             height: constant(safe-area-inset-top, 0);
         }
 
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: var(--brand-teal);
+            color: #111111;
+            min-height: 100vh;
+            padding: 0;
+        }
+
         /* Header image responsive */
         .site-header {
             background: var(--brand-teal);
             display: block;
             width: 100%;
-            margin: 0;
+            max-width: 1200px;
+            margin: 40px auto 0;
             padding: 0;
         }
 
@@ -52,17 +61,11 @@
             vertical-align: middle;
         }
 
-        body {
-            font-family: 'Nunito Sans', sans-serif;
-            background-color: var(--bg);
-            color: #111111;
-            min-height: 100vh;
-            padding: 40px 15px;
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            background-color: var(--bg);
+            padding: 40px 15px;
         }
 
         .content-wrapper {
@@ -484,6 +487,7 @@
             max-width: 1200px;
             margin: 40px auto 0;
             padding: 0 15px;
+            background-color: var(--bg);
         }
 
         .testimonials-title {
@@ -492,12 +496,14 @@
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 30px;
+            padding-top: 40px;
         }
 
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
+            padding-bottom: 40px;
         }
 
         .testimonial-card {
@@ -570,6 +576,15 @@
 
         @media (max-width: 520px) {
             body {
+                padding: 0;
+            }
+
+            .site-header {
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .container {
                 padding: 20px 10px;
             }
 
@@ -595,8 +610,18 @@
                 grid-template-columns: 1fr;
             }
 
+            .testimonials {
+                padding: 0;
+                margin-top: 0;
+            }
+
+            .testimonials-title {
+                padding: 30px 15px 20px;
+            }
+
             .testimonials-grid {
                 grid-template-columns: 1fr;
+                padding: 0 15px 30px;
             }
         }
     </style>
@@ -848,7 +873,7 @@
                     headers: { 'Content-Type': 'application/json' },
                 });
 
-                console.log('Réponse API reçue :', response.status);
+                console.log('Réponse API reçue:', response.status);
 
                 if (!response.ok) {
                     const errorText = await response.text();
