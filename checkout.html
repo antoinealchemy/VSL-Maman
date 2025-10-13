@@ -1233,8 +1233,6 @@
         async function initialize() {
             try {
                 console.log('Début de l\'initialisation...');
-                
-                // Checkbox cochée par défaut, donc on envoie includeUpsell: true
                 const includeUpsell = document.getElementById('upsell').checked;
                 
                 const response = await fetch(`${API_URL}/api/create-payment-intent`, {
@@ -1244,7 +1242,7 @@
                 });
 
                 console.log('Réponse API reçue:', response.status);
-
+                
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Erreur API:', errorText);
@@ -1274,22 +1272,16 @@
                     }
                 };
 
-                elements = stripe.elements({ 
-                    appearance, 
-                    clientSecret,
-                });
+                elements = stripe.elements({ appearance, clientSecret });
 
-                console.log('Elements Stripe créés');
-
+                // Express Checkout Element
                 const expressCheckoutOptions = {
                     buttonHeight: 48,
                     buttonTheme: {
                         applePay: 'black',
                         googlePay: 'black'
                     },
-                    buttonType: {
-                        googlePay: 'buy'
-                    },
+                    buttonType: { googlePay: 'buy' },
                     paymentMethods: {
                         applePay: 'always',
                         googlePay: 'always',
@@ -1298,10 +1290,9 @@
                 };
 
                 const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
-
+                
                 expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
                     console.log('Moyens de paiement disponibles:', availablePaymentMethods);
-                    
                     if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
                         document.getElementById('express-checkout-element').style.display = 'block';
                         document.getElementById('payment-divider').style.display = 'block';
@@ -1330,12 +1321,9 @@
                             return_url: `${window.location.origin}/success.html`,
                             receipt_email: email,
                             payment_method_data: {
-                                billing_details: {
-                                    name: name,
-                                    email: email
-                                }
+                                billing_details: { name, email }
                             }
-                        },
+                        }
                     });
 
                     if (error) {
@@ -1344,13 +1332,10 @@
                 });
 
                 expressCheckoutElement.mount('#express-checkout-element');
-                console.log('Express Checkout monté');
 
+                // Payment Element
                 const paymentElementOptions = {
-                    layout: {
-                        type: 'tabs',
-                        defaultCollapsed: false,
-                    },
+                    layout: { type: 'tabs', defaultCollapsed: false },
                     fields: {
                         billingDetails: {
                             name: 'never',
@@ -1360,14 +1345,12 @@
                         }
                     }
                 };
-                
+
                 const paymentElement = elements.create('payment', paymentElementOptions);
                 paymentElement.mount('#payment-element');
-                console.log('Payment Element monté');
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('payment-container').style.display = 'block';
-                console.log('Interface affichée');
 
                 // Écouter les changements sur la checkbox
                 document.getElementById('upsell').addEventListener('change', handleUpsellChange);
@@ -1384,6 +1367,7 @@
             }
         }
 
+        // SOLUTION AU PROBLÈME 2 : Mise à jour du montant sans réinitialiser les champs
         async function handleUpsellChange() {
             const includeUpsell = document.getElementById('upsell').checked;
             console.log('Upsell changé:', includeUpsell);
@@ -1405,46 +1389,8 @@
                 const data = await response.json();
                 currentClientSecret = data.clientSecret;
 
-                // Recréer les elements avec le nouveau clientSecret
-                const appearance = {
-                    theme: 'stripe',
-                    variables: {
-                        colorPrimary: '#3FB7A8',
-                        colorBackground: '#ffffff',
-                        colorText: '#111111',
-                        colorDanger: '#ff4444',
-                        fontFamily: 'Nunito Sans, sans-serif',
-                        borderRadius: '8px',
-                        spacingUnit: '4px'
-                    }
-                };
-
-                elements = stripe.elements({ 
-                    appearance, 
-                    clientSecret: currentClientSecret,
-                });
-
-                const paymentElementOptions = {
-                    layout: {
-                        type: 'tabs',
-                        defaultCollapsed: false,
-                    },
-                    fields: {
-                        billingDetails: {
-                            name: 'never',
-                            email: 'never',
-                            phone: 'never',
-                            address: 'never'
-                        }
-                    }
-                };
-                
-                const paymentElement = elements.create('payment', paymentElementOptions);
-                
-                // Démonter l'ancien élément et monter le nouveau
-                const paymentElementContainer = document.getElementById('payment-element');
-                paymentElementContainer.innerHTML = '';
-                paymentElement.mount('#payment-element');
+                // CORRECTION : Utiliser elements.update() au lieu de tout recréer
+                elements.update({ clientSecret: currentClientSecret });
 
                 console.log('Montant mis à jour:', data.amount / 100, '€');
                 setLoading(false);
@@ -1456,17 +1402,42 @@
             }
         }
 
-        document.getElementById('payment-form').addEventListener('submit', handleSubmit);
+        // SOLUTION AU PROBLÈME 1 : Gestion correcte de la soumission du formulaire
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('payment-form');
+            if (form) {
+                form.addEventListener('submit', handleSubmit);
+            }
+        });
 
         async function handleSubmit(e) {
             e.preventDefault();
+            console.log('Soumission du formulaire...');
+            
             setLoading(true);
 
+            // Validation des champs requis
             const email = document.getElementById('email').value;
             const prenom = document.getElementById('prenom').value;
+
+            if (!email || !prenom) {
+                showMessage('Veuillez remplir tous les champs obligatoires');
+                setLoading(false);
+                return;
+            }
+
             const nom = document.getElementById('nom').value;
             const fullName = nom ? `${prenom} ${nom}` : prenom;
 
+            // Soumettre les éléments avant la confirmation
+            const { error: submitError } = await elements.submit();
+            if (submitError) {
+                showMessage(submitError.message);
+                setLoading(false);
+                return;
+            }
+
+            // Confirmer le paiement
             const { error } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
@@ -1478,28 +1449,28 @@
                             email: email
                         }
                     }
-                },
+                }
             });
 
             if (error) {
+                console.error('Erreur de paiement:', error);
                 if (error.type === "card_error" || error.type === "validation_error") {
                     showMessage(error.message);
                 } else {
                     showMessage("Une erreur inattendue est survenue.");
                 }
+                setLoading(false);
             }
-
-            setLoading(false);
+            // Si pas d'erreur, l'utilisateur sera redirigé vers return_url
         }
 
         function showMessage(messageText) {
             const messageContainer = document.querySelector("#payment-message");
             messageContainer.textContent = messageText;
             messageContainer.classList.remove('success-message');
-            
             setTimeout(() => {
                 messageContainer.textContent = "";
-            }, 4000);
+            }, 5000);
         }
 
         function setLoading(isLoading) {
