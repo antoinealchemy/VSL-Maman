@@ -86,7 +86,7 @@
         }
 
         .product-features li:before {
-            content: "âœ“";
+            content: "✓";
             position: absolute;
             left: 0;
             color: #3FB7A8;
@@ -137,6 +137,36 @@
         .checkout-section {
             padding: 40px;
             background: white;
+        }
+
+        #payment-request-button {
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .payment-divider {
+            display: none;
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .payment-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #E8E8E8;
+        }
+
+        .payment-divider span {
+            background: white;
+            padding: 0 16px;
+            position: relative;
+            color: #6B7280;
+            font-size: 14px;
         }
 
         #payment-form {
@@ -284,67 +314,78 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>ðŸŒŸ Rituel C.A.L.M.E</h1>
-            <p>Retrouve ta sÃ©rÃ©nitÃ© en 3 minutes par jour</p>
+            <h1>💸 Rituel C.A.L.M.E</h1>
+            <p>Retrouve ta sérénité en 3 minutes par jour</p>
         </div>
 
         <div class="content-wrapper">
             <div class="product-info">
                 <h2 class="product-title">Le Programme Complet</h2>
                 <p class="product-description">
-                    AccÃ¨de immÃ©diatement au rituel qui a aidÃ© 4 783 mamans Ã  passer leur stress de 8/10 Ã  2/10 en seulement 3 semaines.
+                    Accède immédiatement au rituel qui a aidé 4 783 mamans à passer leur stress de 8/10 à 2/10 en seulement 3 semaines.
                 </p>
 
                 <ul class="product-features">
-                    <li>AccÃ¨s immÃ©diat au programme complet</li>
-                    <li>Les 5 Ã©tapes du rituel C.A.L.M.E dÃ©taillÃ©es</li>
-                    <li>Guide PDF tÃ©lÃ©chargeable</li>
-                    <li>VidÃ©os explicatives pour chaque Ã©tape</li>
-                    <li>Support communautÃ© privÃ©e</li>
-                    <li>Garantie satisfait ou remboursÃ© 30 jours</li>
+                    <li>Accès immédiat au programme complet</li>
+                    <li>Les 5 étapes du rituel C.A.L.M.E détaillées</li>
+                    <li>Guide PDF téléchargeable</li>
+                    <li>Vidéos explicatives pour chaque étape</li>
+                    <li>Support communauté privée</li>
+                    <li>Garantie satisfait ou remboursé 30 jours</li>
                 </ul>
 
                 <div class="price-section">
-                    <span class="price">17â‚¬</span>
-                    <span class="old-price">97â‚¬</span>
+                    <span class="price">17€</span>
+                    <span class="old-price">97€</span>
                 </div>
 
                 <div class="guarantee">
-                    <h3>âœ… Garantie 30 jours satisfait ou remboursÃ©</h3>
-                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intÃ©gralement. Sans question.</p>
+                    <h3>✓ Garantie 30 jours satisfait ou remboursé</h3>
+                    <p>Si le rituel ne transforme pas ta gestion du stress, nous te remboursons intégralement. Sans question.</p>
                 </div>
             </div>
 
             <div class="checkout-section">
                 <div id="loading" class="loading">
                     <div class="spinner"></div>
-                    <p>Chargement du paiement sÃ©curisÃ©...</p>
+                    <p>Chargement du paiement sécurisé...</p>
                 </div>
                 
-                <form id="payment-form" style="display: none;">
-                    <div class="form-field">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                <div id="payment-container" style="display: none;">
+                    <!-- Bouton Apple Pay / Google Pay -->
+                    <div id="payment-request-button"></div>
+                    
+                    <!-- Séparateur -->
+                    <div class="payment-divider" id="payment-divider">
+                        <span>ou payer par carte</span>
                     </div>
 
-                    <div class="name-row">
+                    <!-- Formulaire classique -->
+                    <form id="payment-form">
                         <div class="form-field">
-                            <label for="prenom">PrÃ©nom</label>
-                            <input type="text" id="prenom" name="prenom" required placeholder="PrÃ©nom">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="votre@email.com">
                         </div>
 
-                        <div class="form-field optional">
-                            <label for="nom">Nom</label>
-                            <input type="text" id="nom" name="nom" placeholder="Nom">
-                        </div>
-                    </div>
+                        <div class="name-row">
+                            <div class="form-field">
+                                <label for="prenom">Prénom</label>
+                                <input type="text" id="prenom" name="prenom" required placeholder="Prénom">
+                            </div>
 
-                    <div id="payment-element"></div>
-                    <button id="submit">
-                        <span id="button-text">Commander maintenant - 17â‚¬</span>
-                    </button>
-                    <div id="payment-message"></div>
-                </form>
+                            <div class="form-field optional">
+                                <label for="nom">Nom</label>
+                                <input type="text" id="nom" name="nom" placeholder="Nom">
+                            </div>
+                        </div>
+
+                        <div id="payment-element"></div>
+                        <button id="submit">
+                            <span id="button-text">Commander maintenant - 17€</span>
+                        </button>
+                        <div id="payment-message"></div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -354,6 +395,7 @@
         const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
         let elements;
+        let paymentRequest;
 
         initialize();
 
@@ -365,11 +407,75 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('Erreur lors de la crÃ©ation du paiement');
+                    throw new Error('Erreur lors de la création du paiement');
                 }
 
                 const { clientSecret } = await response.json();
 
+                // 1. Créer le Payment Request pour Apple Pay / Google Pay
+                paymentRequest = stripe.paymentRequest({
+                    country: 'FR',
+                    currency: 'eur',
+                    total: {
+                        label: 'Rituel C.A.L.M.E',
+                        amount: 1700,
+                    },
+                    requestPayerName: true,
+                    requestPayerEmail: true,
+                });
+
+                // 2. Créer le bouton Payment Request
+                const prButton = elements.create('paymentRequestButton', {
+                    paymentRequest,
+                    style: {
+                        paymentRequestButton: {
+                            type: 'buy',
+                            theme: 'dark',
+                            height: '48px',
+                        },
+                    },
+                });
+
+                // 3. Vérifier si Apple Pay / Google Pay est disponible
+                const canMakePaymentResult = await paymentRequest.canMakePayment();
+                if (canMakePaymentResult) {
+                    document.getElementById('payment-request-button').style.display = 'block';
+                    document.getElementById('payment-divider').style.display = 'block';
+                    prButton.mount('#payment-request-button');
+                }
+
+                // 4. Gérer le paiement via Payment Request
+                paymentRequest.on('paymentmethod', async (ev) => {
+                    try {
+                        const { error: confirmError } = await stripe.confirmCardPayment(
+                            clientSecret,
+                            { payment_method: ev.paymentMethod.id },
+                            { handleActions: false }
+                        );
+
+                        if (confirmError) {
+                            ev.complete('fail');
+                            showMessage(confirmError.message);
+                        } else {
+                            ev.complete('success');
+                            
+                            // Vérifier si des actions supplémentaires sont nécessaires
+                            const { error: finalError, paymentIntent } = await stripe.confirmCardPayment(clientSecret);
+                            
+                            if (finalError) {
+                                showMessage(finalError.message);
+                            } else if (paymentIntent.status === 'succeeded') {
+                                window.location.href = `${window.location.origin}/success.html`;
+                            }
+                        }
+                    } catch (err) {
+                        console.error('Erreur Payment Request:', err);
+                        ev.complete('fail');
+                        showMessage('Une erreur est survenue lors du paiement.');
+                    }
+                });
+
+                // 5. Créer le Payment Element classique
                 const appearance = {
                     theme: 'stripe',
                     variables: {
@@ -388,15 +494,10 @@
                     clientSecret,
                 });
                 
-                // Configuration corrigÃ©e pour activer Apple Pay et Google Pay
                 const paymentElementOptions = {
                     layout: {
                         type: 'tabs',
                         defaultCollapsed: false,
-                    },
-                    wallets: {
-                        applePay: 'auto',
-                        googlePay: 'auto'
                     },
                     fields: {
                         billingDetails: {
@@ -411,16 +512,16 @@
                 const paymentElement = elements.create('payment', paymentElementOptions);
                 paymentElement.mount('#payment-element');
 
-                // Cacher le loading, afficher le formulaire
+                // Afficher le formulaire
                 document.getElementById('loading').style.display = 'none';
-                document.getElementById('payment-form').style.display = 'block';
+                document.getElementById('payment-container').style.display = 'block';
 
             } catch (error) {
                 console.error('Erreur:', error);
                 document.getElementById('loading').innerHTML = `
-                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez rÃ©essayer.</p>
+                    <p style="color: #ff4444;">Une erreur est survenue. Veuillez réessayer.</p>
                     <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                        RÃ©essayer
+                        Réessayer
                     </button>
                 `;
             }
@@ -481,7 +582,7 @@
                 buttonText.textContent = "Traitement en cours...";
             } else {
                 submitButton.disabled = false;
-                buttonText.textContent = "Commander maintenant - 17â‚¬";
+                buttonText.textContent = "Commander maintenant - 17€";
             }
         }
     </script>
