@@ -16,33 +16,20 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { includeUpsell } = req.body;
-    
-    const baseAmount = 100;  // 17€
-    const upsellAmount = 100; // 27€
-    
-    const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
-
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: totalAmount,
+      amount: 100, // 17Ã¢â€šÂ¬ en centimes
       currency: 'eur',
       automatic_payment_methods: { 
-        enabled: true
+        enabled: true,
+        allow_redirects: 'always'
       },
       metadata: {
-        product: 'Rituel C.A.L.M.E',
-        includeUpsell: includeUpsell ? 'true' : 'false',
-        baseProduct: 'Rituel C.A.L.M.E Complet - 17€',
-        upsellProduct: includeUpsell ? 'Pack Respiration Instantanée - 27€' : 'none'
+        product: 'Rituel C.A.L.M.E'
       }
     });
 
-    // Renvoyer aussi l'ID pour tracer
     res.status(200).json({
       clientSecret: paymentIntent.client_secret,
-      paymentIntentId: paymentIntent.id,
-      amount: totalAmount,
-      includeUpsell: includeUpsell
     });
   } catch (error) {
     console.error('Erreur Stripe:', error);
