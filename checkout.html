@@ -884,15 +884,13 @@
     </style>
 </head>
 <body>
-    <!-- iOS safe-area strip (remplit l'encoche au-dessus du header en vert) -->
+    <!-- iOS safe-area strip -->
     <div class="ios-safe-area" aria-hidden="true"></div>
 
     <!-- Header image responsive -->
     <header class="site-header" role="banner" aria-label="Dr Sarah Dumont — Docteur en psychologie">
         <picture>
-            <!-- Mobile en priorité -->
             <source srcset="headermobile.png" media="(max-width: 768px)">
-            <!-- Desktop par défaut (et tablettes paysage) -->
             <img
                 src="headerdesktop.png"
                 alt="Dr Sarah Dumont — Docteur en psychologie. +5 000 femmes lui ont déjà fait confiance."
@@ -1221,206 +1219,218 @@
         </div>
     </div>
 
-<script>
-    const API_URL = window.location.origin;
-    const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
+    <script>
+        const API_URL = window.location.origin;
+        const stripe = Stripe('pk_live_51SHSrhPW27FSnXRnz9dcKPTnhx0M2CmfOLFWIWZSolup0v8wlnabG0EYY6qLYLFBXcaInbXpGXjniRAuuub5tOIW00CaGLTKVe');
 
-    let elements;
-    let currentClientSecret;
-    let currentPaymentIntentId;
+        let elements;
+        let currentClientSecret;
+        let currentPaymentIntentId;
+        let upsellUpdating = false;
 
-    initialize();
+        initialize();
 
-    async function initialize() {
-        try {
-            console.log('🚀 Début de l\'initialisation...');
-            const includeUpsell = document.getElementById('upsell').checked;
-            
-            const response = await fetch(`${API_URL}/api/create-payment-intent`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ includeUpsell })
-            });
-
-            console.log('📡 Réponse API reçue:', response.status);
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('❌ Erreur API:', errorText);
-                throw new Error(`Erreur API: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log('📦 Données reçues:', data);
-
-            currentClientSecret = data.clientSecret;
-            currentPaymentIntentId = data.paymentIntentId;
-
-            if (!currentClientSecret) {
-                throw new Error('Client secret manquant');
-            }
-
-            const appearance = {
-                theme: 'stripe',
-                variables: {
-                    colorPrimary: '#3FB7A8',
-                    colorBackground: '#ffffff',
-                    colorText: '#111111',
-                    colorDanger: '#ff4444',
-                    fontFamily: 'Nunito Sans, sans-serif',
-                    borderRadius: '8px',
-                    spacingUnit: '4px'
-                }
-            };
-
-            elements = stripe.elements({ appearance, clientSecret: currentClientSecret });
-
-            // Express Checkout Element
-            const expressCheckoutOptions = {
-                buttonHeight: 48,
-                buttonTheme: {
-                    applePay: 'black',
-                    googlePay: 'black'
-                },
-                buttonType: { googlePay: 'buy' },
-                paymentMethods: {
-                    applePay: 'always',
-                    googlePay: 'always',
-                    link: 'auto'
-                }
-            };
-
-            const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
-            
-            expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
-                console.log('💳 Moyens de paiement disponibles:', availablePaymentMethods);
-                if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
-                    document.getElementById('express-checkout-element').style.display = 'block';
-                    document.getElementById('payment-divider').style.display = 'block';
-                } else {
-                    document.getElementById('express-checkout-element').style.display = 'none';
-                    document.getElementById('payment-divider').style.display = 'none';
-                }
-            });
-
-            expressCheckoutElement.on('confirm', async (event) => {
-                console.log('⚡ Confirmation Express Checkout...');
+        async function initialize() {
+            try {
+                console.log('🚀 Début de l\'initialisation...');
+                const includeUpsell = document.getElementById('upsell').checked;
                 
-                const { error: submitError } = await elements.submit();
-                if (submitError) {
-                    showMessage(submitError.message);
-                    return;
+                const response = await fetch(`${API_URL}/api/create-payment-intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ includeUpsell })
+                });
+
+                console.log('📡 Réponse API reçue:', response.status);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ Erreur API:', errorText);
+                    throw new Error(`Erreur API: ${response.status}`);
                 }
 
-                const email = document.getElementById('email').value || event.billingDetails?.email || '';
-                const name = event.billingDetails?.name || 'Client';
+                const data = await response.json();
+                console.log('📦 Données reçues:', data);
 
-                const { error } = await stripe.confirmPayment({
-                    elements,
-                    clientSecret: currentClientSecret,
-                    confirmParams: {
-                        return_url: `${window.location.origin}/success.html`,
-                        receipt_email: email,
-                        payment_method_data: {
-                            billing_details: { name, email }
-                        }
+                currentClientSecret = data.clientSecret;
+                currentPaymentIntentId = data.paymentIntentId;
+
+                if (!currentClientSecret) {
+                    throw new Error('Client secret manquant');
+                }
+
+                const appearance = {
+                    theme: 'stripe',
+                    variables: {
+                        colorPrimary: '#3FB7A8',
+                        colorBackground: '#ffffff',
+                        colorText: '#111111',
+                        colorDanger: '#ff4444',
+                        fontFamily: 'Nunito Sans, sans-serif',
+                        borderRadius: '8px',
+                        spacingUnit: '4px'
+                    }
+                };
+
+                elements = stripe.elements({ appearance, clientSecret: currentClientSecret });
+
+                // Express Checkout Element
+                const expressCheckoutOptions = {
+                    buttonHeight: 48,
+                    buttonTheme: {
+                        applePay: 'black',
+                        googlePay: 'black'
+                    },
+                    buttonType: { googlePay: 'buy' },
+                    paymentMethods: {
+                        applePay: 'always',
+                        googlePay: 'always',
+                        link: 'auto'
+                    }
+                };
+
+                const expressCheckoutElement = elements.create('expressCheckout', expressCheckoutOptions);
+                
+                expressCheckoutElement.on('ready', ({ availablePaymentMethods }) => {
+                    console.log('💳 Moyens de paiement disponibles:', availablePaymentMethods);
+                    if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
+                        document.getElementById('express-checkout-element').style.display = 'block';
+                        document.getElementById('payment-divider').style.display = 'block';
+                    } else {
+                        document.getElementById('express-checkout-element').style.display = 'none';
+                        document.getElementById('payment-divider').style.display = 'none';
                     }
                 });
 
-                if (error) {
-                    showMessage(error.message);
-                }
-            });
+                expressCheckoutElement.on('confirm', async (event) => {
+                    console.log('⚡ Confirmation Express Checkout...');
+                    
+                    const { error: submitError } = await elements.submit();
+                    if (submitError) {
+                        showMessage(submitError.message);
+                        return;
+                    }
 
-            expressCheckoutElement.mount('#express-checkout-element');
+                    const email = document.getElementById('email').value || event.billingDetails?.email || '';
+                    const name = event.billingDetails?.name || 'Client';
 
-            // Payment Element avec configuration simplifiée
-            const paymentElementOptions = {
-                layout: { type: 'tabs', defaultCollapsed: false },
-                // ✅ SUPPRIMEZ complètement la section fields
-                // Laissez Stripe gérer automatiquement les champs
-            };
+                    const { error } = await stripe.confirmPayment({
+                        elements,
+                        clientSecret: currentClientSecret,
+                        confirmParams: {
+                            return_url: `${window.location.origin}/success.html`,
+                            receipt_email: email,
+                            payment_method_data: {
+                                billing_details: { name, email }
+                            }
+                        }
+                    });
 
-            const paymentElement = elements.create('payment', paymentElementOptions);
-            paymentElement.mount('#payment-element');
+                    if (error) {
+                        showMessage(error.message);
+                    }
+                });
 
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('payment-container').style.display = 'block';
+                expressCheckoutElement.mount('#express-checkout-element');
 
-            // Écouter les changements sur la checkbox
-            document.getElementById('upsell').addEventListener('change', handleUpsellChange);
+                // Payment Element
+                const paymentElementOptions = {
+                    layout: { type: 'tabs', defaultCollapsed: false }
+                };
 
-        } catch (error) {
-            console.error('❌ Erreur complète:', error);
-            document.getElementById('loading').innerHTML = `
-                <p style="color: #ff4444; text-align: center; margin-bottom: 10px;">Une erreur est survenue lors du chargement du paiement.</p>
-                <p style="color: #6B7280; font-size: 14px; text-align: center; margin-bottom: 20px;">${error.message}</p>
-                <button onclick="location.reload()" style="padding: 12px 24px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                    Réessayer
-                </button>
-            `;
-        }
-    }
+                const paymentElement = elements.create('payment', paymentElementOptions);
+                paymentElement.mount('#payment-element');
 
-    // ✅ CORRECTION : Mise à jour du montant sans réinitialiser les champs
-    async function handleUpsellChange() {
-        const includeUpsell = document.getElementById('upsell').checked;
-        console.log('🔄 Upsell changé:', includeUpsell);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('payment-container').style.display = 'block';
 
-        try {
-            setLoading(true);
+                // Écouter les changements sur la checkbox
+                document.getElementById('upsell').addEventListener('change', handleUpsellChange);
 
-            // Mettre à jour le PaymentIntent existant avec le nouvel montant
-            const response = await fetch(`${API_URL}/api/create-payment-intent`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    includeUpsell,
-                    paymentIntentId: currentPaymentIntentId  // ✅ Envoyer l'ID existant
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Erreur lors de la mise à jour du montant');
+            } catch (error) {
+                console.error('❌ Erreur complète:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p style="color: #ff4444; text-align: center; margin-bottom: 10px;">Une erreur est survenue lors du chargement du paiement.</p>
+                    <p style="color: #6B7280; font-size: 14px; text-align: center; margin-bottom: 20px;">${error.message}</p>
+                    <button onclick="location.reload()" style="padding: 12px 24px; background: #3FB7A8; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                        Réessayer
+                    </button>
+                `;
             }
-
-            const data = await response.json();
-            currentClientSecret = data.clientSecret;
-
-            // ✅ Utiliser elements.fetchUpdates() au lieu de elements.update()
-            await elements.fetchUpdates();
-
-            console.log('✅ Montant mis à jour:', data.amount / 100, '€');
-            setLoading(false);
-
-        } catch (error) {
-            console.error('❌ Erreur lors de la mise à jour:', error);
-            showMessage('Erreur lors de la mise à jour du montant');
-            setLoading(false);
         }
-    }
 
-    // ✅ CORRECTION : Gestion correcte de la soumission du formulaire
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('payment-form');
-        if (form) {
-            form.addEventListener('submit', handleSubmit);
+        // ✅ Gestion de l'upsell avec protection
+        async function handleUpsellChange() {
+            if (upsellUpdating) return;
+            upsellUpdating = true;
+            
+            const includeUpsell = document.getElementById('upsell').checked;
+            console.log('🔄 Upsell changé:', includeUpsell);
+
+            try {
+                setLoading(true);
+
+                const response = await fetch(`${API_URL}/api/create-payment-intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        includeUpsell,
+                        paymentIntentId: currentPaymentIntentId
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la mise à jour du montant');
+                }
+
+                const data = await response.json();
+                currentClientSecret = data.clientSecret;
+                currentPaymentIntentId = data.paymentIntentId;
+
+                await elements.fetchUpdates();
+
+                console.log('✅ Montant mis à jour:', data.amount / 100, '€');
+                setLoading(false);
+
+            } catch (error) {
+                console.error('❌ Erreur lors de la mise à jour:', error);
+                showMessage('Erreur lors de la mise à jour du montant');
+                setLoading(false);
+            } finally {
+                upsellUpdating = false;
+            }
         }
-    });
+
+        // ✅ Gestion de la soumission avec billing_details
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('payment-form');
+            if (form) {
+                form.addEventListener('submit', handleSubmit);
+            }
+        });
 
         async function handleSubmit(e) {
             e.preventDefault();
+            
+            // ✅ Protection contre soumission pendant mise à jour
+            if (upsellUpdating) { 
+                showMessage('Mise à jour du montant en cours...'); 
+                return; 
+            }
+            
             console.log('🚀 Soumission du formulaire...');
             
             setLoading(true);
 
             try {
-                // Récupération des champs (optionnel pour receipt_email)
-                const email = document.getElementById('email').value;
-                const prenom = document.getElementById('prenom').value;
-                const nom = document.getElementById('nom').value;
+                // Récupération des champs
+                const email = document.getElementById('email').value || undefined;
+                const prenom = document.getElementById('prenom').value || '';
+                const nom = document.getElementById('nom').value || '';
+                const fullName = `${prenom} ${nom}`.trim() || undefined;
 
                 console.log('📧 Email:', email);
+                console.log('👤 Nom:', fullName);
 
                 // ✅ Soumettre les éléments
                 const { error: submitError } = await elements.submit();
@@ -1433,18 +1443,31 @@
 
                 console.log('✅ Submit OK, confirmation du paiement...');
 
-                // ✅ Confirmation simplifiée - Stripe collecte tout automatiquement
+                // ✅ AJOUT DES BILLING DETAILS (CRUCIAL !)
                 const { error } = await stripe.confirmPayment({
                     elements,
                     clientSecret: currentClientSecret,
                     confirmParams: {
                         return_url: `${window.location.origin}/success.html`,
-                        receipt_email: email || undefined  // Seulement pour le reçu
+                        receipt_email: email,
+                        payment_method_data: {
+                            billing_details: { 
+                                name: fullName, 
+                                email: email 
+                            }
+                        }
                     }
                 });
 
                 if (error) {
-                    console.error('❌ Erreur de paiement:', error);
+                    // ✅ Log détaillé de l'erreur
+                    console.error('❌ Erreur de paiement:', {
+                        message: error.message,
+                        type: error.type,
+                        code: error.code,
+                        decline_code: error.decline_code,
+                        payment_intent_id: error.payment_intent?.id
+                    });
                     showMessage(error.message);
                     setLoading(false);
                 }
@@ -1455,57 +1478,57 @@
             }
         }
 
-    function showMessage(messageText) {
-        const messageContainer = document.querySelector("#payment-message");
-        messageContainer.textContent = messageText;
-        messageContainer.classList.remove('success-message');
-        setTimeout(() => {
-            messageContainer.textContent = "";
-        }, 5000);
-    }
-
-    function setLoading(isLoading) {
-        const submitButton = document.querySelector("#submit");
-        const buttonText = document.querySelector("#button-text");
-        
-        if (isLoading) {
-            submitButton.disabled = true;
-            buttonText.textContent = "Traitement en cours...";
-        } else {
-            submitButton.disabled = false;
-            buttonText.textContent = "Commander maintenant";
+        function showMessage(messageText) {
+            const messageContainer = document.querySelector("#payment-message");
+            messageContainer.textContent = messageText;
+            messageContainer.classList.remove('success-message');
+            setTimeout(() => {
+                messageContainer.textContent = "";
+            }, 5000);
         }
-    }
 
-    // Scripts modals (inchangés)
-    function openModal(type) {
-        const modalId = type + 'Modal';
-        document.getElementById(modalId).style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
+        function setLoading(isLoading) {
+            const submitButton = document.querySelector("#submit");
+            const buttonText = document.querySelector("#button-text");
+            
+            if (isLoading) {
+                submitButton.disabled = true;
+                buttonText.textContent = "Traitement en cours...";
+            } else {
+                submitButton.disabled = false;
+                buttonText.textContent = "Commander maintenant";
+            }
+        }
 
-    function closeModal(type) {
-        const modalId = type + 'Modal';
-        document.getElementById(modalId).style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
+        // Scripts modals
+        function openModal(type) {
+            const modalId = type + 'Modal';
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
 
-    window.onclick = function(event) {
-        if (event.target.classList.contains('modal')) {
-            event.target.style.display = 'none';
+        function closeModal(type) {
+            const modalId = type + 'Modal';
+            document.getElementById(modalId).style.display = 'none';
             document.body.style.overflow = 'auto';
         }
-    }
 
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                modal.style.display = 'none';
-            });
-            document.body.style.overflow = 'auto';
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         }
-    });
-</script>
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
 </body>
 </html>
