@@ -18,8 +18,8 @@ module.exports = async (req, res) => {
   try {
     const { includeUpsell, paymentIntentId } = req.body;
 
-    const baseAmount = 100; // 17€ en centimes
-    const upsellAmount = 200; // 27€ en centimes
+    const baseAmount = 1700; // 17€ en centimes
+    const upsellAmount = 2700; // 27€ en centimes
     const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
 
     let paymentIntent;
