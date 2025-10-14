@@ -1334,17 +1334,11 @@
 
             expressCheckoutElement.mount('#express-checkout-element');
 
-            // Payment Element
+            // Payment Element avec configuration simplifiée
             const paymentElementOptions = {
                 layout: { type: 'tabs', defaultCollapsed: false },
-                fields: {
-                    billingDetails: {
-                        name: 'never',
-                        email: 'never',
-                        phone: 'never',
-                        address: 'never'
-                    }
-                }
+                // ✅ SUPPRIMEZ complètement la section fields
+                // Laissez Stripe gérer automatiquement les champs
             };
 
             const paymentElement = elements.create('payment', paymentElementOptions);
@@ -1421,25 +1415,14 @@
             setLoading(true);
 
             try {
-                // Validation des champs requis
+                // Récupération des champs (optionnel pour receipt_email)
                 const email = document.getElementById('email').value;
                 const prenom = document.getElementById('prenom').value;
+                const nom = document.getElementById('nom').value;
 
                 console.log('📧 Email:', email);
-                console.log('👤 Prénom:', prenom);
 
-                if (!email || !prenom) {
-                    showMessage('Veuillez remplir tous les champs obligatoires');
-                    setLoading(false);
-                    return;
-                }
-
-                const nom = document.getElementById('nom').value;
-                const fullName = nom ? `${prenom} ${nom}` : prenom;
-
-                console.log('✅ Validation OK, soumission à Stripe...');
-
-                // ✅ Soumettre les éléments avant la confirmation
+                // ✅ Soumettre les éléments
                 const { error: submitError } = await elements.submit();
                 if (submitError) {
                     console.error('❌ Erreur submit:', submitError);
@@ -1450,28 +1433,13 @@
 
                 console.log('✅ Submit OK, confirmation du paiement...');
 
-                // ✅ Confirmer le paiement avec tous les billing_details requis
+                // ✅ Confirmation simplifiée - Stripe collecte tout automatiquement
                 const { error } = await stripe.confirmPayment({
                     elements,
                     clientSecret: currentClientSecret,
                     confirmParams: {
                         return_url: `${window.location.origin}/success.html`,
-                        receipt_email: email,
-                        payment_method_data: {
-                            billing_details: {
-                                name: fullName,
-                                email: email,
-                                phone: '',      // ✅ Ajout du champ phone vide
-                                address: {      // ✅ Ajout de l'adresse vide
-                                    line1: null,
-                                    line2: null,
-                                    city: null,
-                                    state: null,
-                                    postal_code: null,
-                                    country: null
-                                }
-                            }
-                        }
+                        receipt_email: email || undefined  // Seulement pour le reçu
                     }
                 });
 
