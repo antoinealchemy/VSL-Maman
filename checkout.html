@@ -1414,69 +1414,78 @@
         }
     });
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        console.log('🚀 Soumission du formulaire...');
-        
-        setLoading(true);
+        async function handleSubmit(e) {
+            e.preventDefault();
+            console.log('🚀 Soumission du formulaire...');
+            
+            setLoading(true);
 
-        try {
-            // Validation des champs requis
-            const email = document.getElementById('email').value;
-            const prenom = document.getElementById('prenom').value;
+            try {
+                // Validation des champs requis
+                const email = document.getElementById('email').value;
+                const prenom = document.getElementById('prenom').value;
 
-            console.log('📧 Email:', email);
-            console.log('👤 Prénom:', prenom);
+                console.log('📧 Email:', email);
+                console.log('👤 Prénom:', prenom);
 
-            if (!email || !prenom) {
-                showMessage('Veuillez remplir tous les champs obligatoires');
-                setLoading(false);
-                return;
-            }
+                if (!email || !prenom) {
+                    showMessage('Veuillez remplir tous les champs obligatoires');
+                    setLoading(false);
+                    return;
+                }
 
-            const nom = document.getElementById('nom').value;
-            const fullName = nom ? `${prenom} ${nom}` : prenom;
+                const nom = document.getElementById('nom').value;
+                const fullName = nom ? `${prenom} ${nom}` : prenom;
 
-            console.log('✅ Validation OK, soumission à Stripe...');
+                console.log('✅ Validation OK, soumission à Stripe...');
 
-            // ✅ Soumettre les éléments avant la confirmation
-            const { error: submitError } = await elements.submit();
-            if (submitError) {
-                console.error('❌ Erreur submit:', submitError);
-                showMessage(submitError.message);
-                setLoading(false);
-                return;
-            }
+                // ✅ Soumettre les éléments avant la confirmation
+                const { error: submitError } = await elements.submit();
+                if (submitError) {
+                    console.error('❌ Erreur submit:', submitError);
+                    showMessage(submitError.message);
+                    setLoading(false);
+                    return;
+                }
 
-            console.log('✅ Submit OK, confirmation du paiement...');
+                console.log('✅ Submit OK, confirmation du paiement...');
 
-            // ✅ Confirmer le paiement
-            const { error } = await stripe.confirmPayment({
-                elements,
-                clientSecret: currentClientSecret,
-                confirmParams: {
-                    return_url: `${window.location.origin}/success.html`,
-                    receipt_email: email,
-                    payment_method_data: {
-                        billing_details: {
-                            name: fullName,
-                            email: email
+                // ✅ Confirmer le paiement avec tous les billing_details requis
+                const { error } = await stripe.confirmPayment({
+                    elements,
+                    clientSecret: currentClientSecret,
+                    confirmParams: {
+                        return_url: `${window.location.origin}/success.html`,
+                        receipt_email: email,
+                        payment_method_data: {
+                            billing_details: {
+                                name: fullName,
+                                email: email,
+                                phone: '',      // ✅ Ajout du champ phone vide
+                                address: {      // ✅ Ajout de l'adresse vide
+                                    line1: null,
+                                    line2: null,
+                                    city: null,
+                                    state: null,
+                                    postal_code: null,
+                                    country: null
+                                }
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            if (error) {
-                console.error('❌ Erreur de paiement:', error);
-                showMessage(error.message);
+                if (error) {
+                    console.error('❌ Erreur de paiement:', error);
+                    showMessage(error.message);
+                    setLoading(false);
+                }
+            } catch (err) {
+                console.error('❌ Erreur inattendue:', err);
+                showMessage('Erreur technique: ' + err.message);
                 setLoading(false);
             }
-        } catch (err) {
-            console.error('❌ Erreur inattendue:', err);
-            showMessage('Erreur technique: ' + err.message);
-            setLoading(false);
         }
-    }
 
     function showMessage(messageText) {
         const messageContainer = document.querySelector("#payment-message");
