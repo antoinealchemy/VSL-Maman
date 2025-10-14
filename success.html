@@ -34,14 +34,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .success-header {
@@ -73,9 +67,7 @@
             opacity: 0.95;
         }
 
-        .content {
-            padding: 40px;
-        }
+        .content { padding: 40px; }
 
         .info-box {
             background: #F0F9F8;
@@ -97,9 +89,7 @@
             font-size: 15px;
         }
 
-        .next-steps {
-            margin-bottom: 30px;
-        }
+        .next-steps { margin-bottom: 30px; }
 
         .next-steps h2 {
             color: #111111;
@@ -164,6 +154,20 @@
             box-shadow: 0 6px 20px rgba(63, 183, 168, 0.4);
         }
 
+        .alt-link {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .alt-link a {
+            color: #3FB7A8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .alt-link a:hover { text-decoration: underline; }
+
         .support-section {
             background: #FFF9E6;
             border: 1px solid #FFE8A3;
@@ -191,9 +195,7 @@
             text-decoration: none;
         }
 
-        .support-email:hover {
-            text-decoration: underline;
-        }
+        .support-email:hover { text-decoration: underline; }
 
         .footer {
             text-align: center;
@@ -204,34 +206,13 @@
         }
 
         @media (max-width: 768px) {
-            .success-header {
-                padding: 40px 25px;
-            }
-
-            .success-icon {
-                font-size: 60px;
-            }
-
-            .success-header h1 {
-                font-size: 26px;
-            }
-
-            .success-header p {
-                font-size: 16px;
-            }
-
-            .content {
-                padding: 30px 25px;
-            }
-
-            .next-steps h2 {
-                font-size: 20px;
-            }
-
-            .access-button {
-                font-size: 1rem;
-                padding: 14px 30px;
-            }
+            .success-header { padding: 40px 25px; }
+            .success-icon { font-size: 60px; }
+            .success-header h1 { font-size: 26px; }
+            .success-header p { font-size: 16px; }
+            .content { padding: 30px 25px; }
+            .next-steps h2 { font-size: 20px; }
+            .access-button { font-size: 1rem; padding: 14px 30px; }
         }
     </style>
 </head>
@@ -263,8 +244,8 @@
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h4>Accédez au programme complet</h4>
-                        <p>Téléchargez votre guide PDF, regardez les vidéos explicatives et découvrez les 5 étapes du rituel C.A.L.M.E</p>
+                        <h4>Téléchargez le guide PDF</h4>
+                        <p>Obtenez immédiatement le guide complet du rituel C.A.L.M.E en cliquant sur le bouton ci-dessous.</p>
                     </div>
                 </div>
 
@@ -285,7 +266,13 @@
                 </div>
             </div>
 
-            <a href="#" class="access-button">🚀 Accéder au programme maintenant</a>
+            <!-- Bouton de téléchargement direct du PDF (même dossier que cette page) -->
+            <a href="Rituel-calme.pdf" class="access-button" download>
+                📘 Télécharger le guide PDF
+            </a>
+            <p class="alt-link">
+                Ou <a href="Rituel-calme.pdf" target="_blank" rel="noopener">lire le guide dans votre navigateur</a>.
+            </p>
 
             <div class="support-section">
                 <h3>💬 Une question ?</h3>
