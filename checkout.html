@@ -6,6 +6,25 @@
     <title>Commande - Rituel C.A.L.M.E</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
+    <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '846721704360341');
+fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+       src="https://www.facebook.com/tr?id=846721704360341&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
     <style>
         :root {
             --teal-1: #3FB7A8;
@@ -1888,6 +1907,20 @@
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('payment-container').style.display = 'block';
 
+                // ✅ Track InitiateCheckout après affichage du formulaire
+                const checkoutValue = includeUpsell ? 44.00 : 17.00;
+                fbq('track', 'InitiateCheckout', {
+                    value: checkoutValue,
+                    currency: 'EUR',
+                    content_ids: ['rituel-calme'],
+                    contents: [
+                        { id: 'rituel-calme', quantity: 1, item_price: 17.00 }
+                    ].concat(includeUpsell ? [{ id: 'pack-respiration', quantity: 1, item_price: 27.00 }] : []),
+                    content_type: 'product',
+                    num_items: includeUpsell ? 2 : 1
+                });
+                console.log('✅ InitiateCheckout envoyé:', checkoutValue, '€');
+
                 // Écouter les changements sur la checkbox
                 document.getElementById('upsell').addEventListener('change', handleUpsellChange);
 
@@ -1903,7 +1936,7 @@
             }
         }
 
-        // ✅ Gestion de l'upsell avec protection
+        // ✅ Gestion de l'upsell avec protection et tracking
         async function handleUpsellChange() {
             if (upsellUpdating) return;
             upsellUpdating = true;
@@ -1934,6 +1967,21 @@
                 await elements.fetchUpdates();
 
                 console.log('✅ Montant mis à jour:', data.amount / 100, '€');
+                
+                // ✅ Track InitiateCheckout après changement d'upsell
+                const newValue = includeUpsell ? 44.00 : 17.00;
+                fbq('track', 'InitiateCheckout', {
+                    value: newValue,
+                    currency: 'EUR',
+                    content_ids: ['rituel-calme'],
+                    contents: [
+                        { id: 'rituel-calme', quantity: 1, item_price: 17.00 }
+                    ].concat(includeUpsell ? [{ id: 'pack-respiration', quantity: 1, item_price: 27.00 }] : []),
+                    content_type: 'product',
+                    num_items: includeUpsell ? 2 : 1
+                });
+                console.log('✅ InitiateCheckout mis à jour:', newValue, '€');
+                
                 setLoading(false);
 
             } catch (error) {
