@@ -1,66 +1,94 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const Stripe = require('stripe');
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: '2025-09-30.clover',
+});
+
+// ✅ Désactiver le bodyParser pour Vercel
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+// Lire le raw body
+function readBuffer(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on('data', (c) => chunks.push(c));
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
+}
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
-
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+  // ✅ Retourner 405 directement sans redirection
+  if (req.method !== 'POST') {
+    return res.status(405).send('Method not allowed');
   }
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  const sig = req.headers['stripe-signature'];
+  const buf = await readBuffer(req);
+
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      buf,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    console.error('❌ Webhook signature error:', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
   try {
-    const { includeUpsell, paymentIntentId } = req.body;
-
-    const baseAmount = 1700;   // ✅ 17€ en centimes (17 x 100)
-    const upsellAmount = 2700; // ✅ 27€ en centimes (27 x 100)
-    const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
-
-    let paymentIntent;
-
-    if (paymentIntentId) {
-      // Mise à jour d'un PaymentIntent existant
-      console.log('🔄 Mise à jour du PaymentIntent:', paymentIntentId);
-      paymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
-        amount: totalAmount,
-        metadata: {
-          product: 'Rituel C.A.L.M.E',
-          includeUpsell: includeUpsell ? 'true' : 'false',
-          baseProduct: 'Rituel C.A.L.M.E Complet',
-          upsellProduct: includeUpsell ? 'Pack Respiration Instantanée' : 'none'
-        }
-      });
-    } else {
-      // Création d'un nouveau PaymentIntent
-      console.log('✨ Création d\'un nouveau PaymentIntent');
-      paymentIntent = await stripe.paymentIntents.create({
-        amount: totalAmount,
-        currency: 'eur',
-        automatic_payment_methods: { enabled: true },
-        metadata: {
-          product: 'Rituel C.A.L.M.E',
-          includeUpsell: includeUpsell ? 'true' : 'false',
-          baseProduct: 'Rituel C.A.L.M.E Complet',
-          upsellProduct: includeUpsell ? 'Pack Respiration Instantanée' : 'none'
-        }
-      });
+    switch (event.type) {
+      case 'payment_intent.succeeded': {
+        const pi = event.data.object;
+        console.log('✅ PI succeeded', {
+          id: pi.id,
+          amount: pi.amount,
+          metadata: pi.metadata
+        });
+        // ➜ Fulfillment ici (envoi email, accès produit, etc.)
+        break;
+      }
+      case 'payment_intent.payment_failed': {
+        const pi = event.data.object;
+        const err = pi.last_payment_error;
+        console.error('❌ PI failed', {
+          id: pi.id,
+          amount: pi.amount,
+          code: err?.code,
+          decline_code: err?.decline_code,
+          message: err?.message
+        });
+        break;
+      }
+      case 'charge.failed': {
+        const charge = event.data.object;
+        console.error('❌ Charge failed', {
+          id: charge.id,
+          outcome: charge.outcome,
+          fraud_details: charge.fraud_details
+        });
+        break;
+      }
+      case 'payment_intent.processing':
+      case 'payment_intent.canceled':
+      case 'charge.refunded':
+      case 'charge.dispute.created':
+        console.log(`ℹ️ ${event.type}`, event.data.object.id);
+        break;
+      default:
+        break;
     }
-
-    res.status(200).json({
-      clientSecret: paymentIntent.client_secret,
-      paymentIntentId: paymentIntent.id,
-      amount: totalAmount,
-      includeUpsell: includeUpsell
-    });
-
-  } catch (error) {
-    console.error('❌ Erreur Stripe:', error);
-    res.status(500).json({ error: error.message });
+    
+    // ✅ Retourner 200 directement
+    return res.status(200).json({ received: true });
+    
+  } catch (err) {
+    console.error('Webhook handler error:', err);
+    return res.status(500).send('Server error');
   }
 };
