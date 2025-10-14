@@ -1,73 +1,66 @@
-const Stripe = require('stripe');
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2025-09-30.clover',
-});
-
-// utilitaire pour lire le raw body (obligatoire pour vérifier la signature)
-function readBuffer(req) {
-  return new Promise((resolve, reject) => {
-    const chunks = [];
-    req.on('data', (c) => chunks.push(c));
-    req.on('end', () => resolve(Buffer.concat(chunks)));
-    req.on('error', reject);
-  });
-}
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method !== 'POST') {
-    res.status(405).send('Method not allowed');
-    return;
-  }
-
-  let event;
-  const sig = req.headers['stripe-signature'];
-  const buf = await readBuffer(req);
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      buf,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET // tu vas le définir dans Vercel après création du webhook
-    );
-  } catch (err) {
-    console.error('❌ Signature invalide:', err.message);
-    res.status(400).send(`Webhook Error: ${err.message}`);
-    return;
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    switch (event.type) {
-      case 'payment_intent.succeeded': {
-        const pi = event.data.object;
-        console.log('✅ PI succeeded', pi.id, pi.amount, pi.metadata);
-        // ➜ Fulfillment ici (donner l’accès, e-mail, etc.)
-        break;
-      }
-      case 'payment_intent.payment_failed': {
-        const pi = event.data.object;
-        const e = pi.last_payment_error;
-        console.error('❌ PI failed', {
-          pi: pi.id,
-          type: e?.type,
-          code: e?.code,
-          decline_code: e?.decline_code,
-          message: e?.message,
-        });
-        break;
-      }
-      case 'payment_intent.processing':
-      case 'payment_intent.canceled':
-      case 'charge.refunded':
-      case 'charge.dispute.created':
-        console.log(`ℹ️ ${event.type}`, event.data.object.id);
-        break;
-      default:
-        // ignore les autres
-        break;
+    const { includeUpsell, paymentIntentId } = req.body;
+
+    const baseAmount = 1700;   // ✅ 17€ en centimes (17 x 100)
+    const upsellAmount = 2700; // ✅ 27€ en centimes (27 x 100)
+    const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
+
+    let paymentIntent;
+
+    if (paymentIntentId) {
+      // Mise à jour d'un PaymentIntent existant
+      console.log('🔄 Mise à jour du PaymentIntent:', paymentIntentId);
+      paymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
+        amount: totalAmount,
+        metadata: {
+          product: 'Rituel C.A.L.M.E',
+          includeUpsell: includeUpsell ? 'true' : 'false',
+          baseProduct: 'Rituel C.A.L.M.E Complet',
+          upsellProduct: includeUpsell ? 'Pack Respiration Instantanée' : 'none'
+        }
+      });
+    } else {
+      // Création d'un nouveau PaymentIntent
+      console.log('✨ Création d\'un nouveau PaymentIntent');
+      paymentIntent = await stripe.paymentIntents.create({
+        amount: totalAmount,
+        currency: 'eur',
+        automatic_payment_methods: { enabled: true },
+        metadata: {
+          product: 'Rituel C.A.L.M.E',
+          includeUpsell: includeUpsell ? 'true' : 'false',
+          baseProduct: 'Rituel C.A.L.M.E Complet',
+          upsellProduct: includeUpsell ? 'Pack Respiration Instantanée' : 'none'
+        }
+      });
     }
-    res.json({ received: true });
-  } catch (e) {
-    console.error('Webhook handler error:', e);
-    res.status(500).send('Server error');
+
+    res.status(200).json({
+      clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
+      amount: totalAmount,
+      includeUpsell: includeUpsell
+    });
+
+  } catch (error) {
+    console.error('❌ Erreur Stripe:', error);
+    res.status(500).json({ error: error.message });
   }
 };
