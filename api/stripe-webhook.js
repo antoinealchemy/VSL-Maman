@@ -1,14 +1,7 @@
 const Stripe = require('stripe');
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2025-09-30.clover',
+  apiVersion: '2023-10-16', // ✅ Même version partout
 });
-
-// ✅ Désactiver le bodyParser pour Vercel
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 // Lire le raw body
 function readBuffer(req) {
@@ -21,7 +14,6 @@ function readBuffer(req) {
 }
 
 module.exports = async (req, res) => {
-  // ✅ Retourner 405 directement sans redirection
   if (req.method !== 'POST') {
     return res.status(405).send('Method not allowed');
   }
@@ -50,7 +42,7 @@ module.exports = async (req, res) => {
           amount: pi.amount,
           metadata: pi.metadata
         });
-        // ➜ Fulfillment ici (envoi email, accès produit, etc.)
+        // ➜ Fulfillment ici
         break;
       }
       case 'payment_intent.payment_failed': {
@@ -74,17 +66,11 @@ module.exports = async (req, res) => {
         });
         break;
       }
-      case 'payment_intent.processing':
-      case 'payment_intent.canceled':
-      case 'charge.refunded':
-      case 'charge.dispute.created':
-        console.log(`ℹ️ ${event.type}`, event.data.object.id);
-        break;
       default:
+        console.log(`ℹ️ ${event.type}`, event.data.object.id);
         break;
     }
     
-    // ✅ Retourner 200 directement
     return res.status(200).json({ received: true });
     
   } catch (err) {
