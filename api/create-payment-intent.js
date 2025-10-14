@@ -18,14 +18,14 @@ module.exports = async (req, res) => {
   try {
     const { includeUpsell, paymentIntentId } = req.body;
 
-    const baseAmount = 100;
-    const upsellAmount = 200;
+    const baseAmount = 100; // 17€ en centimes
+    const upsellAmount = 100; // 27€ en centimes
     const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
 
     let paymentIntent;
 
-    // Si on a déjà un PaymentIntent, on le met à jour
     if (paymentIntentId) {
+      // Mise à jour d'un PaymentIntent existant
       console.log('🔄 Mise à jour du PaymentIntent:', paymentIntentId);
       paymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
         amount: totalAmount,
@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
         }
       });
     } else {
-      // Sinon on en crée un nouveau
+      // Création d'un nouveau PaymentIntent
       console.log('✨ Création d\'un nouveau PaymentIntent');
       paymentIntent = await stripe.paymentIntents.create({
         amount: totalAmount,
