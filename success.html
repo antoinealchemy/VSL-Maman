@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merci pour votre commande ! - Rituel C.A.L.M.E</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '846721704360341');
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none"
+           src="https://www.facebook.com/tr?id=846721704360341&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Meta Pixel Code -->
+    
     <style>
         * {
             margin: 0;
@@ -266,18 +286,18 @@
                 </div>
             </div>
 
-            <!-- Bouton de téléchargement direct du PDF (même dossier que cette page) -->
-            <a href="Rituel-calme.pdf" class="access-button" download>
+            <!-- Bouton de téléchargement direct du PDF -->
+            <a href="Rituel-calme.pdf" class="access-button" download onclick="trackDownload()">
                 📘 Télécharger le guide PDF
             </a>
             <p class="alt-link">
-                Ou <a href="Rituel-calme.pdf" target="_blank" rel="noopener">lire le guide dans votre navigateur</a>.
+                Ou <a href="Rituel-calme.pdf" target="_blank" rel="noopener" onclick="trackViewContent()">lire le guide dans votre navigateur</a>.
             </p>
 
             <div class="support-section">
                 <h3>💬 Une question ?</h3>
                 <p>Notre équipe est là pour vous accompagner</p>
-                <a href="mailto:support@drsarahdumont.com" class="support-email">support@drsarahdumont.com</a>
+                <a href="mailto:support@drsarahdumont.com" class="support-email" onclick="trackContact()">support@drsarahdumont.com</a>
             </div>
         </div>
 
@@ -286,5 +306,78 @@
             <p style="margin-top: 10px;">Garantie satisfait ou remboursé 30 jours</p>
         </div>
     </div>
+
+    <script>
+        // ✅ Fonction pour récupérer les paramètres d'URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // ✅ Récupérer le payment_intent depuis l'URL
+        var paymentIntentId = getUrlParameter('payment_intent');
+        var paymentIntentClientSecret = getUrlParameter('payment_intent_client_secret');
+
+        // ✅ Track Purchase au chargement de la page
+        window.addEventListener('load', function() {
+            // On envoie l'événement Purchase
+            // Note: Idéalement, récupérez le montant exact depuis votre backend
+            // Pour l'instant, on suppose 44€ (avec upsell) ou 17€
+            
+            var purchaseValue = 44.00; // Ajustez selon votre logique
+            
+            fbq('track', 'Purchase', {
+                value: purchaseValue,
+                currency: 'EUR',
+                content_ids: ['rituel-calme'],
+                contents: [
+                    { id: 'rituel-calme', quantity: 1, item_price: 17.00 },
+                    { id: 'pack-respiration', quantity: 1, item_price: 27.00 }
+                ],
+                content_type: 'product',
+                num_items: 2,
+                transaction_id: paymentIntentId || 'unknown'
+            });
+            
+            console.log('✅ Purchase event envoyé:', purchaseValue, '€');
+        });
+
+        // ✅ Track Lead (nouveau client capturé)
+        fbq('track', 'Lead', {
+            content_name: 'Rituel C.A.L.M.E',
+            content_category: 'Programme Bien-être',
+            value: purchaseValue,
+            currency: 'EUR'
+        });
+        console.log('✅ Lead event envoyé');
+
+        // ✅ Track téléchargement du PDF
+        function trackDownload() {
+            fbq('track', 'Download', {
+                content_name: 'Guide PDF Rituel C.A.L.M.E',
+                content_type: 'product'
+            });
+            console.log('✅ Download event envoyé');
+        }
+
+        // ✅ Track consultation du PDF dans le navigateur
+        function trackViewContent() {
+            fbq('track', 'ViewContent', {
+                content_name: 'Guide PDF Rituel C.A.L.M.E',
+                content_type: 'product'
+            });
+            console.log('✅ ViewContent event envoyé');
+        }
+
+        // ✅ Track contact support
+        function trackContact() {
+            fbq('track', 'Contact', {
+                content_name: 'Support email'
+            });
+            console.log('✅ Contact event envoyé');
+        }
+    </script>
 </body>
 </html>
