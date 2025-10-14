@@ -19,8 +19,8 @@ module.exports = async (req, res) => {
   try {
     const { includeUpsell, paymentIntentId } = req.body;
 
-    const baseAmount = 100;
-    const upsellAmount = 100;
+    const baseAmount = 1700;
+    const upsellAmount = 2700;
     const totalAmount = includeUpsell ? baseAmount + upsellAmount : baseAmount;
 
     let paymentIntent;
